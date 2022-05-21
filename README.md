@@ -1,4 +1,8 @@
-# PlantUML Viewer [![License](https://img.shields.io/github/license/Fruchtzwerg94/PlantUmlViewer.svg)] (https://github.com/nea/MarkdownViewerPlusPlus/blob/master/LICENSE.md) [![Latest release](https://img.shields.io/badge/release-1.0.0-green.svg)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases/tag/1.0.0)
+# PlantUML Viewer
+[![License](https://img.shields.io/github/license/Fruchtzwerg94/PlantUmlViewer.svg)](https://github.com/nea/MarkdownViewerPlusPlus/blob/master/LICENSE.md) 
+[![Latest release](https://img.shields.io/badge/release-1.0.0-green.svg)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases/tag/1.0.0)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/insanitydesign)
+
 A [Notepad++](https://notepad-plus-plus.org/) plugin to generate view and export [PlantUML](https://plantuml.com/) diagrams.
 
 ## Features
@@ -14,7 +18,7 @@ You can find latest and all other changes in the [changelog](CHANGELOG.md).
 Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy folder *PantUmlViewer* with its content to the *plugins* subfolder at your Notepad++ installation directory.
 
 ### Plugin Manager
-If you have the [Plugin Manager](https://bruderste.in/npp/pm/) installed you can search for *PlantUML Viewer* and install it.
+If you have the [Plugin Manager](https://github.com/bruderstein/nppPluginManager) installed you can search for *PlantUML Viewer* and install it.
 
 ### Compatibility
 This plugin requires at least
