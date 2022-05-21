@@ -2,7 +2,7 @@
 """
 Script to help creating a release of the plugin
 
-@author: Philipp Schmidt (philipp.schmidt5@zf.com)
+@author: Philipp Schmidt
 """
 
 import hashlib
