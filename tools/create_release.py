@@ -33,7 +33,7 @@ def create_plugin_list_entry(version, architecture, hash):
         'version': '{version}'.format(version=version),
         'npp-compatible-versions': '[8.3,]',
         'id': '{hash}'.format(hash=hash),
-        'repository': 'https://github.com/Fruchtzwerg94/PlantUmlViewer/releases/{version}/PlantUmlViewer_v{version}_{architecture}.zip'
+        'repository': 'https://github.com/Fruchtzwerg94/PlantUmlViewer/releases/download/{version}/PlantUmlViewer_v{version}_{architecture}.zip'
             .format(version=version, architecture=architecture),
         'description': 'A Notepad++ plugin to generate view and export PlantUML diagrams.',
         'author': 'Philipp Schmidt',

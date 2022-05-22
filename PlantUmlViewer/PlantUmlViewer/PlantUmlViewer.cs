@@ -35,8 +35,8 @@ namespace PlantUmlViewer
 
         public PlantUmlViewer()
         {
-            assemblyDirectory = Path.GetDirectoryName(
-                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            assemblyDirectory = Uri.UnescapeDataString(Path.GetDirectoryName(
+                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
 
             notepadPp = new NotepadPPGateway();
             editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
@@ -74,8 +74,10 @@ namespace PlantUmlViewer
 
         public void SetToolBarIcon()
         {
-            toolbarIcons tbIcons = new toolbarIcons();
-            tbIcons.hToolbarBmp = Properties.Resources.Icon.GetHbitmap();
+            toolbarIcons tbIcons = new toolbarIcons
+            {
+                hToolbarBmp = Properties.Resources.Icon.GetHbitmap()
+            };
             IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
             Marshal.StructureToPtr(tbIcons, pTbIcons, false);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON,
