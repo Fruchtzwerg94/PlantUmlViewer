@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using PlantUmlViewer.Properties;
+
 using PlantUml.Net;
 
 namespace PlantUmlViewer.Forms
@@ -48,11 +50,19 @@ namespace PlantUmlViewer.Forms
                     JavaPath = getJavaPath(),
                     RenderingMode = RenderingMode.Local
                 });
-                byte[] bytes = await Task.Run(() => renderer.Render(getText(), OutputFormat.Png)).ConfigureAwait(true);
-                using (MemoryStream ms = new MemoryStream())
+                string text = getText();
+                if (string.IsNullOrWhiteSpace(text))
                 {
-                    ms.Write(bytes, 0, bytes.Length);
-                    imageBox_Diagram.Image = Image.FromStream(ms);
+                    imageBox_Diagram.Image = Resources.Empty;
+                }
+                else
+                {
+                    byte[] bytes = await Task.Run(() => renderer.Render(text, OutputFormat.Png)).ConfigureAwait(true);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        ms.Write(bytes, 0, bytes.Length);
+                        imageBox_Diagram.Image = Image.FromStream(ms);
+                    }
                 }
 
                 toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();

@@ -25,9 +25,9 @@ namespace PlantUmlViewer
         }
 
         private readonly string assemblyDirectory;
-        private readonly INotepadPPGateway notepadPp;
-        private readonly IScintillaGateway editor;
 
+        private INotepadPPGateway notepadPp;
+        private IScintillaGateway editor;
         private Settings settings;
 
         private readonly Icon icon;
@@ -37,9 +37,6 @@ namespace PlantUmlViewer
         {
             assemblyDirectory = Uri.UnescapeDataString(Path.GetDirectoryName(
                 new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
-
-            notepadPp = new NotepadPPGateway();
-            editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
 
             using (Bitmap bmp = new Bitmap(16, 16))
             {
@@ -65,6 +62,8 @@ namespace PlantUmlViewer
 
         public void CommandMenuInit()
         {
+            notepadPp = new NotepadPPGateway();
+            editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
             settings = new Settings();
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
