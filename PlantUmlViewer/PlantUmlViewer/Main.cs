@@ -1,4 +1,6 @@
-﻿using Kbg.NppPluginNET.PluginInfrastructure;
+﻿using System.Diagnostics;
+
+using Kbg.NppPluginNET.PluginInfrastructure;
 
 namespace Kbg.NppPluginNET
 {
@@ -10,21 +12,25 @@ namespace Kbg.NppPluginNET
 
         public static void OnNotification(ScNotification notification)
         {
+            Debug.WriteLine($"OnNotification: {notification.Header.Code}", nameof(Main));
             plantUmlViewer.OnNotification(notification);
         }
 
         internal static void CommandMenuInit()
         {
+            Debug.WriteLine("CommandMenuInit", nameof(Main));
             plantUmlViewer.CommandMenuInit();
         }
 
         internal static void SetToolBarIcon()
         {
+            Debug.WriteLine("SetToolBarIcon", nameof(Main));
             plantUmlViewer.SetToolBarIcon();
         }
 
         internal static void PluginCleanUp()
         {
+            Debug.WriteLine("PluginCleanUp", nameof(Main));
             plantUmlViewer.PluginCleanUp();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,12 +27,14 @@ namespace PlantUmlViewer
                 Directory.CreateDirectory(iniFilePath);
             }
             iniFilePath = Path.Combine(iniFilePath, $"{nameof(PlantUmlViewer)}.ini");
+            Debug.WriteLine($"Using settings file '{iniFilePath}'", nameof(Settings));
         }
 
         public string GetSetting(string key, string defaultValue)
         {
             if (settingsBuffer.TryGetValue(key, out string bufferedValue))
             {
+                Debug.WriteLine($"Get buffered setting '{key}': '{bufferedValue}'", nameof(Settings));
                 return bufferedValue;
             }
             else
@@ -47,12 +50,14 @@ namespace PlantUmlViewer
                     value = sb.ToString();
                 }
                 settingsBuffer[key] = value;
+                Debug.WriteLine($"Get setting '{key}': '{value}'", nameof(Settings));
                 return value;
             }
         }
 
         public void SetSetting(string key, string value)
         {
+            Debug.WriteLine($"Set setting '{key}': '{value}'", nameof(Settings));
             Win32.WritePrivateProfileString(nameof(PlantUmlViewer), key, value, iniFilePath);
             settingsBuffer[key] = value;
         }

@@ -50,6 +50,7 @@ namespace PlantUmlViewer.Forms
                     JavaPath = getJavaPath(),
                     RenderingMode = RenderingMode.Local
                 });
+
                 string text = getText();
                 if (string.IsNullOrWhiteSpace(text))
                 {
@@ -117,15 +118,15 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private void InvokeIfRequired(Action a)
+        private void InvokeIfRequired(Action action)
         {
             if (InvokeRequired)
             {
-                Invoke(a);
+                Invoke(action);
             }
             else
             {
-                a();
+                action();
             }
         }
     }
