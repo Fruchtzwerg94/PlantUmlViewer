@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Added support for dark interfaces
+
 # 1.0.2.3 (22.05.2022)
 - Fixed generation fails for release builds
 - Removed error for generation of empty documents

@@ -61,10 +61,11 @@
             // button_Export
             // 
             this.button_Export.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Export.Location = new System.Drawing.Point(145, 3);
             this.button_Export.Name = "button_Export";
             this.button_Export.Size = new System.Drawing.Size(136, 23);
-            this.button_Export.TabIndex = 3;
+            this.button_Export.TabIndex = 2;
             this.button_Export.Text = "Export";
             this.button_Export.UseVisualStyleBackColor = true;
             this.button_Export.Click += new System.EventHandler(this.Button_Export_Click);
@@ -72,6 +73,7 @@
             // button_Refresh
             // 
             this.button_Refresh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Refresh.Location = new System.Drawing.Point(3, 3);
             this.button_Refresh.Name = "button_Refresh";
             this.button_Refresh.Size = new System.Drawing.Size(136, 23);
@@ -84,10 +86,12 @@
             // 
             this.tableLayoutPanel_Window.SetColumnSpan(this.imageBox_Diagram, 2);
             this.imageBox_Diagram.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageBox_Diagram.GridDisplayMode = Cyotek.Windows.Forms.ImageBoxGridDisplayMode.None;
             this.imageBox_Diagram.Location = new System.Drawing.Point(3, 32);
             this.imageBox_Diagram.Name = "imageBox_Diagram";
             this.imageBox_Diagram.Size = new System.Drawing.Size(278, 227);
-            this.imageBox_Diagram.TabIndex = 2;
+            this.imageBox_Diagram.TabIndex = 3;
+            this.imageBox_Diagram.TabStop = false;
             // 
             // statusStrip_Bottom
             // 
@@ -99,18 +103,19 @@
             this.statusStrip_Bottom.Name = "statusStrip_Bottom";
             this.statusStrip_Bottom.Size = new System.Drawing.Size(284, 22);
             this.statusStrip_Bottom.TabIndex = 2;
-            this.statusStrip_Bottom.Text = "statusStrip1";
             // 
             // toolStripProgressBar_Refreshing
             // 
+            this.toolStripProgressBar_Refreshing.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripProgressBar_Refreshing.Name = "toolStripProgressBar_Refreshing";
             this.toolStripProgressBar_Refreshing.Size = new System.Drawing.Size(100, 16);
             this.toolStripProgressBar_Refreshing.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // toolStripStatusLabel_Time
             // 
+            this.toolStripStatusLabel_Time.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.toolStripStatusLabel_Time.Name = "toolStripStatusLabel_Time";
-            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(101, 17);
+            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(101, 16);
             this.toolStripStatusLabel_Time.Spring = true;
             // 
             // toolStripStatusLabel_Zoom

@@ -41,11 +41,13 @@ namespace PlantUmlViewer
             using (Bitmap bmp = new Bitmap(16, 16))
             {
                 Graphics g = Graphics.FromImage(bmp);
-                ColorMap[] colorMap = new ColorMap[1];
-                colorMap[0] = new ColorMap
+                ColorMap[] colorMap = new ColorMap[]
                 {
-                    OldColor = Color.Transparent,
-                    NewColor = Color.FromKnownColor(KnownColor.ButtonFace)
+                    new ColorMap
+                    {
+                        OldColor = Color.Transparent,
+                        NewColor = Color.FromKnownColor(KnownColor.ButtonFace)
+                    }
                 };
                 ImageAttributes attr = new ImageAttributes();
                 attr.SetRemapTable(colorMap);
@@ -117,6 +119,11 @@ namespace PlantUmlViewer
             {
                 Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, previewWindow.Handle);
             }
+
+            IntPtr editorBachgroundColorPtr = Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETEDITORDEFAULTBACKGROUNDCOLOR, 0, 0);
+            int bbggrr = editorBachgroundColorPtr.ToInt32();
+            Color editorBackgroundColor = Color.FromArgb(bbggrr & 0x0000FF, (bbggrr & 0x00FF00) >> 8, (bbggrr & 0xFF0000) >> 16);
+            previewWindow.SetStyle(editorBackgroundColor);
         }
 
         private void ShowSettings()

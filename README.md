@@ -7,15 +7,16 @@ A [Notepad++](https://notepad-plus-plus.org/) plugin to generate view and export
 
 ## Features
 * Official and full PlantUML syntax
-* Dockable panel the generated PlantUML diagrams
+* Dockable panel to show the generated PlantUML diagrams
 * Zoomable diagrams
 * PNG export of diagrams
+* Dark mode support
 
 ## Latest changes
 You can find latest and all other changes in the [changelog](CHANGELOG.md).
 
 ## Installation
-Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy folder *PantUmlViewer* with its content to the *plugins* subfolder at your Notepad++ installation directory.
+Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy the folder *PantUmlViewer* with its content to the *plugins* subfolder of your Notepad++ installation directory.
 
 ### Plugin Manager
 If you have the [Plugin Manager](https://github.com/bruderstein/nppPluginManager) installed you can search for *PlantUML Viewer* and install it.
@@ -34,7 +35,7 @@ PlantUML Viewer can be opened
 
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
 
-By clicking the *Refresh* button the diagram gets generated out of the current opened document. The diagram can be moved by dragging and zoomed by scrolling. The currently showed diagram can be exported as PNG by clicking the *Export* button.
+By clicking the *Refresh* button the diagram gets generated out of the current opened document. The file extension doesn't matter. The diagram can be moved by dragging and zoomed by scrolling. The currently showed diagram can be exported as PNG image by clicking the *Export* button.
 
 You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
 
@@ -48,10 +49,10 @@ This Notepad++ plugin integrates the sources of multiple other libraries, becaus
 * The plugin release includes the PlantUML binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 
 ## Feedback, issues and contribution
-Resonable feedback, issues and contribution is always very welcome. Feel free to bring in your points!
+Resonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!
 
 ## Disclaimer
 This source and the whole package comes without warranty. It may or may not harm your computer or cell phone. Please use with care. Any damage cannot be related back to the author. The source has been tested on a virtual environment and scanned for viruses and has passed all tests.
 
 ## Personal Note
-*I've created this software in my leasure time since I found no comparable solution to preview PlantUML diagrams seamlessly in Notepad++. This software (with all its bugs) is not aiming to be a enterprise solution. It surely will not fulfill the needs of everybody. But it maybe is a nice little helper for some of you. I am always open for your reasonable feedback, issues and contributions. Feel free to contact me and have fun with it.*
+*I've created this software in my leasure time since I found no comparable solution to preview PlantUML diagrams seamlessly in Notepad++. This software (with all its bugs) is not aiming to be an enterprise solution. It surely will not fulfill the needs of everybody. But it maybe is a nice little helper for some of you. I am always open for your reasonable feedback, issues and contributions. Feel free to contact me and have fun with it.*

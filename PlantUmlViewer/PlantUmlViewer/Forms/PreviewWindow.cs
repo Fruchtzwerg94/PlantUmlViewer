@@ -17,6 +17,9 @@ namespace PlantUmlViewer.Forms
         private readonly Func<string> getText;
         private readonly Func<string> getJavaPath;
 
+        private Color colorSuccess;
+        private Color colorFailure;
+
         public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, Func<string> getJavaPath)
         {
             this.plantUmlBinary = plantUmlBinary;
@@ -67,21 +70,21 @@ namespace PlantUmlViewer.Forms
                 }
 
                 toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
-                statusStrip_Bottom.BackColor = Color.LightGreen;
+                toolStripStatusLabel_Time.BackColor = colorSuccess;
             }
             catch (TaskCanceledException)
             {
-                statusStrip_Bottom.BackColor = Color.Tomato;
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show("Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (RenderingException rex)
+            catch (RenderingException rEx)
             {
-                statusStrip_Bottom.BackColor = Color.Tomato;
-                MessageBox.Show(rex.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
+                MessageBox.Show(rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                statusStrip_Bottom.BackColor = Color.Tomato;
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -128,6 +131,43 @@ namespace PlantUmlViewer.Forms
             {
                 action();
             }
+        }
+
+        public void SetStyle(Color editorBackgroundColor)
+        {
+            imageBox_Diagram.BackColor = editorBackgroundColor;
+
+            Color buttonBackColor;
+            Color buttonForeColor;
+            float brighness = editorBackgroundColor.GetBrightness();
+            if (editorBackgroundColor.GetBrightness() > 0.4)
+            {
+                //Light
+                colorSuccess = Color.LightGreen;
+                colorFailure = Color.Tomato;
+                BackColor = SystemColors.Control;
+                buttonBackColor = SystemColors.Control;
+                buttonForeColor = SystemColors.ControlText;
+                statusStrip_Bottom.BackColor = SystemColors.Control;
+                statusStrip_Bottom.ForeColor = SystemColors.ControlText;
+            }
+            else
+            {
+                //Dark
+                colorSuccess = Color.DarkGreen;
+                colorFailure = Color.DarkRed;
+                BackColor = SystemColors.ControlDarkDark;
+                buttonBackColor = SystemColors.ControlDarkDark;
+                buttonForeColor = SystemColors.ControlLightLight;
+                statusStrip_Bottom.BackColor = SystemColors.ControlDarkDark;
+                statusStrip_Bottom.ForeColor = SystemColors.ControlLightLight;
+            }
+
+            button_Export.BackColor = buttonBackColor;
+            button_Export.ForeColor = buttonForeColor;
+
+            button_Refresh.BackColor = buttonBackColor;
+            button_Refresh.ForeColor = buttonForeColor;
         }
     }
 }
