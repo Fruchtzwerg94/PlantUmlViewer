@@ -32,15 +32,35 @@ jobs:
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
 
+    - uses: suisei-cn/actions-download-file@v1
+      id: plantUmlJarFile
+      name: Download PlantUML JAR file
+      with:
+        url: https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar
+        target: build/
+        auto-match: false
+
     - name: Archive artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v2
       with:
-          name: PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
-          path: PlantUmlViewer\PlantUmlViewer\bin\${{ matrix.build_configuration }}-${{ matrix.build_platform }}\PlantUmlViewer.dll
+          name: build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+          path: |
+              PlantUmlViewer\PlantUmlViewer\bin\${{ matrix.build_configuration }}-${{ matrix.build_platform }}\PlantUmlViewer.dll
+              build\plantuml-1.2022.5.jar
+
+    - name: Generate checksum
+        if: matrix.build_configuration == 'Release'
+        uses: jmgilman/actions-generate-checksum@v1
+        with:
+            method: sha256
+            output: build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
+            patterns: build\*.zip
 
     - name: Create release on tagging
-      uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
       with:
-          files: PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+          files: |
+              build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+              build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
