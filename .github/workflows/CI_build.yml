@@ -55,7 +55,8 @@ jobs:
       with:
           method: sha256
           output: PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
-          patterns: *.zip
+          patterns: |
+              *.zip
 
     - name: Create release on tagging
       if: startsWith(github.ref, 'refs/tags/')
