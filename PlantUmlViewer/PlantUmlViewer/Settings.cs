@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
@@ -10,9 +9,6 @@ namespace PlantUmlViewer
 {
     internal class Settings
     {
-        [DllImport("kernel32")]
-        public static extern int GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
-
         private readonly string iniFilePath;
 
         private readonly Dictionary<string, string> settingsBuffer = new Dictionary<string, string>();
@@ -41,7 +37,7 @@ namespace PlantUmlViewer
             {
                 StringBuilder sb = new StringBuilder(4096);
                 string value;
-                if (GetPrivateProfileString(nameof(PlantUmlViewer), key, "", sb, 4096, iniFilePath) < 1)
+                if (Win32.GetPrivateProfileString(nameof(PlantUmlViewer), key, "", sb, 4096, iniFilePath) < 1)
                 {
                     value = defaultValue;
                 }

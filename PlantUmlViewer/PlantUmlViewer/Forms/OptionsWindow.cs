@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace PlantUmlViewer.Forms
 {
-    internal partial class SettingsWindow : Form
+    internal partial class OptionsWindow : Form
     {
         private readonly Settings settings;
 
-        public SettingsWindow(Settings settings)
+        public OptionsWindow(Settings settings)
         {
             this.settings = settings;
 

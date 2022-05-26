@@ -101,11 +101,11 @@
     <Compile Include="Forms\AboutWindow.Designer.cs">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SettingsWindow.cs">
+    <Compile Include="Forms\OptionsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SettingsWindow.Designer.cs">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    <Compile Include="Forms\OptionsWindow.Designer.cs">
+      <DependentUpon>OptionsWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="PlantUmlViewer.cs" />
     <Compile Include="PluginInfrastructure\ClikeStringArray.cs" />
@@ -138,6 +138,7 @@
     </Compile>
     <Compile Include="PluginInfrastructure\UnmanagedExports.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Windows\Messages.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutWindow.resx">
@@ -146,8 +147,8 @@
     <EmbeddedResource Include="Forms\PreviewWindow.resx">
       <DependentUpon>PreviewWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsWindow.resx">
-      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\OptionsWindow.resx">
+      <DependentUpon>OptionsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

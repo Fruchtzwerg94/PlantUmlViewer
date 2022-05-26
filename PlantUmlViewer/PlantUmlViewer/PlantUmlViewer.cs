@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
 
@@ -19,9 +20,11 @@ namespace PlantUmlViewer
 
         private enum CommandId
         {
-            ShowPreview = 0,
-            ShowSettings = 1,
-            ShowAbout = 2
+            ShowPreview     = 0,
+            Refresh         = 1,
+            Separator1      = 2,
+            ShowOptions     = 3,
+            ShowAbout       = 4
         }
 
         private readonly string assemblyDirectory;
@@ -69,7 +72,9 @@ namespace PlantUmlViewer
             settings = new Settings();
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
-            PluginBase.SetCommand((int)CommandId.ShowSettings, "Settings", ShowSettings);
+            PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh, new ShortcutKey(false, false, true, Keys.U));
+            PluginBase.SetCommand((int)CommandId.Separator1, "---", null);
+            PluginBase.SetCommand((int)CommandId.ShowOptions, "Options", ShowOptions);
             PluginBase.SetCommand((int)CommandId.ShowAbout, "About", ShowAbout);
         }
 
@@ -84,6 +89,8 @@ namespace PlantUmlViewer
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON,
                 PluginBase._funcItems.Items[(int)CommandId.ShowPreview]._cmdID, pTbIcons);
             Marshal.FreeHGlobal(pTbIcons);
+
+            VisibilityChanged(false);
         }
 
         public void PluginCleanUp()
@@ -101,6 +108,8 @@ namespace PlantUmlViewer
                     () => editor.GetText(editor.GetLength() + 1),
                     () => settings.GetSetting("JavaPath", ""));
 
+                previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);
+
                 NppTbData nppTbData = new NppTbData
                 {
                     hClient = previewWindow.Handle,
@@ -114,23 +123,58 @@ namespace PlantUmlViewer
                 Marshal.StructureToPtr(nppTbData, nppTbDataPtr, false);
 
                 Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, nppTbDataPtr);
+                UpdateStyle();
             }
             else
             {
-                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, previewWindow.Handle);
+                if (!previewWindow.Visible)
+                {
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, previewWindow.Handle);
+                    UpdateStyle();
+                }
+                else
+                {
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMHIDE, 0, previewWindow.Handle);
+                }
             }
+            VisibilityChanged(previewWindow.Visible);
+        }
 
-            IntPtr editorBachgroundColorPtr = Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETEDITORDEFAULTBACKGROUNDCOLOR, 0, 0);
+        private void UpdateStyle()
+        {
+            IntPtr editorBachgroundColorPtr = Win32.SendMessage(PluginBase.nppData._nppHandle,
+                (uint)NppMsg.NPPM_GETEDITORDEFAULTBACKGROUNDCOLOR, 0, 0);
             int bbggrr = editorBachgroundColorPtr.ToInt32();
             Color editorBackgroundColor = Color.FromArgb(bbggrr & 0x0000FF, (bbggrr & 0x00FF00) >> 8, (bbggrr & 0xFF0000) >> 16);
             previewWindow.SetStyle(editorBackgroundColor);
         }
 
-        private void ShowSettings()
+        private void VisibilityChanged(bool visible)
         {
-            using (SettingsWindow settingsWindow = new SettingsWindow(settings))
+            //Check / uncheck icon
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SETMENUITEMCHECK,
+                PluginBase._funcItems.Items[(int)CommandId.ShowPreview]._cmdID, visible ? 1 : 0);
+
+            //Enable / disable refresh menu entry
+            IntPtr hMenu = Win32.SendMessage(PluginBase.nppData._nppHandle,
+                (uint)NppMsg.NPPM_GETMENUHANDLE, (int)NppMsg.NPPPLUGINMENU, 0);
+            Win32.EnableMenuItem(hMenu, PluginBase._funcItems.Items[(int)CommandId.Refresh]._cmdID,
+                Win32.MF_BYCOMMAND | (visible ? Win32.MF_ENABLED : (Win32.MF_DISABLED | Win32.MF_GRAYED)));
+        }
+
+        private void Refresh()
+        {
+            if (previewWindow?.Visible == true)
             {
-                settingsWindow.ShowDialog();
+                previewWindow.Button_Refresh_Click(null, null);
+            }
+        }
+
+        private void ShowOptions()
+        {
+            using (OptionsWindow optionsWindow = new OptionsWindow(settings))
+            {
+                optionsWindow.ShowDialog();
             }
         }
 

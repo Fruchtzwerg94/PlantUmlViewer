@@ -3,10 +3,15 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
-using PlantUmlViewer.Properties;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
 using PlantUml.Net;
+
+using PlantUmlViewer.Windows;
+using PlantUmlViewer.Properties;
 
 namespace PlantUmlViewer.Forms
 {
@@ -19,6 +24,8 @@ namespace PlantUmlViewer.Forms
 
         private Color colorSuccess;
         private Color colorFailure;
+
+        public event EventHandler<EventArgs> DockablePanelClose;
 
         public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, Func<string> getJavaPath)
         {
@@ -33,12 +40,27 @@ namespace PlantUmlViewer.Forms
             ImageBox_ZoomChanged(this, null);
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            //Notify the dockable panel was closed
+            if (m.Msg == (int)WindowsMessage.WM_NOTIFY)
+            {
+                NMHDR notification = (NMHDR)Marshal.PtrToStructure(m.LParam, typeof(NMHDR));
+                if (notification.code == (int)DockMgrMsg.DMN_CLOSE)
+                {
+                    Debug.WriteLine("Closed dockable panel", nameof(PreviewWindow));
+                    DockablePanelClose?.Invoke(this, EventArgs.Empty);
+                }
+            }
+            base.WndProc(ref m);
+        }
+
         private void ImageBox_ZoomChanged(object sender, EventArgs e)
         {
             toolStripStatusLabel_Zoom.Text = $"{imageBox_Diagram.Zoom}%";
         }
 
-        private async void Button_Refresh_Click(object sender, EventArgs e)
+        public async void Button_Refresh_Click(object sender, EventArgs e)
         {
             try
             {
@@ -139,7 +161,6 @@ namespace PlantUmlViewer.Forms
 
             Color buttonBackColor;
             Color buttonForeColor;
-            float brighness = editorBackgroundColor.GetBrightness();
             if (editorBackgroundColor.GetBrightness() > 0.4)
             {
                 //Light
@@ -165,7 +186,6 @@ namespace PlantUmlViewer.Forms
 
             button_Export.BackColor = buttonBackColor;
             button_Export.ForeColor = buttonForeColor;
-
             button_Refresh.BackColor = buttonBackColor;
             button_Refresh.ForeColor = buttonForeColor;
         }
