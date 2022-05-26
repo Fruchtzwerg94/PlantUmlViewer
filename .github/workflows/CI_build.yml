@@ -22,11 +22,11 @@ jobs:
       uses: nuget/setup-nuget@v1
 
     - name: Nuget restore solution
-      working-directory: PlantUmlViewer\
+      working-directory: PlantUmlViewer/
       run: nuget restore PlantUmlViewer.sln
 
     - name: MSBuild of solution
-      working-directory: PlantUmlViewer\
+      working-directory: PlantUmlViewer/
       run: msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
 
     - uses: olegtarasov/get-tag@v2.1
@@ -44,23 +44,23 @@ jobs:
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v2
       with:
-          name: build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+          name: build/PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
           path: |
-              PlantUmlViewer\PlantUmlViewer\bin\${{ matrix.build_configuration }}-${{ matrix.build_platform }}\PlantUmlViewer.dll
-              build\plantuml-1.2022.5.jar
+              PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
+              build/plantuml-1.2022.5.jar
 
     - name: Generate checksum
       if: matrix.build_configuration == 'Release'
       uses: jmgilman/actions-generate-checksum@v1
       with:
           method: sha256
-          output: build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
-          patterns: build\*.zip
+          output: build/PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
+          patterns: build/*.zip
 
     - name: Create release on tagging
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
           files: |
-              build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
-              build\PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
+              build/PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+              build/PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
