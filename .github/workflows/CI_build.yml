@@ -49,19 +49,9 @@ jobs:
               PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
               build/plantuml-1.2022.5.jar
 
-    - name: Generate checksum
-      if: matrix.build_configuration == 'Release'
-      uses: jmgilman/actions-generate-checksum@v1
-      with:
-          method: sha256
-          output: PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
-          patterns: |
-              *.zip
-
     - name: Create release on tagging
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
           files: |
               PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
-              PlantUmlViewer_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.sha256
