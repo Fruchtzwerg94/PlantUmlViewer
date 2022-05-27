@@ -1,5 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
 - Added support for dark interfaces
+- Implemented calcellation of an ongoing generation
+- Improved error message if Java was not found
 - Extended icon to highlight itself and close preview if opened
 - Added menu entry and shortcut Shift + U to refresh diagram
 - Renamed settings to options

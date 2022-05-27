@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 using Kbg.NppPluginNET.PluginInfrastructure;
 
 using PlantUml.Net;
+using PlantUml.Net.Java;
 
 using PlantUmlViewer.Windows;
 using PlantUmlViewer.Properties;
@@ -24,6 +26,8 @@ namespace PlantUmlViewer.Forms
 
         private Color colorSuccess;
         private Color colorFailure;
+
+        private CancellationTokenSource refreshCancellationTokenSource;
 
         public event EventHandler<EventArgs> DockablePanelClose;
 
@@ -62,11 +66,18 @@ namespace PlantUmlViewer.Forms
 
         public async void Button_Refresh_Click(object sender, EventArgs e)
         {
+            //Cancel if already running
+            if (refreshCancellationTokenSource != null)
+            {
+                refreshCancellationTokenSource.Cancel();
+                return;
+            }
+
             try
             {
                 toolStripProgressBar_Refreshing.Style = ProgressBarStyle.Marquee;
                 toolStripProgressBar_Refreshing.MarqueeAnimationSpeed = 30;
-                tableLayoutPanel_Window.Enabled = false;
+                button_Refresh.Text = "Cancel";
 
                 RendererFactory factory = new RendererFactory();
                 IPlantUmlRenderer renderer = factory.CreateRenderer(new PlantUmlSettings()
@@ -83,7 +94,9 @@ namespace PlantUmlViewer.Forms
                 }
                 else
                 {
-                    byte[] bytes = await Task.Run(() => renderer.Render(text, OutputFormat.Png)).ConfigureAwait(true);
+                    refreshCancellationTokenSource = new CancellationTokenSource();
+                    byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Png,
+                        refreshCancellationTokenSource.Token).ConfigureAwait(true);
                     using (MemoryStream ms = new MemoryStream())
                     {
                         ms.Write(bytes, 0, bytes.Length);
@@ -94,19 +107,25 @@ namespace PlantUmlViewer.Forms
                 toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
                 toolStripStatusLabel_Time.BackColor = colorSuccess;
             }
+            catch (JavaNotFoundException jnfEx)
+            {
+                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                MessageBox.Show($"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
+                    "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             catch (TaskCanceledException)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
+                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
                 MessageBox.Show("Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (RenderingException rEx)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
+                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
                 MessageBox.Show(rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
+                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
                 MessageBox.Show(ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -115,7 +134,8 @@ namespace PlantUmlViewer.Forms
                 {
                     toolStripProgressBar_Refreshing.Style = ProgressBarStyle.Continuous;
                     toolStripProgressBar_Refreshing.MarqueeAnimationSpeed = 0;
-                    tableLayoutPanel_Window.Enabled = true;
+                    button_Refresh.Text = "Refresh";
+                    refreshCancellationTokenSource = null;
                 });
             }
         }
