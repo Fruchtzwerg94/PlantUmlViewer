@@ -42,7 +42,7 @@ jobs:
 
     - name: Archive artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
 #          name: PlantUmlViewer_v${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
           name: PlantUmlViewer_${{ matrix.build_platform }}
