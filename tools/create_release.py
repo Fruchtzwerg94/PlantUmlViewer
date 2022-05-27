@@ -44,7 +44,7 @@ def create_plugin_list_entry(version, architecture, hash):
 def main():
     input('Press any key to confirm builds were done for x86 and x64 and the PlantUML binary was added to the build directory')
     script_directory = pathlib.Path(__file__).parent.resolve()
-    x86_build_directory = os.path.join(script_directory, '..', 'PlantUmlViewer', 'PlantUmlViewer', 'bin', 'Release')
+    x86_build_directory = os.path.join(script_directory, '..', 'PlantUmlViewer', 'PlantUmlViewer', 'bin', 'Release-x86')
     x64_build_directory = os.path.join(script_directory, '..', 'PlantUmlViewer', 'PlantUmlViewer', 'bin', 'Release-x64')
     if not os.path.isdir(x86_build_directory):
         print('x86 build directory does not exist: ' + x86_build_directory)
