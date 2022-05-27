@@ -104,8 +104,11 @@ namespace PlantUmlViewer.Forms
                     }
                 }
 
-                toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
-                toolStripStatusLabel_Time.BackColor = colorSuccess;
+                InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
+                    toolStripStatusLabel_Time.BackColor = colorSuccess;
+                });
             }
             catch (JavaNotFoundException jnfEx)
             {

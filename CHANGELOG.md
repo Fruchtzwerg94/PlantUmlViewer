@@ -1,6 +1,6 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.1.0.4 (27.05.2022)
 - Added support for dark interfaces
-- Implemented calcellation of an ongoing generation
+- Implemented cancellation of an ongoing generation
 - Improved error message if Java was not found
 - Extended icon to highlight itself and close preview if opened
 - Added menu entry and shortcut Shift + U to refresh diagram

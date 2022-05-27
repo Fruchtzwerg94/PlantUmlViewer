@@ -1,6 +1,6 @@
 # PlantUML Viewer
 [![License](https://img.shields.io/github/license/Fruchtzwerg94/PlantUmlViewer.svg)](https://github.com/nea/MarkdownViewerPlusPlus/blob/master/LICENSE.md)
-[![Latest release](https://img.shields.io/badge/release-1.0.2-green.svg)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases/tag/1.0.2.3)
+[![Latest release](https://img.shields.io/github/v/tag/Fruchtzwerg94/PlantUmlViewer?color=green)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases)
 [![Downloads](https://img.shields.io/github/downloads/Fruchtzwerg94/PlantUmlViewer/total)](https://tooomm.github.io/github-release-stats/?username=Fruchtzwerg94&repository=PlantUmlViewer)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/insanitydesign)
 
@@ -35,10 +35,14 @@ PlantUML Viewer can be opened
 * via the *Plugins* submenu
 
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
+![PlantUML Viewer](doc/PlantUmlViewerDark.png)
 
 By clicking the *Refresh* button the diagram gets generated out of the current opened document. The file extension doesn't matter. The diagram can be moved by dragging and zoomed by scrolling. The currently showed diagram can be exported as PNG image by clicking the *Export* button.
 
 Make sure *JAVA_PATH* is set in your system or set the right path to your Java installation in the plugins options.
+
+![PlantUML Viewer](doc/Menu.png)
+![PlantUML Viewer](doc/Options.png)
 
 You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
 
