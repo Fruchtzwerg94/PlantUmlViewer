@@ -72,7 +72,7 @@ namespace PlantUmlViewer
             settings = new Settings();
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
-            PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh, new ShortcutKey(false, false, true, Keys.U));
+            PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh);
             PluginBase.SetCommand((int)CommandId.Separator1, "---", null);
             PluginBase.SetCommand((int)CommandId.ShowOptions, "Options", ShowOptions);
             PluginBase.SetCommand((int)CommandId.ShowAbout, "About", ShowAbout);

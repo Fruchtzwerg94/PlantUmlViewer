@@ -1,3 +1,6 @@
+# 1.1.1.5 (27.05.2022)
+- Removed shortcut Shift + U
+
 # 1.1.0.4 (27.05.2022)
 - Added support for dark interfaces
 - Implemented cancellation of an ongoing generation
