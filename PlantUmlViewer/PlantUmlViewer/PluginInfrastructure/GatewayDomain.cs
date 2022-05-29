@@ -1,7 +1,6 @@
 ﻿// NPP plugin platform for .Net v0.94.00 by Kasper B. Graversen etc.
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Kbg.NppPluginNET.PluginInfrastructure
 {
@@ -189,9 +188,9 @@ namespace Kbg.NppPluginNET.PluginInfrastructure
     [StructLayout(LayoutKind.Sequential)]
     public struct CharacterRange
     {
-        public CharacterRange(int cpmin, int cpmax) { cpMin = cpmin; cpMax = cpmax; }
-        public int cpMin;
-        public int cpMax;
+        public CharacterRange(int cpmin, int cpmax) { cpMin = new IntPtr(cpmin); cpMax = new IntPtr(cpmax); }
+        public IntPtr cpMin;
+        public IntPtr cpMax;
     }
 
     public class Cells
@@ -218,8 +217,8 @@ namespace Kbg.NppPluginNET.PluginInfrastructure
         }
         public TextRange(int cpmin, int cpmax, int stringCapacity)
         {
-            _sciTextRange.chrg.cpMin = cpmin;
-            _sciTextRange.chrg.cpMax = cpmax;
+            _sciTextRange.chrg.cpMin = new IntPtr(cpmin);
+            _sciTextRange.chrg.cpMax = new IntPtr(cpmax);
             _sciTextRange.lpstrText = Marshal.AllocHGlobal(stringCapacity);
         }
 

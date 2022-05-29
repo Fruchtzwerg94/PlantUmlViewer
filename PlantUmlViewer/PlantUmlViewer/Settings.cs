@@ -13,11 +13,9 @@ namespace PlantUmlViewer
 
         private readonly Dictionary<string, string> settingsBuffer = new Dictionary<string, string>();
 
-        public Settings()
+        public Settings(INotepadPPGateway notepadPp)
         {
-            StringBuilder sb = new StringBuilder(Win32.MAX_PATH);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sb);
-            iniFilePath = sb.ToString();
+            iniFilePath = notepadPp.GetPluginConfigPath();
             if (!Directory.Exists(iniFilePath))
             {
                 Directory.CreateDirectory(iniFilePath);

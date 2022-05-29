@@ -69,7 +69,7 @@ namespace PlantUmlViewer
         {
             notepadPp = new NotepadPPGateway();
             editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
-            settings = new Settings();
+            settings = new Settings(notepadPp);
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
             PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh);
@@ -80,15 +80,7 @@ namespace PlantUmlViewer
 
         public void SetToolBarIcon()
         {
-            toolbarIcons tbIcons = new toolbarIcons
-            {
-                hToolbarBmp = Properties.Resources.Icon.GetHbitmap()
-            };
-            IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
-            Marshal.StructureToPtr(tbIcons, pTbIcons, false);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_ADDTOOLBARICON,
-                PluginBase._funcItems.Items[(int)CommandId.ShowPreview]._cmdID, pTbIcons);
-            Marshal.FreeHGlobal(pTbIcons);
+            notepadPp.AddToolbarIcon((int)CommandId.ShowPreview, Properties.Resources.Icon);
 
             VisibilityChanged(false);
         }
@@ -105,7 +97,32 @@ namespace PlantUmlViewer
                 previewWindow = new PreviewWindow(
                     Path.Combine(assemblyDirectory, PLANT_UML_BINARY),
                     notepadPp.GetCurrentFilePath,
-                    () => editor.GetText(editor.GetLength() + 1),
+                    () =>
+                    {
+                        //const int GET_TEXT_STEP_SIZE = 10000;
+                        //StringBuilder textBuilder = new StringBuilder();
+                        //int length = editor.GetLength();
+                        //int position = 0;
+                        //int rest = length;
+                        //while (rest > 0)
+                        //{
+                        //    int step = Math.Min(rest, GET_TEXT_STEP_SIZE);
+                        //    using (TextRange textRange = new TextRange(position, position + step, step + 1))
+                        //    {
+                        //        int ret = editor.GetTextRange(textRange);
+                        //        if (ret != step)
+                        //        {
+                        //            throw new Exception("Failed to get text");
+                        //        }
+                        //        textBuilder.Append(textRange.lpstrText.TrimEnd('\0'));
+                        //    }
+                        //    position += step;
+                        //    rest -= step;
+                        //}
+                        //return textBuilder.ToString();
+
+                        return editor.GetText(editor.GetLength() + 1);
+                    },
                     () => settings.GetSetting("JavaPath", ""));
 
                 previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);

@@ -157,6 +157,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\CHANGELOG.md">
+      <Link>CHANGELOG.md</Link>
+    </None>
     <None Include="app.config" />
     <None Include="ILMerge.props" />
     <None Include="packages.config" />
@@ -170,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PluginInfrastructure\Commit.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />

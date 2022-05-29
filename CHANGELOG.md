@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Fixed crash generating large documents with more than 10000 characters
+
 # 1.1.1.5 (27.05.2022)
 - Removed shortcut Shift + U
 
