@@ -2,16 +2,16 @@
 https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net
 
 # Commit URL
-https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/commit/7caa5b8a5d19d90510d76d9de930197c40187260
+https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/commit/2efb1fcadde31311c4504eb2ac1b67525b0019a0
 
 # Commit details
 ```
-Commit: 7caa5b8a5d19d90510d76d9de930197c40187260 [7caa5b8]
-Parents: 3292e9f027, db7aa9efbe
+Commit: 2efb1fcadde31311c4504eb2ac1b67525b0019a0 [2efb1fc]
+Parents: 7caa5b8a5d, fbc710de5b
 Author: Kasper B. Graversen <kbilsted@users.noreply.github.com>
-Date: Samstag, 28. Mai 2022 19:36:26
+Date: Dienstag, 31. Mai 2022 09:46:57
 Committer: GitHub
-Merge pull request #91 from Fruchtzwerg94/use_intptr_for_text_range
+Merge pull request #92 from Fruchtzwerg94/fix_get_current_file_path
 
-Use IntPtr for TextRange to support x86 and x64
+Fixed GetCurrentFilePath due to unexpected return value
 ```

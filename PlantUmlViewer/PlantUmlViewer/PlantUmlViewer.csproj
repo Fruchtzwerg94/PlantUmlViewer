@@ -160,6 +160,9 @@
     <None Include="..\..\CHANGELOG.md">
       <Link>CHANGELOG.md</Link>
     </None>
+    <None Include="..\..\README.md">
+      <Link>README.md</Link>
+    </None>
     <None Include="app.config" />
     <None Include="ILMerge.props" />
     <None Include="packages.config" />
