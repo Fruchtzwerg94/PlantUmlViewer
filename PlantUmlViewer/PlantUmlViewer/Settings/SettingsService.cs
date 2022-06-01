@@ -40,7 +40,6 @@ namespace PlantUmlViewer.Settings
             catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to load settings: {ex}", nameof(SettingsService));
-                throw;
             }
         }
 
@@ -59,7 +58,6 @@ namespace PlantUmlViewer.Settings
             catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to save settings: {ex}", nameof(SettingsService));
-                throw;
             }
         }
     }
