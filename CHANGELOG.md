@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Switched settings file format from *.ini to *.xml
 - Fixed crash generating large documents with more than 10000 characters
 
 # 1.1.1.5 (27.05.2022)

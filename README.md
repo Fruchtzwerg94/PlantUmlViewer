@@ -51,7 +51,7 @@ PlantUML Viewer is released under the [MIT License](LICENSE.md).
 
 This Notepad++ plugin integrates the sources of multiple other libraries, because of issues with the library merging process. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache-2.0 license.
-* The plugin uses the PlantUML .Net wrapper [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
+* The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
 * The plugin release includes the PlantUML binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 

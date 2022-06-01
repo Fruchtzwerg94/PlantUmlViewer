@@ -14,6 +14,7 @@ using PlantUml.Net.Java;
 
 using PlantUmlViewer.Windows;
 using PlantUmlViewer.Properties;
+using PlantUmlViewer.Settings;
 
 namespace PlantUmlViewer.Forms
 {
@@ -22,7 +23,7 @@ namespace PlantUmlViewer.Forms
         private readonly string plantUmlBinary;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
-        private readonly Func<string> getJavaPath;
+        private readonly SettingsService settings;
 
         private Color colorSuccess;
         private Color colorFailure;
@@ -31,12 +32,12 @@ namespace PlantUmlViewer.Forms
 
         public event EventHandler<EventArgs> DockablePanelClose;
 
-        public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, Func<string> getJavaPath)
+        public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
             this.plantUmlBinary = plantUmlBinary;
             this.getFilePath = getFilePath;
             this.getText = getText;
-            this.getJavaPath = getJavaPath;
+            this.settings = settings;
 
             InitializeComponent();
 
@@ -83,7 +84,7 @@ namespace PlantUmlViewer.Forms
                 IPlantUmlRenderer renderer = factory.CreateRenderer(new PlantUmlSettings()
                 {
                     LocalPlantUmlPath = plantUmlBinary,
-                    JavaPath = getJavaPath(),
+                    JavaPath = settings.Settings.JavaPath,
                     RenderingMode = RenderingMode.Local
                 });
 
@@ -108,6 +109,7 @@ namespace PlantUmlViewer.Forms
                 {
                     toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
                     toolStripStatusLabel_Time.BackColor = colorSuccess;
+                    button_Export.Enabled = true;
                 });
             }
             catch (JavaNotFoundException jnfEx)

@@ -61,6 +61,7 @@
             // button_Export
             // 
             this.button_Export.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_Export.Enabled = false;
             this.button_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Export.Location = new System.Drawing.Point(145, 3);
             this.button_Export.Name = "button_Export";

@@ -137,7 +137,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="PluginInfrastructure\UnmanagedExports.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Settings\PlantUmlViewerSettings.cs" />
+    <Compile Include="Settings\SettingsService.cs" />
     <Compile Include="Windows\Messages.cs" />
   </ItemGroup>
   <ItemGroup>

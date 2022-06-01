@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using PlantUmlViewer.Settings;
+
 namespace PlantUmlViewer.Forms
 {
     internal partial class OptionsWindow : Form
     {
-        private readonly Settings settings;
+        private readonly SettingsService settings;
 
-        public OptionsWindow(Settings settings)
+        public OptionsWindow(SettingsService settings)
         {
             this.settings = settings;
 
             InitializeComponent();
 
-            textBox_JavaPath.Text = settings.GetSetting("JavaPath", "");
+            textBox_JavaPath.Text = settings.Settings.JavaPath;
         }
 
         private void Button_Ok_Click(object sender, EventArgs e)
         {
-            settings.SetSetting("JavaPath", textBox_JavaPath.Text);
+            settings.Settings.JavaPath = textBox_JavaPath.Text;
+            settings.Save();
 
             DialogResult = DialogResult.OK;
         }

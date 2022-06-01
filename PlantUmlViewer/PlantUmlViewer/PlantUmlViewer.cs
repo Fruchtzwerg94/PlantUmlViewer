@@ -4,11 +4,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
 
 using PlantUmlViewer.Forms;
+using PlantUmlViewer.Settings;
 
 namespace PlantUmlViewer
 {
@@ -31,7 +31,7 @@ namespace PlantUmlViewer
 
         private INotepadPPGateway notepadPp;
         private IScintillaGateway editor;
-        private Settings settings;
+        private SettingsService settings;
 
         private readonly Icon icon;
         private PreviewWindow previewWindow;
@@ -69,7 +69,7 @@ namespace PlantUmlViewer
         {
             notepadPp = new NotepadPPGateway();
             editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
-            settings = new Settings(notepadPp);
+            settings = new SettingsService(notepadPp);
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
             PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh);
@@ -122,8 +122,7 @@ namespace PlantUmlViewer
                         //return textBuilder.ToString();
 
                         return editor.GetText(editor.GetLength() + 1);
-                    },
-                    () => settings.GetSetting("JavaPath", ""));
+                    }, settings);
 
                 previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);
 
