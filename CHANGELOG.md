@@ -1,6 +1,10 @@
 # X.X.X.X (XX.XX.XXXX)
+- Added export of SVG files
+- Added option to define the export size factor for PNG files
+- Added context menu to copy to clipboard and export diagram
 - Switched settings file format from *.ini to *.xml
 - Fixed crash generating large documents with more than 10000 characters
+- Fixed bottom status bar overlapping the diagrams horizontal scroll bar
 
 # 1.1.1.5 (27.05.2022)
 - Removed shortcut Shift + U

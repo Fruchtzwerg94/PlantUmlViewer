@@ -28,15 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel_Window = new System.Windows.Forms.TableLayoutPanel();
             this.button_Export = new System.Windows.Forms.Button();
             this.button_Refresh = new System.Windows.Forms.Button();
             this.imageBox_Diagram = new Cyotek.Windows.Forms.ImageBox();
+            this.contextMenuStrip_Diagram = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_Diagram_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Diagram_ExportFile = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip_Bottom = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar_Refreshing = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel_Time = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Zoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel_Window.SuspendLayout();
+            this.contextMenuStrip_Diagram.SuspendLayout();
             this.statusStrip_Bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,15 +51,16 @@
             this.tableLayoutPanel_Window.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel_Window.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel_Window.Controls.Add(this.button_Export, 1, 0);
+            this.tableLayoutPanel_Window.Controls.Add(this.statusStrip_Bottom, 0, 2);
             this.tableLayoutPanel_Window.Controls.Add(this.button_Refresh, 0, 0);
             this.tableLayoutPanel_Window.Controls.Add(this.imageBox_Diagram, 0, 1);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
-            this.tableLayoutPanel_Window.RowCount = 2;
+            this.tableLayoutPanel_Window.RowCount = 3;
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.Size = new System.Drawing.Size(284, 262);
             this.tableLayoutPanel_Window.TabIndex = 1;
             // 
@@ -86,16 +92,43 @@
             // imageBox_Diagram
             // 
             this.tableLayoutPanel_Window.SetColumnSpan(this.imageBox_Diagram, 2);
+            this.imageBox_Diagram.ContextMenuStrip = this.contextMenuStrip_Diagram;
             this.imageBox_Diagram.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageBox_Diagram.GridDisplayMode = Cyotek.Windows.Forms.ImageBoxGridDisplayMode.None;
             this.imageBox_Diagram.Location = new System.Drawing.Point(3, 32);
             this.imageBox_Diagram.Name = "imageBox_Diagram";
-            this.imageBox_Diagram.Size = new System.Drawing.Size(278, 227);
+            this.imageBox_Diagram.Size = new System.Drawing.Size(278, 205);
             this.imageBox_Diagram.TabIndex = 3;
             this.imageBox_Diagram.TabStop = false;
             // 
+            // contextMenuStrip_Diagram
+            // 
+            this.contextMenuStrip_Diagram.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_Diagram_CopyToClipboard,
+            this.ToolStripMenuItem_Diagram_ExportFile});
+            this.contextMenuStrip_Diagram.Name = "contextMenuStrip_Diagram";
+            this.contextMenuStrip_Diagram.Size = new System.Drawing.Size(170, 48);
+            // 
+            // ToolStripMenuItem_Diagram_CopyToClipboard
+            // 
+            this.ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = false;
+            this.ToolStripMenuItem_Diagram_CopyToClipboard.Name = "ToolStripMenuItem_Diagram_CopyToClipboard";
+            this.ToolStripMenuItem_Diagram_CopyToClipboard.Size = new System.Drawing.Size(169, 22);
+            this.ToolStripMenuItem_Diagram_CopyToClipboard.Text = "Copy to clipboard";
+            this.ToolStripMenuItem_Diagram_CopyToClipboard.Click += new System.EventHandler(this.ToolStripMenuItem_Diagram_CopyToClipboard_Click);
+            // 
+            // ToolStripMenuItem_Diagram_ExportFile
+            // 
+            this.ToolStripMenuItem_Diagram_ExportFile.Enabled = false;
+            this.ToolStripMenuItem_Diagram_ExportFile.Name = "ToolStripMenuItem_Diagram_ExportFile";
+            this.ToolStripMenuItem_Diagram_ExportFile.Size = new System.Drawing.Size(169, 22);
+            this.ToolStripMenuItem_Diagram_ExportFile.Text = "Export";
+            this.ToolStripMenuItem_Diagram_ExportFile.Click += new System.EventHandler(this.Button_Export_Click);
+            // 
             // statusStrip_Bottom
             // 
+            this.tableLayoutPanel_Window.SetColumnSpan(this.statusStrip_Bottom, 2);
+            this.statusStrip_Bottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusStrip_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar_Refreshing,
             this.toolStripStatusLabel_Time,
@@ -116,7 +149,7 @@
             // 
             this.toolStripStatusLabel_Time.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.toolStripStatusLabel_Time.Name = "toolStripStatusLabel_Time";
-            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(101, 16);
+            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(132, 16);
             this.toolStripStatusLabel_Time.Spring = true;
             // 
             // toolStripStatusLabel_Zoom
@@ -130,15 +163,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.statusStrip_Bottom);
             this.Controls.Add(this.tableLayoutPanel_Window);
             this.Name = "PreviewWindow";
             this.Text = "PlantUML";
             this.tableLayoutPanel_Window.ResumeLayout(false);
+            this.tableLayoutPanel_Window.PerformLayout();
+            this.contextMenuStrip_Diagram.ResumeLayout(false);
             this.statusStrip_Bottom.ResumeLayout(false);
             this.statusStrip_Bottom.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -152,5 +185,8 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_Refreshing;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Zoom;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Time;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_Diagram;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_CopyToClipboard;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_ExportFile;
     }
 }

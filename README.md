@@ -4,13 +4,13 @@
 [![Downloads](https://img.shields.io/github/downloads/Fruchtzwerg94/PlantUmlViewer/total)](https://tooomm.github.io/github-release-stats/?username=Fruchtzwerg94&repository=PlantUmlViewer)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/insanitydesign)
 
-A [Notepad++](https://notepad-plus-plus.org/) plugin to generate view and export [PlantUML](https://plantuml.com/) diagrams.
+A [Notepad++](https://notepad-plus-plus.org/) plugin to generate, view and export [PlantUML](https://plantuml.com/) diagrams.
 
 ## Features
 * Official and full PlantUML syntax
 * Dockable panel to show the generated PlantUML diagrams
 * Zoomable diagrams
-* PNG export of diagrams
+* Export of diagrams as PNG or SVG
 * Dark mode support
 
 ## Latest changes
@@ -49,9 +49,11 @@ You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](ht
 ## License and credits
 PlantUML Viewer is released under the [MIT License](LICENSE.md).
 
-This Notepad++ plugin integrates the sources of multiple other libraries, because of issues with the library merging process. Credits and thanks to all the developers working on these great projects:
+This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache-2.0 license.
 * The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
+* The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License, which depends on
+    * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU LESSER GENERAL PUBLIC LICENSE.
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
 * The plugin release includes the PlantUML binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 

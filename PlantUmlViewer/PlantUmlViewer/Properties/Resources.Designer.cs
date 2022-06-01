@@ -61,14 +61,14 @@ namespace PlantUmlViewer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1031{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1031{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fswiss\fprq2\fcharset0 Calibri;}{\f2\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs24\lang7 License and credits\par
         ///
         ///\pard\sa200\sl240\slmult1\b0\fs22 PlantUML Viewer is released under the MIT License.\par
         ///
-        ///\pard\sl240\slmult1 This Notepad++ plugin integrates the sources of multiple other libraries, because of issues with the library merging proces [rest of string was truncated]&quot;;.
+        ///\pard\sl240\slmult1 This Notepad++ plugin integrates the sources of multiple other libraries, because of i [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AboutText {
             get {
@@ -77,12 +77,12 @@ namespace PlantUmlViewer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Empty {
+        internal static byte[] Empty {
             get {
                 object obj = ResourceManager.GetObject("Empty", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         

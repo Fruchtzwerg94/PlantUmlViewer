@@ -12,6 +12,8 @@ using Kbg.NppPluginNET.PluginInfrastructure;
 using PlantUml.Net;
 using PlantUml.Net.Java;
 
+using Svg;
+
 using PlantUmlViewer.Windows;
 using PlantUmlViewer.Properties;
 using PlantUmlViewer.Settings;
@@ -28,6 +30,7 @@ namespace PlantUmlViewer.Forms
         private Color colorSuccess;
         private Color colorFailure;
 
+        private SvgDocument svgImage;
         private CancellationTokenSource refreshCancellationTokenSource;
 
         public event EventHandler<EventArgs> DockablePanelClose;
@@ -91,25 +94,30 @@ namespace PlantUmlViewer.Forms
                 string text = getText();
                 if (string.IsNullOrWhiteSpace(text))
                 {
-                    imageBox_Diagram.Image = Resources.Empty;
+                    using (MemoryStream stream = new MemoryStream(Resources.Empty))
+                    {
+                        svgImage = SvgDocument.Open<SvgDocument>(stream);
+                    }
                 }
                 else
                 {
                     refreshCancellationTokenSource = new CancellationTokenSource();
-                    byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Png,
+                    byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Svg,
                         refreshCancellationTokenSource.Token).ConfigureAwait(true);
-                    using (MemoryStream ms = new MemoryStream())
+                    using (MemoryStream ms = new MemoryStream(bytes))
                     {
-                        ms.Write(bytes, 0, bytes.Length);
-                        imageBox_Diagram.Image = Image.FromStream(ms);
+                        svgImage = SvgDocument.Open<SvgDocument>(ms);
                     }
                 }
 
                 InvokeIfRequired(() =>
                 {
+                    imageBox_Diagram.Image = GetDiagramImage(1);
                     toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
                     toolStripStatusLabel_Time.BackColor = colorSuccess;
                     button_Export.Enabled = true;
+                    ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
+                    ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
                 });
             }
             catch (JavaNotFoundException jnfEx)
@@ -151,14 +159,24 @@ namespace PlantUmlViewer.Forms
             {
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog()
                 {
-                    Filter = "PNG file | *.png",
+                    Filter = "PNG file|*.png|SVG file|*.svg",
                     FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}.png",
                     InitialDirectory = Path.GetDirectoryName(getFilePath())
                 })
                 {
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        imageBox_Diagram.Image.Save(saveFileDialog.FileName);
+                        switch (Path.GetExtension(saveFileDialog.FileName))
+                        {
+                            case ".png":
+                                GetDiagramImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
+                                break;
+                            case ".svg":
+                                svgImage.Write(saveFileDialog.FileName);
+                                break;
+                            default:
+                                throw new Exception("Invalid file extension");
+                        }
                     }
                 }
             }
@@ -166,6 +184,40 @@ namespace PlantUmlViewer.Forms
             {
                 MessageBox.Show(ex.ToString(), "Failed to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(GetDiagramImage(settings.Settings.ExportSizeFactor));
+        }
+
+        private Image GetDiagramImage(decimal exportSizeFactor)
+        {
+            //Resize (See: https://github.com/svg-net/SVG/blob/master/Source/SvgDocument.Drawing.cs#L217)
+            SizeF svgSize = svgImage.GetDimensions();
+            SizeF imageSize = svgSize;
+            svgImage.RasterizeDimensions(ref imageSize,
+                (int)Math.Round((decimal)svgSize.Width * exportSizeFactor), (int)Math.Round((decimal)svgSize.Height * exportSizeFactor));
+            Size bitmapSize = Size.Round(imageSize);
+            Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
+
+            //Set background if defined in SVG
+            if (svgImage.TryGetAttribute("background", out string backgroundAttribute))
+            {
+                using (Graphics g = Graphics.FromImage(image))
+                using (SolidBrush brush = new SolidBrush(ColorTranslator.FromHtml(backgroundAttribute)))
+                {
+                    g.FillRectangle(brush, 0, 0, image.Width, image.Height);
+                }
+            }
+
+            //Render
+            using (var renderer = SvgRenderer.FromImage(image))
+            {
+                renderer.ScaleTransform(imageSize.Width / svgSize.Width, imageSize.Height / svgSize.Height);
+                svgImage.Draw(renderer);
+            }
+            return image;
         }
 
         private void InvokeIfRequired(Action action)
