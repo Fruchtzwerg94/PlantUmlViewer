@@ -12,6 +12,9 @@ jobs:
         build_platform: [x64, x86]
 
     steps:
+    - run: curl https://download.visualstudio.microsoft.com/download/pr/ea744c52-1db4-4173-943d-a5d18e7e0d97/105c0e17be525bb0cebc7795d7aa1c32/ndp462-devpack-kb3151934-enu.exe --output ndp462-devpack-kb3151934-enu.exe
+    - run: ndp462-devpack-kb3151934-enu.exe -install -quiet -norestart
+
     - name: Checkout repo
       uses: actions/checkout@v3
 

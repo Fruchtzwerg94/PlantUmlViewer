@@ -18,12 +18,11 @@
             - https://stackoverflow.com/questions/66282361/ilasm-problem-when-dealing-with-double-nan-and-inf
             - https://gitlab.com/OpenTAP/opentap/-/issues/344
             - http://unicode.org/L2/L2002/02039-J1N6646-cli-5.pdf
-        Fix: Either use Visual Studio 2017 to build the project or set a specific path for the corresponding tools.
+        Fix: Either use Visual Studio 2017 to build the project or set a specific path for the corresponding tools: .NET Framework Developer pack 4.6.1 or 4.6.2
     -->
     <PropertyGroup>
       <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.6.1 Tools')">$(SDK40ToolsPath)..\NETFX 4.6.1 Tools</SpecificSDK40ToolsPath>
       <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.6.2 Tools')">$(SDK40ToolsPath)..\NETFX 4.6.2 Tools</SpecificSDK40ToolsPath>
-      <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.7.2 Tools')">$(SDK40ToolsPath)..\NETFX 4.7.2 Tools</SpecificSDK40ToolsPath>
     </PropertyGroup>
     <Error Condition="!Exists('$(SpecificSDK40ToolsPath)')" Text="Specific required SDK40ToolsPath not available"/>
     <Message Text="Using specific SDK40ToolsPath: $(SpecificSDK40ToolsPath)" Importance="high"/>
