@@ -10,6 +10,23 @@
 			If you don't have the C++ toolchain installed this is missing, but then you can't' debug C++ anyway -->
         <LibToolPath Condition="Exists('$(DevEnvDir)\..\..\VC\bin')">$(DevEnvDir)\..\..\VC\bin</LibToolPath>
     </PropertyGroup>
+
+    <!-- 
+        Due to a assembly bug / change for SDK tools included with Visual Studio versions >= 2019 it is not possible to export merged assembly in some cases.
+        Errors like 'error : syntax error at token '-' in:     IL_0210:  ldc.r4     -nan(ind)' are occuring.
+        Further reading:
+            - https://stackoverflow.com/questions/66282361/ilasm-problem-when-dealing-with-double-nan-and-inf
+            - https://gitlab.com/OpenTAP/opentap/-/issues/344
+            - http://unicode.org/L2/L2002/02039-J1N6646-cli-5.pdf
+        Fix: Either use Visual Studio 2017 to build the project or set a specific path for the corresponding tools:
+    -->
+    <PropertyGroup>
+      <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.6.1 Tools')">$(SDK40ToolsPath)..\NETFX 4.6.1 Tools</SpecificSDK40ToolsPath>
+      <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.6.2 Tools')">$(SDK40ToolsPath)..\NETFX 4.6.2 Tools</SpecificSDK40ToolsPath>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SpecificSDK40ToolsPath)')" Text="Specific required SDK40ToolsPath not available"/>
+    <Message Text="Using specific SDK40ToolsPath: $(SpecificSDK40ToolsPath)" Importance="high"/>
+
     <DllExportTask Platform="$(Platform)"
                    PlatformTarget="$(PlatformTarget)"
                    CpuType="$(CpuType)"

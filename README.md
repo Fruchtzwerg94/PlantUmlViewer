@@ -44,18 +44,22 @@ Make sure *JAVA_PATH* is set in your system or set the right path to your Java i
 ![PlantUML Viewer](doc/Menu.png)
 ![PlantUML Viewer](doc/Options.png)
 
-You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
+### Usability hints
+* You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
+* Using the *Shortcut Mapper*, which is accessible via the *Settings* submenu of Notepad++, you can define a shortcut to generate the diagrams.
+
 
 ## License and credits
-PlantUML Viewer is released under the [MIT License](LICENSE.md).
+PlantUML Viewer is released under the [MIT License](LICENSE).
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache-2.0 license.
 * The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
 * The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License, which depends on
-    * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU LESSER GENERAL PUBLIC LICENSE.
+    * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU Lesser General Public License.
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
-* The plugin release includes the PlantUML binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
+* The plugin is packed using [ILMerge](https://github.com/dotnet/ILMerge) provided under the MIT License.
+* The plugin release includes the binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 
 ## Feedback, issues and contribution
 Resonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!

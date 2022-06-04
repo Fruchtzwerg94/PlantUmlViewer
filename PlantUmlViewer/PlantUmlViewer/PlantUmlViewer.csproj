@@ -193,6 +193,7 @@
     <Resource Include="ILMergeOrder.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
     <None Include="Resources\AboutText.rtf" />
     <None Include="Resources\Icon.png" />
   </ItemGroup>
@@ -201,6 +202,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Empty.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PluginInfrastructure\DllExport\Mono.Cecil.dll" />
+    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.dll" />
+    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.MSBuild.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
