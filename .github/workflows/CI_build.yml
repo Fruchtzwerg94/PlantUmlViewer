@@ -12,6 +12,8 @@ jobs:
         build_platform: [x64, x86]
 
     steps:
+    - run: choco install netfx-4.6.2-devpack
+
     - name: Checkout repo
       uses: actions/checkout@v3
 
