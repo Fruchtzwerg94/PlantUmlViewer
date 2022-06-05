@@ -18,7 +18,11 @@
             - https://stackoverflow.com/questions/66282361/ilasm-problem-when-dealing-with-double-nan-and-inf
             - https://gitlab.com/OpenTAP/opentap/-/issues/344
             - http://unicode.org/L2/L2002/02039-J1N6646-cli-5.pdf
-        Fix: Either use Visual Studio 2017 to build the project or set a specific path for the corresponding tools: .NET Framework Developer pack 4.6.1 or 4.6.2
+        Fix:
+            Either use Visual Studio 2017 to build the project or set a specific path for the corresponding tools: .NET Framework Developer pack 4.6.1 or 4.6.2
+            which can be
+            - downloaded at https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-developer-pack-offline-installer or
+            - installed with Chocolatey 'choco install netfx-4.6.2-devpack'.
     -->
     <PropertyGroup>
       <SpecificSDK40ToolsPath Condition="Exists('$(SDK40ToolsPath)..\NETFX 4.6.1 Tools')">$(SDK40ToolsPath)..\NETFX 4.6.1 Tools</SpecificSDK40ToolsPath>
@@ -41,8 +45,8 @@
                    FrameworkPath="$(TargetedFrameworkDir);$(TargetFrameworkDirectory)"
                    LibToolPath="$(LibToolPath)"
                    LibToolDllPath="$(DevEnvDir)"
-                   SdkPath="$(SDK40ToolsPath)"/>
- 
+                   SdkPath="$(SpecificSDK40ToolsPath)"/>
+
 	<!-- $(MSBuildProgramFiles32) points to the 32 bit program files dir.
 		On 32 bit windows usually C:\Program Files\
 		On 64 bit windows usually C:\Program Files (x86)\
