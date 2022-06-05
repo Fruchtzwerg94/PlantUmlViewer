@@ -1,8 +1,9 @@
 # PlantUML Viewer
-[![License](https://img.shields.io/github/license/Fruchtzwerg94/PlantUmlViewer.svg)](https://github.com/nea/MarkdownViewerPlusPlus/blob/master/LICENSE.md)
-[![Latest release](https://img.shields.io/github/v/tag/Fruchtzwerg94/PlantUmlViewer?color=green)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases)
+[![License](https://img.shields.io/github/license/Fruchtzwerg94/PlantUmlViewer)](LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/Fruchtzwerg94/PlantUmlViewer/total)](https://tooomm.github.io/github-release-stats/?username=Fruchtzwerg94&repository=PlantUmlViewer)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/insanitydesign)
+[![Release](https://img.shields.io/github/v/release/Fruchtzwerg94/PlantUmlViewer)](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases)
+[![Build status](https://github.com/Fruchtzwerg94/PlantUmlViewer/actions/workflows/CI_build.yml/badge.svg?branch=master)](https://github.com/Fruchtzwerg94/PlantUmlViewer/actions/workflows/CI_build.yml)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/insanitydesign)
 
 A [Notepad++](https://notepad-plus-plus.org/) plugin to generate, view and export [PlantUML](https://plantuml.com/) diagrams.
 
