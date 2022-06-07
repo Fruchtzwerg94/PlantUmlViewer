@@ -2,6 +2,7 @@
 - Added export of SVG files
 - Added option to define the export size factor for PNG files
 - Added context menu to copy to clipboard and export diagram
+- Added corresponding line at error message if diagram generation fails due to a syntax error
 - Switched settings file format from *.ini to *.xml
 - Fixed crash generating large documents with more than 10000 characters
 - Fixed bottom status bar overlapping the diagrams horizontal scroll bar

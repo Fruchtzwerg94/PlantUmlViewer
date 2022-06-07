@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
 
@@ -77,6 +78,7 @@ namespace PlantUmlViewer.Forms
                 return;
             }
 
+            string text = "";
             try
             {
                 toolStripProgressBar_Refreshing.Style = ProgressBarStyle.Marquee;
@@ -91,7 +93,7 @@ namespace PlantUmlViewer.Forms
                     RenderingMode = RenderingMode.Local
                 });
 
-                string text = getText();
+                text = getText();
                 if (string.IsNullOrWhiteSpace(text))
                 {
                     using (MemoryStream stream = new MemoryStream(Resources.Empty))
@@ -134,7 +136,24 @@ namespace PlantUmlViewer.Forms
             catch (RenderingException rEx)
             {
                 InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
-                MessageBox.Show(rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                //Try to get the line of a syntax error
+                Match m = Regex.Match(rEx.Message, @"^ERROR\r\n(\d+)\r\nSyntax Error\?\r\nSome diagram description contains errors\r\n$");
+                string errorMessage = rEx.Message;
+                if (m.Success)
+                {
+                    int line = Convert.ToInt32(m.Groups[1].Value);
+                    string syntaxErrorLineText = ReadLine(text, line);
+                    if (!string.IsNullOrWhiteSpace(syntaxErrorLineText))
+                    {
+                        if (syntaxErrorLineText.Length > 150)
+                        {
+                            syntaxErrorLineText = syntaxErrorLineText.Substring(0, 150) + " ...";
+                        }
+                        errorMessage += $"{Environment.NewLine}{Environment.NewLine}This may is caused by line {line}:{Environment.NewLine}{syntaxErrorLineText}";
+                    }
+                }
+                MessageBox.Show(errorMessage, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
@@ -265,6 +284,22 @@ namespace PlantUmlViewer.Forms
             button_Export.ForeColor = buttonForeColor;
             button_Refresh.BackColor = buttonBackColor;
             button_Refresh.ForeColor = buttonForeColor;
+        }
+
+        private static string ReadLine(string text, int lineNumber)
+        {
+            var reader = new StringReader(text);
+
+            string line;
+            int currentLineNumber = 0;
+            do
+            {
+                currentLineNumber++;
+                line = reader.ReadLine();
+            }
+            while (line != null && currentLineNumber < lineNumber);
+
+            return (currentLineNumber == lineNumber) ? line : "";
         }
     }
 }
