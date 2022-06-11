@@ -38,7 +38,9 @@ PlantUML Viewer can be opened
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
 ![PlantUML Viewer](doc/PlantUmlViewerDark.png)
 
-By clicking the *Refresh* button the diagram gets generated out of the current opened document. The file extension doesn't matter. The diagram can be moved by dragging and zoomed by scrolling. The currently showed diagram can be exported as PNG image by clicking the *Export* button.
+By clicking the *Refresh* button the diagram gets generated out of the current opened document. The file extension doesn't matter.
+The diagram can be moved by dragging and zoomed by scrolling.
+The currently showed diagram can be exported or copied to clipboard as PNG or SVG image by clicking the *Export* button or using the right click context menu.
 
 Make sure *JAVA_PATH* is set in your system or set the right path to your Java installation in the plugins options.
 
