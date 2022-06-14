@@ -31,18 +31,18 @@
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel_Window = new System.Windows.Forms.TableLayoutPanel();
             this.button_Export = new System.Windows.Forms.Button();
+            this.statusStrip_Bottom = new System.Windows.Forms.StatusStrip();
+            this.loadingCircleToolStripMenuItem_Refreshing = new MRG.Controls.UI.LoadingCircleToolStripMenuItem();
+            this.toolStripStatusLabel_Time = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_Zoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.button_Refresh = new System.Windows.Forms.Button();
             this.imageBox_Diagram = new Cyotek.Windows.Forms.ImageBox();
             this.contextMenuStrip_Diagram = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_Diagram_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Diagram_ExportFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip_Bottom = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar_Refreshing = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripStatusLabel_Time = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_Zoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel_Window.SuspendLayout();
-            this.contextMenuStrip_Diagram.SuspendLayout();
             this.statusStrip_Bottom.SuspendLayout();
+            this.contextMenuStrip_Diagram.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel_Window
@@ -76,6 +76,56 @@
             this.button_Export.Text = "Export";
             this.button_Export.UseVisualStyleBackColor = true;
             this.button_Export.Click += new System.EventHandler(this.Button_Export_Click);
+            // 
+            // statusStrip_Bottom
+            // 
+            this.tableLayoutPanel_Window.SetColumnSpan(this.statusStrip_Bottom, 2);
+            this.statusStrip_Bottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusStrip_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadingCircleToolStripMenuItem_Refreshing,
+            this.toolStripStatusLabel_Time,
+            this.toolStripStatusLabel_Zoom});
+            this.statusStrip_Bottom.Location = new System.Drawing.Point(0, 240);
+            this.statusStrip_Bottom.Name = "statusStrip_Bottom";
+            this.statusStrip_Bottom.Size = new System.Drawing.Size(284, 22);
+            this.statusStrip_Bottom.TabIndex = 2;
+            // 
+            // loadingCircleToolStripMenuItem_Refreshing
+            // 
+            // 
+            // loadingCircleToolStripMenuItem_Refreshing
+            // 
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.AccessibleName = "loadingCircleToolStripMenuItem_Refreshing";
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = System.Drawing.Color.DarkGray;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.InnerCircleRadius = 6;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Location = new System.Drawing.Point(1, 2);
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Name = "loadingCircleToolStripMenuItem_Refreshing";
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.NumberSpoke = 9;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.OuterCircleRadius = 7;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.RotationSpeed = 100;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Size = new System.Drawing.Size(22, 20);
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.SpokeThickness = 4;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.StylePreset = MRG.Controls.UI.LoadingCircle.StylePresets.Firefox;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.TabIndex = 1;
+            this.loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Text = "Refreshing";
+            this.loadingCircleToolStripMenuItem_Refreshing.Name = "loadingCircleToolStripMenuItem_Refreshing";
+            this.loadingCircleToolStripMenuItem_Refreshing.Size = new System.Drawing.Size(22, 20);
+            this.loadingCircleToolStripMenuItem_Refreshing.Text = "Refreshing";
+            this.loadingCircleToolStripMenuItem_Refreshing.Visible = false;
+            // 
+            // toolStripStatusLabel_Time
+            // 
+            this.toolStripStatusLabel_Time.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.toolStripStatusLabel_Time.Name = "toolStripStatusLabel_Time";
+            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(181, 16);
+            this.toolStripStatusLabel_Time.Spring = true;
+            // 
+            // toolStripStatusLabel_Zoom
+            // 
+            this.toolStripStatusLabel_Zoom.Name = "toolStripStatusLabel_Zoom";
+            this.toolStripStatusLabel_Zoom.Size = new System.Drawing.Size(35, 17);
+            this.toolStripStatusLabel_Zoom.Text = "100%";
             // 
             // button_Refresh
             // 
@@ -125,39 +175,6 @@
             this.ToolStripMenuItem_Diagram_ExportFile.Text = "Export";
             this.ToolStripMenuItem_Diagram_ExportFile.Click += new System.EventHandler(this.Button_Export_Click);
             // 
-            // statusStrip_Bottom
-            // 
-            this.tableLayoutPanel_Window.SetColumnSpan(this.statusStrip_Bottom, 2);
-            this.statusStrip_Bottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusStrip_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar_Refreshing,
-            this.toolStripStatusLabel_Time,
-            this.toolStripStatusLabel_Zoom});
-            this.statusStrip_Bottom.Location = new System.Drawing.Point(0, 240);
-            this.statusStrip_Bottom.Name = "statusStrip_Bottom";
-            this.statusStrip_Bottom.Size = new System.Drawing.Size(284, 22);
-            this.statusStrip_Bottom.TabIndex = 2;
-            // 
-            // toolStripProgressBar_Refreshing
-            // 
-            this.toolStripProgressBar_Refreshing.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStripProgressBar_Refreshing.Name = "toolStripProgressBar_Refreshing";
-            this.toolStripProgressBar_Refreshing.Size = new System.Drawing.Size(100, 16);
-            this.toolStripProgressBar_Refreshing.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            // 
-            // toolStripStatusLabel_Time
-            // 
-            this.toolStripStatusLabel_Time.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.toolStripStatusLabel_Time.Name = "toolStripStatusLabel_Time";
-            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(132, 16);
-            this.toolStripStatusLabel_Time.Spring = true;
-            // 
-            // toolStripStatusLabel_Zoom
-            // 
-            this.toolStripStatusLabel_Zoom.Name = "toolStripStatusLabel_Zoom";
-            this.toolStripStatusLabel_Zoom.Size = new System.Drawing.Size(35, 17);
-            this.toolStripStatusLabel_Zoom.Text = "100%";
-            // 
             // PreviewWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,9 +185,9 @@
             this.Text = "PlantUML";
             this.tableLayoutPanel_Window.ResumeLayout(false);
             this.tableLayoutPanel_Window.PerformLayout();
-            this.contextMenuStrip_Diagram.ResumeLayout(false);
             this.statusStrip_Bottom.ResumeLayout(false);
             this.statusStrip_Bottom.PerformLayout();
+            this.contextMenuStrip_Diagram.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -182,11 +199,11 @@
         private Cyotek.Windows.Forms.ImageBox imageBox_Diagram;
         private System.Windows.Forms.Button button_Export;
         private System.Windows.Forms.StatusStrip statusStrip_Bottom;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_Refreshing;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Zoom;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Time;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_Diagram;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_CopyToClipboard;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_ExportFile;
+        private MRG.Controls.UI.LoadingCircleToolStripMenuItem loadingCircleToolStripMenuItem_Refreshing;
     }
 }

@@ -1,3 +1,7 @@
+# X.X.X.X (XX.XX.XXXX)
+- Used loading circle instead of progress bar to show refreshing
+- Added button to check for update in about window
+
 # 1.2.0.6 (11.06.2022)
 - Added export of SVG files
 - Added option to define the export size factor for PNG files

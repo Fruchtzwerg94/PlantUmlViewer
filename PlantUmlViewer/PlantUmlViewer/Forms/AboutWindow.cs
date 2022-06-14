@@ -1,23 +1,18 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows.Forms;
+
+using Newtonsoft.Json.Linq;
 
 namespace PlantUmlViewer.Forms
 {
     internal partial class AboutWindow : Form
     {
-        public AboutWindow()
-        {
-            InitializeComponent();
-            this.Text = PlantUmlViewer.PLUGIN_NAME;
-            this.label_ProductName.Text = AssemblyProduct;
-            this.label_Version.Text = string.Format("Version {0}", AssemblyVersion);
-            this.label_Copyright.Text = AssemblyCopyright;
-            this.richTextBox_Text.SelectedRtf = Properties.Resources.AboutText;
-        }
-
         #region Assembly Attribute Accessors
-
         public string AssemblyTitle
         {
             get
@@ -81,7 +76,28 @@ namespace PlantUmlViewer.Forms
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
-        #endregion
+        #endregion Assembly Attribute Accessors
+
+        public AboutWindow()
+        {
+            InitializeComponent();
+
+            this.Text = PlantUmlViewer.PLUGIN_NAME;
+            this.label_ProductName.Text = AssemblyProduct;
+            this.label_Version.Text = string.Format("Version {0}", AssemblyVersion);
+            this.label_Copyright.Text = AssemblyCopyright;
+            this.richTextBox_Text.SelectedRtf = Properties.Resources.AboutText;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            //Cancel closing if checking for updates ongoing
+            if (loadingCircle_checkForUpdate.Active)
+            {
+                e.Cancel = true;
+            }
+            base.OnClosing(e);
+        }
 
         private void linkLabel_Github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -99,6 +115,53 @@ namespace PlantUmlViewer.Forms
         {
             linkLabel_Donate.LinkVisited = true;
             Process.Start("https://www.paypal.me/schmidtph");
+        }
+
+        private async void button_CheckForUpdate_Click(object sender, EventArgs e)
+        {
+            button_CheckForUpdate.Enabled = false;
+            loadingCircle_checkForUpdate.Active = true;
+            loadingCircle_checkForUpdate.Visible = true;
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                using (HttpClient client = new HttpClient()
+                {
+                    Timeout = TimeSpan.FromSeconds(3)
+                })
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("request");
+                    HttpResponseMessage response = await client.GetAsync("https://api.github.com/repos/Fruchtzwerg94/PlantUmlViewer/releases").ConfigureAwait(true);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                    JArray responseArray = JArray.Parse(responseBody);
+                    JToken latestRelease = responseArray[0];
+                    string latestReleaseVersion = latestRelease.Value<string>("name");
+                    string latestReleaseUrl = latestRelease.Value<string>("html_url");
+
+                    if (latestReleaseVersion == AssemblyVersion)
+                    {
+                        MessageBox.Show(this, "You are using the latest release", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you whish to proceed to the download site?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        Process.Start(latestReleaseUrl);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(IsDisposed ? null : this, ex.Message, "Failed to get the latest release information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    loadingCircle_checkForUpdate.Visible = false;
+                    loadingCircle_checkForUpdate.Active = false;
+                    button_CheckForUpdate.Enabled = true;
+                });
+            }
         }
     }
 }

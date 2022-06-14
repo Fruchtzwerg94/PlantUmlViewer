@@ -61,6 +61,7 @@ This Notepad++ plugin integrates multiple other libraries and sources. Credits a
 * The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License, which depends on
     * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU Lesser General Public License.
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
+* The plugin uses the [LoadingCircle](https://www.codeproject.com/articles/14841/how-to-write-a-loading-circle-animation-in-net) by Martin Gagne provided under the Code Project Open License.
 * The plugin is packed using [ILMerge](https://github.com/dotnet/ILMerge) provided under the MIT License.
 * The plugin release includes the binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 

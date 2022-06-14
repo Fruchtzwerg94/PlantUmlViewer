@@ -81,8 +81,8 @@ namespace PlantUmlViewer.Forms
             string text = "";
             try
             {
-                toolStripProgressBar_Refreshing.Style = ProgressBarStyle.Marquee;
-                toolStripProgressBar_Refreshing.MarqueeAnimationSpeed = 30;
+                loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
+                loadingCircleToolStripMenuItem_Refreshing.Visible = true;
                 button_Refresh.Text = "Cancel";
 
                 RendererFactory factory = new RendererFactory();
@@ -112,7 +112,7 @@ namespace PlantUmlViewer.Forms
                     }
                 }
 
-                InvokeIfRequired(() =>
+                this.InvokeIfRequired(() =>
                 {
                     imageBox_Diagram.Image = GetDiagramImage(1);
                     toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
@@ -124,18 +124,18 @@ namespace PlantUmlViewer.Forms
             }
             catch (JavaNotFoundException jnfEx)
             {
-                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
-                MessageBox.Show($"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
+                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                MessageBox.Show(this, $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
                     "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (TaskCanceledException)
             {
-                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
-                MessageBox.Show("Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                MessageBox.Show(this, "Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (RenderingException rEx)
             {
-                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
 
                 //Try to get the line of a syntax error
                 Match m = Regex.Match(rEx.Message, @"^ERROR\r\n(\d+)\r\nSyntax Error\?\r\nSome diagram description contains errors\r\n$");
@@ -153,19 +153,19 @@ namespace PlantUmlViewer.Forms
                         errorMessage += $"{Environment.NewLine}{Environment.NewLine}This may is caused by line {line}:{Environment.NewLine}{syntaxErrorLineText}";
                     }
                 }
-                MessageBox.Show(errorMessage, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, errorMessage, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
-                MessageBox.Show(ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                MessageBox.Show(this, ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                InvokeIfRequired(() =>
+                this.InvokeIfRequired(() =>
                 {
-                    toolStripProgressBar_Refreshing.Style = ProgressBarStyle.Continuous;
-                    toolStripProgressBar_Refreshing.MarqueeAnimationSpeed = 0;
+                    loadingCircleToolStripMenuItem_Refreshing.Visible = false;
+                    loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
                     button_Refresh.Text = "Refresh";
                     refreshCancellationTokenSource = null;
                 });
@@ -201,7 +201,7 @@ namespace PlantUmlViewer.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Failed to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.ToString(), "Failed to export", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -239,18 +239,6 @@ namespace PlantUmlViewer.Forms
             return image;
         }
 
-        private void InvokeIfRequired(Action action)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(action);
-            }
-            else
-            {
-                action();
-            }
-        }
-
         public void SetStyle(Color editorBackgroundColor)
         {
             imageBox_Diagram.BackColor = editorBackgroundColor;
@@ -265,6 +253,7 @@ namespace PlantUmlViewer.Forms
                 BackColor = SystemColors.Control;
                 buttonBackColor = SystemColors.Control;
                 buttonForeColor = SystemColors.ControlText;
+                loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.DarkGray;
                 statusStrip_Bottom.BackColor = SystemColors.Control;
                 statusStrip_Bottom.ForeColor = SystemColors.ControlText;
             }
@@ -276,6 +265,7 @@ namespace PlantUmlViewer.Forms
                 BackColor = SystemColors.ControlDarkDark;
                 buttonBackColor = SystemColors.ControlDarkDark;
                 buttonForeColor = SystemColors.ControlLightLight;
+                loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.LightGray;
                 statusStrip_Bottom.BackColor = SystemColors.ControlDarkDark;
                 statusStrip_Bottom.ForeColor = SystemColors.ControlLightLight;
             }
