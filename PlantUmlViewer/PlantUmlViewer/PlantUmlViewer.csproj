@@ -118,13 +118,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\LoadingCircle.cs">
+    <Compile Include="Forms\Controls\LoadingCircle.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\LoadingCircle.designer.cs">
+    <Compile Include="Forms\Controls\LoadingCircle.designer.cs">
       <DependentUpon>LoadingCircle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LoadingCircleToolStripMenuItem.cs">
+    <Compile Include="Forms\Controls\LoadingCircleToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\AboutWindow.cs">
