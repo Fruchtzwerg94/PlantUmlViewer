@@ -38,8 +38,7 @@ namespace PlantUmlViewer
 
         public PlantUmlViewer()
         {
-            assemblyDirectory = Uri.UnescapeDataString(Path.GetDirectoryName(
-                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath));
+            assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             using (Bitmap bmp = new Bitmap(16, 16))
             {
