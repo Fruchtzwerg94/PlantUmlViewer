@@ -30,7 +30,6 @@ namespace PlantUmlViewer
         private readonly string assemblyDirectory;
 
         private INotepadPPGateway notepadPp;
-        private IScintillaGateway editor;
         private SettingsService settings;
 
         private readonly Icon icon;
@@ -67,7 +66,6 @@ namespace PlantUmlViewer
         public void CommandMenuInit()
         {
             notepadPp = new NotepadPPGateway();
-            editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
             settings = new SettingsService(notepadPp);
 
             PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
@@ -98,6 +96,9 @@ namespace PlantUmlViewer
                     notepadPp.GetCurrentFilePath,
                     () =>
                     {
+                        IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
+                        return editor.GetText(editor.GetLength() + 1);
+
                         //const int GET_TEXT_STEP_SIZE = 10000;
                         //StringBuilder textBuilder = new StringBuilder();
                         //int length = editor.GetLength();
@@ -119,8 +120,6 @@ namespace PlantUmlViewer
                         //    rest -= step;
                         //}
                         //return textBuilder.ToString();
-
-                        return editor.GetText(editor.GetLength() + 1);
                     }, settings);
 
                 previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);
