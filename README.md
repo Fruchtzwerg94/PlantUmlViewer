@@ -9,6 +9,7 @@ A [Notepad++](https://notepad-plus-plus.org/) plugin to generate, view and expor
 
 ## Features
 * Official and full PlantUML syntax
+* Multiple diagrams per document supported
 * Dockable panel to show the generated PlantUML diagrams
 * Zoomable diagrams
 * Export of diagrams as PNG or SVG
@@ -63,6 +64,7 @@ This Notepad++ plugin integrates multiple other libraries and sources. Credits a
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
 * The plugin uses the [LoadingCircle](https://www.codeproject.com/articles/14841/how-to-write-a-loading-circle-animation-in-net) by Martin Gagne provided under the Code Project Open License.
 * The plugin uses [Json.NET](https://www.newtonsoft.com/json) by James Newton-King provided under the MIT License.
+* The plugin uses [Material Design Icons](https://materialdesignicons.com/) provided under the Pictogrammers Free License.
 * The plugin is packed using [ILMerge](https://github.com/dotnet/ILMerge) provided under the MIT License.
 * The plugin release includes the binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 
