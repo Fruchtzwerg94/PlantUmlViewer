@@ -239,6 +239,18 @@
   <ItemGroup>
     <None Include="Resources\ZoomOut.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\PlantUml.Net\src\PlantUml.Net.csproj">
+      <Project>{5e30fe66-0029-4e53-92ac-6c2c7d728385}</Project>
+      <Name>PlantUml.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZoomFit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZoomReset.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
   <PropertyGroup>
