@@ -39,6 +39,8 @@
             this.ToolStripMenuItem_Diagram_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Diagram_ExportFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel_Buttons = new System.Windows.Forms.TableLayoutPanel();
+            this.button_ZoomReset = new System.Windows.Forms.Button();
+            this.button_ZoomFit = new System.Windows.Forms.Button();
             this.button_Refresh = new System.Windows.Forms.Button();
             this.button_ZoomIn = new System.Windows.Forms.Button();
             this.button_Export = new System.Windows.Forms.Button();
@@ -67,7 +69,7 @@
             this.tableLayoutPanel_Window.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
             this.tableLayoutPanel_Window.RowCount = 3;
-            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.Size = new System.Drawing.Size(284, 262);
@@ -129,10 +131,10 @@
             this.imageBox_Diagram.ContextMenuStrip = this.contextMenuStrip_Diagram;
             this.imageBox_Diagram.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageBox_Diagram.GridDisplayMode = Cyotek.Windows.Forms.ImageBoxGridDisplayMode.None;
-            this.imageBox_Diagram.Location = new System.Drawing.Point(0, 35);
+            this.imageBox_Diagram.Location = new System.Drawing.Point(0, 38);
             this.imageBox_Diagram.Margin = new System.Windows.Forms.Padding(0);
             this.imageBox_Diagram.Name = "imageBox_Diagram";
-            this.imageBox_Diagram.Size = new System.Drawing.Size(284, 205);
+            this.imageBox_Diagram.Size = new System.Drawing.Size(284, 202);
             this.imageBox_Diagram.TabIndex = 1;
             this.imageBox_Diagram.TabStop = false;
             // 
@@ -162,25 +164,56 @@
             // 
             // tableLayoutPanel_Buttons
             // 
-            this.tableLayoutPanel_Buttons.ColumnCount = 5;
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00001F));
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel_Buttons.ColumnCount = 7;
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_Buttons.Controls.Add(this.button_ZoomReset, 5, 0);
+            this.tableLayoutPanel_Buttons.Controls.Add(this.button_ZoomFit, 4, 0);
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_Refresh, 0, 0);
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_ZoomIn, 2, 0);
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_Export, 1, 0);
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_ZoomOut, 3, 0);
-            this.tableLayoutPanel_Buttons.Controls.Add(this.tableLayoutPanel_Navigation, 4, 0);
+            this.tableLayoutPanel_Buttons.Controls.Add(this.tableLayoutPanel_Navigation, 6, 0);
             this.tableLayoutPanel_Buttons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Buttons.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel_Buttons.Name = "tableLayoutPanel_Buttons";
             this.tableLayoutPanel_Buttons.RowCount = 1;
             this.tableLayoutPanel_Buttons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(278, 29);
+            this.tableLayoutPanel_Buttons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(278, 32);
             this.tableLayoutPanel_Buttons.TabIndex = 0;
             this.tableLayoutPanel_Buttons.TabStop = true;
+            // 
+            // button_ZoomReset
+            // 
+            this.button_ZoomReset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_ZoomReset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_ZoomReset.Enabled = false;
+            this.button_ZoomReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_ZoomReset.Location = new System.Drawing.Point(93, 3);
+            this.button_ZoomReset.Name = "button_ZoomReset";
+            this.button_ZoomReset.Size = new System.Drawing.Size(24, 26);
+            this.button_ZoomReset.TabIndex = 6;
+            this.button_ZoomReset.UseVisualStyleBackColor = true;
+            this.button_ZoomReset.Click += new System.EventHandler(this.Button_ZoomReset_Click);
+            // 
+            // button_ZoomFit
+            // 
+            this.button_ZoomFit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_ZoomFit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_ZoomFit.Enabled = false;
+            this.button_ZoomFit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_ZoomFit.Location = new System.Drawing.Point(123, 3);
+            this.button_ZoomFit.Name = "button_ZoomFit";
+            this.button_ZoomFit.Size = new System.Drawing.Size(24, 26);
+            this.button_ZoomFit.TabIndex = 5;
+            this.button_ZoomFit.UseVisualStyleBackColor = true;
+            this.button_ZoomFit.Click += new System.EventHandler(this.Button_ZoomFit_Click);
             // 
             // button_Refresh
             // 
@@ -189,7 +222,7 @@
             this.button_Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Refresh.Location = new System.Drawing.Point(3, 3);
             this.button_Refresh.Name = "button_Refresh";
-            this.button_Refresh.Size = new System.Drawing.Size(43, 23);
+            this.button_Refresh.Size = new System.Drawing.Size(24, 26);
             this.button_Refresh.TabIndex = 1;
             this.button_Refresh.UseVisualStyleBackColor = true;
             this.button_Refresh.Click += new System.EventHandler(this.Button_Refresh_Click);
@@ -200,9 +233,9 @@
             this.button_ZoomIn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_ZoomIn.Enabled = false;
             this.button_ZoomIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_ZoomIn.Location = new System.Drawing.Point(100, 3);
+            this.button_ZoomIn.Location = new System.Drawing.Point(63, 3);
             this.button_ZoomIn.Name = "button_ZoomIn";
-            this.button_ZoomIn.Size = new System.Drawing.Size(42, 23);
+            this.button_ZoomIn.Size = new System.Drawing.Size(24, 26);
             this.button_ZoomIn.TabIndex = 3;
             this.button_ZoomIn.UseVisualStyleBackColor = true;
             this.button_ZoomIn.Click += new System.EventHandler(this.Button_ZoomIn_Click);
@@ -213,9 +246,9 @@
             this.button_Export.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_Export.Enabled = false;
             this.button_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_Export.Location = new System.Drawing.Point(52, 3);
+            this.button_Export.Location = new System.Drawing.Point(33, 3);
             this.button_Export.Name = "button_Export";
-            this.button_Export.Size = new System.Drawing.Size(42, 23);
+            this.button_Export.Size = new System.Drawing.Size(24, 26);
             this.button_Export.TabIndex = 2;
             this.button_Export.UseVisualStyleBackColor = true;
             this.button_Export.Click += new System.EventHandler(this.Button_Export_Click);
@@ -226,9 +259,9 @@
             this.button_ZoomOut.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_ZoomOut.Enabled = false;
             this.button_ZoomOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_ZoomOut.Location = new System.Drawing.Point(148, 3);
+            this.button_ZoomOut.Location = new System.Drawing.Point(153, 3);
             this.button_ZoomOut.Name = "button_ZoomOut";
-            this.button_ZoomOut.Size = new System.Drawing.Size(42, 23);
+            this.button_ZoomOut.Size = new System.Drawing.Size(24, 26);
             this.button_ZoomOut.TabIndex = 4;
             this.button_ZoomOut.UseVisualStyleBackColor = true;
             this.button_ZoomOut.Click += new System.EventHandler(this.Button_ZoomOut_Click);
@@ -242,12 +275,13 @@
             this.tableLayoutPanel_Navigation.Controls.Add(this.button_PreviousDiagram, 0, 0);
             this.tableLayoutPanel_Navigation.Controls.Add(this.button_NextDiagram, 2, 0);
             this.tableLayoutPanel_Navigation.Controls.Add(this.label_SelectedDiagram, 1, 0);
-            this.tableLayoutPanel_Navigation.Location = new System.Drawing.Point(193, 0);
+            this.tableLayoutPanel_Navigation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_Navigation.Location = new System.Drawing.Point(180, 0);
             this.tableLayoutPanel_Navigation.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_Navigation.Name = "tableLayoutPanel_Navigation";
             this.tableLayoutPanel_Navigation.RowCount = 1;
             this.tableLayoutPanel_Navigation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Navigation.Size = new System.Drawing.Size(82, 29);
+            this.tableLayoutPanel_Navigation.Size = new System.Drawing.Size(98, 32);
             this.tableLayoutPanel_Navigation.TabIndex = 8;
             this.tableLayoutPanel_Navigation.Visible = false;
             // 
@@ -259,8 +293,8 @@
             this.button_PreviousDiagram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_PreviousDiagram.Location = new System.Drawing.Point(3, 3);
             this.button_PreviousDiagram.Name = "button_PreviousDiagram";
-            this.button_PreviousDiagram.Size = new System.Drawing.Size(32, 23);
-            this.button_PreviousDiagram.TabIndex = 5;
+            this.button_PreviousDiagram.Size = new System.Drawing.Size(40, 26);
+            this.button_PreviousDiagram.TabIndex = 7;
             this.button_PreviousDiagram.UseVisualStyleBackColor = true;
             this.button_PreviousDiagram.Click += new System.EventHandler(this.Button_PreviousDiagram_Click);
             // 
@@ -270,10 +304,10 @@
             this.button_NextDiagram.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_NextDiagram.Enabled = false;
             this.button_NextDiagram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_NextDiagram.Location = new System.Drawing.Point(47, 3);
+            this.button_NextDiagram.Location = new System.Drawing.Point(55, 3);
             this.button_NextDiagram.Name = "button_NextDiagram";
-            this.button_NextDiagram.Size = new System.Drawing.Size(32, 23);
-            this.button_NextDiagram.TabIndex = 6;
+            this.button_NextDiagram.Size = new System.Drawing.Size(40, 26);
+            this.button_NextDiagram.TabIndex = 8;
             this.button_NextDiagram.UseVisualStyleBackColor = true;
             this.button_NextDiagram.Click += new System.EventHandler(this.Button_NextDiagram_Click);
             // 
@@ -281,9 +315,9 @@
             // 
             this.label_SelectedDiagram.AutoSize = true;
             this.label_SelectedDiagram.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_SelectedDiagram.Location = new System.Drawing.Point(41, 0);
+            this.label_SelectedDiagram.Location = new System.Drawing.Point(49, 0);
             this.label_SelectedDiagram.Name = "label_SelectedDiagram";
-            this.label_SelectedDiagram.Size = new System.Drawing.Size(1, 29);
+            this.label_SelectedDiagram.Size = new System.Drawing.Size(1, 32);
             this.label_SelectedDiagram.TabIndex = 7;
             this.label_SelectedDiagram.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -328,5 +362,7 @@
         private System.Windows.Forms.Label label_SelectedDiagram;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Navigation;
         private System.Windows.Forms.ToolTip toolTip_Buttons;
+        private System.Windows.Forms.Button button_ZoomFit;
+        private System.Windows.Forms.Button button_ZoomReset;
     }
 }

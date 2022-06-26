@@ -1,6 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
 - Added support for multiple diagrams per document
 - Fixed using the text of the selected document in split mode
+- Added buttons to zoom
 - Used icons for all buttons
 - Used loading circle instead of progress bar to show refreshing
 - Added button to check for update in about window

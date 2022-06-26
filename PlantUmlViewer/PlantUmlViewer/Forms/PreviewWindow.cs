@@ -104,6 +104,8 @@ namespace PlantUmlViewer.Forms
             toolTip_Buttons.SetToolTip(button_Export, "Export");
             toolTip_Buttons.SetToolTip(button_ZoomIn, "Zoom in");
             toolTip_Buttons.SetToolTip(button_ZoomOut, "Zoom out");
+            toolTip_Buttons.SetToolTip(button_ZoomFit, "Zoom to fit");
+            toolTip_Buttons.SetToolTip(button_ZoomReset, "Reset zoom");
             toolTip_Buttons.SetToolTip(button_PreviousDiagram, "Previous diagram");
             toolTip_Buttons.SetToolTip(button_NextDiagram, "Next diagram");
 
@@ -188,6 +190,12 @@ namespace PlantUmlViewer.Forms
             button_ZoomOut.BackColor = buttonBackColor;
             button_ZoomOut.ForeColor = buttonForeColor;
             button_ZoomOut.BackgroundImage = RemapImage(Resources.ZoomOut, buttonImageColorMap);
+            button_ZoomFit.BackColor = buttonBackColor;
+            button_ZoomFit.ForeColor = buttonForeColor;
+            button_ZoomFit.BackgroundImage = RemapImage(Resources.ZoomFit, buttonImageColorMap);
+            button_ZoomReset.BackColor = buttonBackColor;
+            button_ZoomReset.ForeColor = buttonForeColor;
+            button_ZoomReset.BackgroundImage = RemapImage(Resources.ZoomReset, buttonImageColorMap);
             button_PreviousDiagram.BackColor = buttonBackColor;
             button_PreviousDiagram.ForeColor = buttonForeColor;
             button_PreviousDiagram.BackgroundImage = RemapImage(Resources.Previous, buttonImageColorMap);
@@ -238,7 +246,7 @@ namespace PlantUmlViewer.Forms
                         refreshCancellationTokenSource.Token).ConfigureAwait(true);
 
                     //Find all start XML declarations to parse multiple images
-                    List<int> xmlStartDeclararationIndices = PatternAt(bytes, Encoding.UTF8.GetBytes("<?xml")).ToList();
+                    List<int> xmlStartDeclararationIndices = PatternAt(bytes, Encoding.UTF8.GetBytes("<?xml ")).ToList();
                     for (int i = 0; i < xmlStartDeclararationIndices.Count; i++)
                     {
                         int start = xmlStartDeclararationIndices[i];
@@ -259,6 +267,8 @@ namespace PlantUmlViewer.Forms
                     button_Export.Enabled = true;
                     button_ZoomIn.Enabled = true;
                     button_ZoomOut.Enabled = true;
+                    button_ZoomFit.Enabled = true;
+                    button_ZoomReset.Enabled = true;
                     ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
                     ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
                 });
@@ -353,6 +363,16 @@ namespace PlantUmlViewer.Forms
         private void Button_ZoomOut_Click(object sender, EventArgs e)
         {
             imageBox_Diagram.ZoomOut();
+        }
+
+        private void Button_ZoomFit_Click(object sender, EventArgs e)
+        {
+            imageBox_Diagram.ZoomToFit();
+        }
+
+        private void Button_ZoomReset_Click(object sender, EventArgs e)
+        {
+            imageBox_Diagram.Zoom = 100;
         }
 
         private void Button_PreviousDiagram_Click(object sender, EventArgs e)

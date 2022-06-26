@@ -139,6 +139,16 @@ namespace PlantUmlViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ZoomFit {
+            get {
+                object obj = ResourceManager.GetObject("ZoomFit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ZoomIn {
             get {
                 object obj = ResourceManager.GetObject("ZoomIn", resourceCulture);
@@ -152,6 +162,16 @@ namespace PlantUmlViewer.Properties {
         internal static System.Drawing.Bitmap ZoomOut {
             get {
                 object obj = ResourceManager.GetObject("ZoomOut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ZoomReset {
+            get {
+                object obj = ResourceManager.GetObject("ZoomReset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
