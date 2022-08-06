@@ -68,7 +68,7 @@ This Notepad++ plugin integrates multiple other libraries and sources. Credits a
 * The plugin is packed using [ILMerge](https://github.com/dotnet/ILMerge) provided under the MIT License.
 * The plugin release includes the binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
 * The plugin release includes the binaries of [JLaTeXMath](https://github.com/opencollab/jlatexmath) which are free to use and released under the GNU General Public License and depends on
-    * [The Apache™ Batik Project](https://xmlgraphics.apache.org/batik/) which are free to use released under the Apache 2.0 license.
+    * [The Apacheâ„¢ Batik Project](https://xmlgraphics.apache.org/batik/) which are free to use released under the Apache 2.0 license.
 
 ## Feedback, issues and contribution
 Resonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!
