@@ -68,7 +68,7 @@ namespace PlantUmlViewer
             notepadPp = new NotepadPPGateway();
             settings = new SettingsService(notepadPp);
 
-            PluginBase.SetCommand((int)CommandId.ShowPreview, "Show preview", ShowPreview);
+            PluginBase.SetCommand((int)CommandId.ShowPreview, "Preview PlantUML", ShowPreview);
             PluginBase.SetCommand((int)CommandId.Refresh, "Refresh", Refresh);
             PluginBase.SetCommand((int)CommandId.Separator1, "---", null);
             PluginBase.SetCommand((int)CommandId.ShowOptions, "Options", ShowOptions);

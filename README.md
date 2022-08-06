@@ -57,9 +57,9 @@ Make sure *JAVA_PATH* is set in your system or set the right path to your Java i
 PlantUML Viewer is released under the [MIT License](LICENSE).
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
-* The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache-2.0 license.
+* The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache 2.0 license.
 * The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
-* The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License, which depends on
+* The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License which depends on
     * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU Lesser General Public License.
 * The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
 * The plugin uses the [LoadingCircle](https://www.codeproject.com/articles/14841/how-to-write-a-loading-circle-animation-in-net) by Martin Gagne provided under the Code Project Open License.
@@ -67,6 +67,8 @@ This Notepad++ plugin integrates multiple other libraries and sources. Credits a
 * The plugin uses [Material Design Icons](https://materialdesignicons.com/) provided under the Pictogrammers Free License.
 * The plugin is packed using [ILMerge](https://github.com/dotnet/ILMerge) provided under the MIT License.
 * The plugin release includes the binaries of [PlantUML](https://plantuml.com/) which are free to use and released under the GNU General Public License.
+* The plugin release includes the binaries of [JLaTeXMath](https://github.com/opencollab/jlatexmath) which are free to use and released under the GNU General Public License and depends on
+    * [The Apache™ Batik Project](https://xmlgraphics.apache.org/batik/) which are free to use released under the Apache 2.0 license.
 
 ## Feedback, issues and contribution
 Resonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!

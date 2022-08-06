@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Included necessary binaries for JLatexMath and Batik to enable generation of formulas
 - Added support for multiple diagrams per document
 - Fixed using the text of the selected document in split mode
 - Added buttons to zoom

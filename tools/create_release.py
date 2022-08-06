@@ -42,7 +42,9 @@ def create_plugin_list_entry(version, architecture, hash):
     return json.dumps(entry, indent=4)
 
 def main():
-    input('Press any key to confirm builds were done for x86 and x64 and the PlantUML binary was added to the build directory')
+    input('Press any key to confirm builds were done for x86 and x64')
+    input('Press any key to confirm the PlantUML binary was added to the build directory')
+    input('Press any key to confirm the necessary binaries for JLatexMath and Batik where added to the build directory')
     script_directory = pathlib.Path(__file__).parent.resolve()
     x86_build_directory = os.path.join(script_directory, '..', 'PlantUmlViewer', 'PlantUmlViewer', 'bin', 'Release-x86')
     x64_build_directory = os.path.join(script_directory, '..', 'PlantUmlViewer', 'PlantUmlViewer', 'bin', 'Release-x64')

@@ -214,7 +214,7 @@ namespace PlantUmlViewer.Forms
                 return;
             }
 
-            string text = "";
+            string text = null;
             try
             {
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
