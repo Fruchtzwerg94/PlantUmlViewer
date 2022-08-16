@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -223,7 +222,7 @@ namespace PlantUmlViewer.Forms
                 RendererFactory factory = new RendererFactory();
                 IPlantUmlRenderer renderer = factory.CreateRenderer(new PlantUmlSettings()
                 {
-                    ErrorReportMode = ErrorReportMode.TwoLines,
+                    ErrorReportMode = ErrorReportMode.Verbose,
                     LocalPlantUmlPath = plantUmlBinary,
                     JavaPath = settings.Settings.JavaPath,
                     RenderingMode = RenderingMode.Local,
@@ -289,24 +288,7 @@ namespace PlantUmlViewer.Forms
             catch (RenderingException rEx)
             {
                 this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
-
-                //Try to get the line of a syntax error
-                Match m = Regex.Match(rEx.Message, @"^ERROR\r\n(\d+)\r\nSyntax Error\?\r\nSome diagram description contains errors\r\n$");
-                string errorMessage = rEx.Message;
-                if (m.Success)
-                {
-                    int line = Convert.ToInt32(m.Groups[1].Value);
-                    string syntaxErrorLineText = ReadLine(text, line);
-                    if (!string.IsNullOrWhiteSpace(syntaxErrorLineText))
-                    {
-                        if (syntaxErrorLineText.Length > 150)
-                        {
-                            syntaxErrorLineText = syntaxErrorLineText.Substring(0, 150) + " ...";
-                        }
-                        errorMessage += $"{Environment.NewLine}{Environment.NewLine}This may is caused by line {line}:{Environment.NewLine}{syntaxErrorLineText}";
-                    }
-                }
-                MessageBox.Show(this, errorMessage, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {

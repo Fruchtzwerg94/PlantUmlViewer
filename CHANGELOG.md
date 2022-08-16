@@ -2,6 +2,7 @@
 - PlantUML version updated to 1.2022.6
 - Included necessary binaries for JLatexMath and Batik to enable generation of formulas
 - Added support for multiple diagrams per document
+- Removed corresponding line to error message if diagram generation fails due to a syntax error which is not supported for multiple diagrams
 - Fixed using the text of the selected document in split mode
 - Added buttons to zoom
 - Used icons for all buttons
