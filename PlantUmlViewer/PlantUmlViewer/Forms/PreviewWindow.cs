@@ -223,9 +223,11 @@ namespace PlantUmlViewer.Forms
                 RendererFactory factory = new RendererFactory();
                 IPlantUmlRenderer renderer = factory.CreateRenderer(new PlantUmlSettings()
                 {
+                    ErrorReportMode = ErrorReportMode.TwoLines,
                     LocalPlantUmlPath = plantUmlBinary,
                     JavaPath = settings.Settings.JavaPath,
-                    RenderingMode = RenderingMode.Local
+                    RenderingMode = RenderingMode.Local,
+                    Delimitor = ""
                 });
 
                 //The response could contain multiple XML documents / SVG images

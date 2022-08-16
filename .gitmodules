@@ -1,0 +1,3 @@
+[submodule "PlantUmlViewer/PlantUml.Net"]
+	path = PlantUmlViewer/PlantUml.Net
+	url = https://github.com/Fruchtzwerg94/PlantUml.Net.git

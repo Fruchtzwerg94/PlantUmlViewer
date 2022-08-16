@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- PlantUML version updated to 1.2022.6
 - Included necessary binaries for JLatexMath and Batik to enable generation of formulas
 - Added support for multiple diagrams per document
 - Fixed using the text of the selected document in split mode
@@ -6,6 +7,7 @@
 - Used icons for all buttons
 - Used loading circle instead of progress bar to show refreshing
 - Added button to check for update in about window
+- Used custom modified version of PlantUml.Net library
 
 # 1.2.0.6 (11.06.2022)
 - Added export of SVG files
