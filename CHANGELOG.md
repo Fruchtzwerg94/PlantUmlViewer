@@ -1,4 +1,4 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.3.0.7 (16.08.2022)
 - PlantUML version updated to 1.2022.6
 - Included necessary binaries for JLatexMath and Batik to enable generation of formulas
 - Added support for multiple diagrams per document
