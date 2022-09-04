@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Describtion**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+**Reproduction**
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
@@ -28,5 +28,5 @@ If applicable, add screenshots to help explain your problem.
  - Notepad++ version [e.g. 8.4.4]
  - Notepad++ bit variant [e.g. 64 bit]
 
-**Additional context**
-Add any other context about the problem here.
+**Additional information**
+Add any other information about the problem here.
