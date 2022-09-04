@@ -131,7 +131,7 @@
             this.linkLabel_Donate.TabStop = true;
             this.linkLabel_Donate.Text = "Buy me a coffee :-)";
             this.linkLabel_Donate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel_Donate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_Donate_LinkClicked);
+            this.linkLabel_Donate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_Donate_LinkClicked);
             // 
             // linkLabel_Mail
             // 
@@ -144,7 +144,7 @@
             this.linkLabel_Mail.TabStop = true;
             this.linkLabel_Mail.Text = "Mail me";
             this.linkLabel_Mail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel_Mail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_Mail_LinkClicked);
+            this.linkLabel_Mail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_Mail_LinkClicked);
             // 
             // linkLabel_Github
             // 
@@ -157,7 +157,7 @@
             this.linkLabel_Github.TabStop = true;
             this.linkLabel_Github.Text = "Visit project on GitHub";
             this.linkLabel_Github.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel_Github.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_Github_LinkClicked);
+            this.linkLabel_Github.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_Github_LinkClicked);
             // 
             // richTextBox_Text
             // 
@@ -208,7 +208,7 @@
             this.button_CheckForUpdate.TabIndex = 2;
             this.button_CheckForUpdate.Text = "Check for update";
             this.button_CheckForUpdate.UseVisualStyleBackColor = true;
-            this.button_CheckForUpdate.Click += new System.EventHandler(this.button_CheckForUpdate_Click);
+            this.button_CheckForUpdate.Click += new System.EventHandler(this.Button_CheckForUpdate_Click);
             // 
             // loadingCircle_checkForUpdate
             // 

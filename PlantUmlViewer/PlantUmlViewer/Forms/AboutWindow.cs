@@ -99,25 +99,25 @@ namespace PlantUmlViewer.Forms
             base.OnClosing(e);
         }
 
-        private void linkLabel_Github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel_Github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             linkLabel_Github.LinkVisited = true;
             Process.Start("https://github.com/Fruchtzwerg94/PlantUmlViewer");
         }
 
-        private void linkLabel_Mail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel_Mail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             linkLabel_Mail.LinkVisited = true;
             Process.Start($"mailto:phi_dev@gmx.de?subject={PlantUmlViewer.PLUGIN_NAME}");
         }
 
-        private void linkLabel_Donate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel_Donate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             linkLabel_Donate.LinkVisited = true;
             Process.Start("https://www.paypal.me/schmidtph");
         }
 
-        private async void button_CheckForUpdate_Click(object sender, EventArgs e)
+        private async void Button_CheckForUpdate_Click(object sender, EventArgs e)
         {
             button_CheckForUpdate.Enabled = false;
             loadingCircle_checkForUpdate.Active = true;
@@ -141,7 +141,7 @@ namespace PlantUmlViewer.Forms
 
                     if (latestReleaseVersion == AssemblyVersion)
                     {
-                        MessageBox.Show(this, "You are using the latest release", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(IsDisposed ? null : this, "You are using the latest release", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you whish to proceed to the download site?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
