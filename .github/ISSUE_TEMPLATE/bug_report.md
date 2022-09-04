@@ -25,8 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment**
  - Windows: [e.g. 10]
- - Notepad++ version [e.g. 8.4.4]
- - Notepad++ bit variant [e.g. 64 bit]
+ - Notepad++ version: [e.g. 8.4.4 64-bit]
 
 **Additional information**
 Add any other information about the problem here.
