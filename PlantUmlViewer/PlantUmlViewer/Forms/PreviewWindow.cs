@@ -274,6 +274,11 @@ namespace PlantUmlViewer.Forms
                     ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
                 });
             }
+            catch (FileFormatException ffEx)
+            {
+                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                MessageBox.Show(this, ffEx.Message, "Failed to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (JavaNotFoundException jnfEx)
             {
                 this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);

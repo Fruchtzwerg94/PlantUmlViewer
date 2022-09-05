@@ -97,6 +97,10 @@ namespace PlantUmlViewer
                     () =>
                     {
                         IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
+                        if (editor.GetCodePage() != (int)SciMsg.SC_CP_UTF8)
+                        {
+                            throw new FileFormatException("File encoding invalid, please use UTF-8 as encoding");
+                        }
                         return editor.GetText(editor.GetLength() + 1);
 
                         //const int GET_TEXT_STEP_SIZE = 10000;

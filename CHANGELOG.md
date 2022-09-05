@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Added error if the input document is not UTF-8 encoded
 - Non functional code improvements
 
 # 1.3.0.7 (16.08.2022)
