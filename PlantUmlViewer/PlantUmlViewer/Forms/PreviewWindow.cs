@@ -263,7 +263,7 @@ namespace PlantUmlViewer.Forms
                 this.InvokeIfRequired(() =>
                 {
                     UpdateImages(images);
-                    toolStripStatusLabel_Time.Text = DateTime.Now.ToShortTimeString();
+                    toolStripStatusLabel_Time.Text = $"{Path.GetFileName(getFilePath())} ({DateTime.Now.ToShortTimeString()})";
                     toolStripStatusLabel_Time.BackColor = colorSuccess;
                     button_Export.Enabled = true;
                     button_ZoomIn.Enabled = true;
