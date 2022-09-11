@@ -168,7 +168,7 @@ namespace PlantUmlViewer
                 (uint)NppMsg.NPPM_GETEDITORDEFAULTBACKGROUNDCOLOR, 0, 0);
             int bbggrr = editorBachgroundColorPtr.ToInt32();
             Color editorBackgroundColor = Color.FromArgb(bbggrr & 0x0000FF, (bbggrr & 0x00FF00) >> 8, (bbggrr & 0xFF0000) >> 16);
-            previewWindow.SetStyle(editorBackgroundColor);
+            previewWindow?.SetStyle(editorBackgroundColor);
         }
 
         private void VisibilityChanged(bool visible)
