@@ -60,8 +60,9 @@ namespace PlantUmlViewer
 
         public void OnNotification(ScNotification notification)
         {
-            //NPPN_DARKMODECHANGED
-            if (notification.Header.Code == (uint)NppMsg.NPPN_FIRST + 27)
+            //NPPN_DARKMODECHANGED or NPPN_WORDSTYLESUPDATED
+            if (notification.Header.Code == (uint)NppMsg.NPPN_FIRST + 27
+                || notification.Header.Code == (uint)NppMsg.NPPN_WORDSTYLESUPDATED)
             {
                 UpdateStyle();
             }

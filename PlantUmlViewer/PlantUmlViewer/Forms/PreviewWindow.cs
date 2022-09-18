@@ -130,7 +130,10 @@ namespace PlantUmlViewer.Forms
 
         public void SetStyle(Color editorBackgroundColor)
         {
-            //Check the current style and update if necessary
+            //Set new background color
+            imageBox_Diagram.BackColor = editorBackgroundColor;
+
+            //Update light or dark colors if necessary
             bool newIsLight = editorBackgroundColor.GetBrightness() > 0.4;
             if (isLight == newIsLight)
             {
@@ -138,8 +141,6 @@ namespace PlantUmlViewer.Forms
             }
             isLight = newIsLight;
             Debug.WriteLine("Setting style", nameof(PreviewWindow));
-
-            imageBox_Diagram.BackColor = editorBackgroundColor;
 
             Color buttonBackColor;
             Color buttonForeColor;
