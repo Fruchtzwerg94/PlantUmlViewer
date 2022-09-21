@@ -238,7 +238,24 @@ namespace PlantUmlViewer.Forms
                 {
                     using (MemoryStream memoryStream = new MemoryStream(Resources.Empty))
                     {
-                        images.Add(SvgDocument.Open<SvgDocument>(memoryStream));
+                        SvgDocument emptyImage = SvgDocument.Open<SvgDocument>(memoryStream);
+                        void setTextColor(SvgElement element, SvgColourServer color)
+                        {
+                            if (element is SvgText textElement)
+                            {
+                                element.Fill = color;
+                            }
+                            else
+                            {
+                                foreach (SvgElement childElement in element.Children)
+                                {
+                                    setTextColor(childElement, color);
+                                }
+                            }
+                        }
+                        Random rnd = new Random();
+                        setTextColor(emptyImage, new SvgColourServer(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))));
+                        images.Add(emptyImage);
                     }
                 }
                 else
