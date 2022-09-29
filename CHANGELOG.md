@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Added support for multiple pages per document
 - Added error if the input document is not UTF-8 encoded
 - Added file name of generated diagram to bottom status bar
 - Update plugin colors automatically if Notepad++ colors changed

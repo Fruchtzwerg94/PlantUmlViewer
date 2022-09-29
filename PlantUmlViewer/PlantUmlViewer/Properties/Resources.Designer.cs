@@ -99,9 +99,9 @@ namespace PlantUmlViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Next {
+        internal static System.Drawing.Bitmap NavigateDown {
             get {
-                object obj = ResourceManager.GetObject("Next", resourceCulture);
+                object obj = ResourceManager.GetObject("NavigateDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -109,9 +109,29 @@ namespace PlantUmlViewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Previous {
+        internal static System.Drawing.Bitmap NavigateLeft {
             get {
-                object obj = ResourceManager.GetObject("Previous", resourceCulture);
+                object obj = ResourceManager.GetObject("NavigateLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NavigateRight {
+            get {
+                object obj = ResourceManager.GetObject("NavigateRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NavigateUp {
+            get {
+                object obj = ResourceManager.GetObject("NavigateUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

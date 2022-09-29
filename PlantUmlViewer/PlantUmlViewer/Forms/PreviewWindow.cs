@@ -27,6 +27,8 @@ namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
+        private const string DIAGRAM_DELIMITOR = "|##|##|<PS>|##|##|";
+
         private readonly string plantUmlBinary;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
@@ -40,26 +42,48 @@ namespace PlantUmlViewer.Forms
 
         #region Images
         private object imagesLock = new object();
-        private int selectedImageIndex = 0;
-        private ReadOnlyCollection<SvgDocument> svgImages;
+        private int selectedDiagramIndex;
+        private int selectedPageIndex;
+        private ReadOnlyCollection<RenderedDiagram> svgImages;
 
-        private void UpdateImages(IEnumerable<SvgDocument> newImages)
+        private void UpdateImages(List<List<SvgDocument>> newPages)
         {
             lock (imagesLock)
             {
                 //Update the images
-                List<SvgDocument> newImagesList = newImages.ToList();
-                svgImages = new ReadOnlyCollection<SvgDocument>(newImagesList);
+                int numberOfDiagrams = newPages.Max(p => p.Count);
+                List<RenderedDiagram> newImagesList = Enumerable.Repeat<object>(null, numberOfDiagrams)
+                    .Select(_ => new RenderedDiagram()).ToList();
+                for (int diagramIndex = 0; diagramIndex < numberOfDiagrams; diagramIndex++)
+                {
+                    foreach (List<SvgDocument> newPage in newPages)
+                    {
+                        if (newPage[diagramIndex] != null)
+                        {
+                            newImagesList[diagramIndex].Pages.Add(newPage[diagramIndex]);
+                        }
+                    }
+                }
+                svgImages = new ReadOnlyCollection<RenderedDiagram>(newImagesList);
+
                 //Update the text of the selected diagram and visibility
-                SetSelectedImage(Math.Min(selectedImageIndex, svgImages.Count - 1));
+                SetSelectedImage(selectedDiagramIndex, selectedPageIndex);
             }
         }
 
-        private int GetSelectedImageIndex()
+        private int GetSelectedDiagramIndex()
         {
             lock (imagesLock)
             {
-                return selectedImageIndex;
+                return selectedDiagramIndex;
+            }
+        }
+
+        private int GetSelectedPageIndex()
+        {
+            lock (imagesLock)
+            {
+                return selectedPageIndex;
             }
         }
 
@@ -67,22 +91,28 @@ namespace PlantUmlViewer.Forms
         {
             lock (imagesLock)
             {
-                return svgImages[selectedImageIndex];
+                return svgImages[selectedDiagramIndex].Pages[selectedPageIndex];
             }
         }
 
-        private void SetSelectedImage(int index)
+        private void SetSelectedImage(int diagramIndex, int pageIndex)
         {
-            Debug.WriteLine($"Selecting image at index {index}", nameof(PreviewWindow));
+            Debug.WriteLine($"Selecting image for diagram index {diagramIndex}, page index {pageIndex}", nameof(PreviewWindow));
             lock (imagesLock)
             {
-                selectedImageIndex = index;
-                label_SelectedDiagram.Visible = svgImages.Count > 1;
-                label_SelectedDiagram.Text = (selectedImageIndex + 1).ToString();
-                tableLayoutPanel_Navigation.Visible = svgImages.Count > 1;
-                button_NextDiagram.Enabled = selectedImageIndex < svgImages.Count - 1;
-                button_PreviousDiagram.Enabled = selectedImageIndex > 0;
-                imageBox_Diagram.Image = GetDiagramImage(1);
+                selectedDiagramIndex = Math.Min(diagramIndex, svgImages.Count - 1);
+                label_SelectedDiagram.Text = (selectedDiagramIndex + 1).ToString();
+                tableLayoutPanel_NavigationDiagram.Visible = svgImages.Count > 1;
+                button_NextDiagram.Enabled = selectedDiagramIndex < svgImages.Count - 1;
+                button_PreviousDiagram.Enabled = selectedDiagramIndex > 0;
+
+                selectedPageIndex = Math.Min(pageIndex, svgImages[selectedDiagramIndex].Pages.Count - 1);
+                label_SelectedPage.Text = (selectedPageIndex + 1).ToString();
+                tableLayoutPanel_NavigationPage.Visible = svgImages.Any(i => i.Pages.Count > 1);
+                button_NextPage.Enabled = selectedPageIndex < svgImages[selectedDiagramIndex].Pages.Count - 1;
+                button_PreviousPage.Enabled = selectedPageIndex > 0;
+
+                imageBox_Diagram.Image = GetCurrentImage(1);
             }
         }
         #endregion Images
@@ -107,6 +137,8 @@ namespace PlantUmlViewer.Forms
             toolTip_Buttons.SetToolTip(button_ZoomReset, "Reset zoom");
             toolTip_Buttons.SetToolTip(button_PreviousDiagram, "Previous diagram");
             toolTip_Buttons.SetToolTip(button_NextDiagram, "Next diagram");
+            toolTip_Buttons.SetToolTip(button_PreviousPage, "Previous page");
+            toolTip_Buttons.SetToolTip(button_NextPage, "Next page");
 
             //Handle zoom changes
             imageBox_Diagram.ZoomChanged += ImageBox_ZoomChanged;
@@ -153,6 +185,7 @@ namespace PlantUmlViewer.Forms
                 buttonBackColor = SystemColors.Control;
                 buttonForeColor = SystemColors.ControlText;
                 label_SelectedDiagram.ForeColor = SystemColors.ControlText;
+                label_SelectedPage.ForeColor = SystemColors.ControlText;
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.DarkGray;
                 statusStrip_Bottom.BackColor = SystemColors.Control;
                 statusStrip_Bottom.ForeColor = SystemColors.ControlText;
@@ -166,6 +199,7 @@ namespace PlantUmlViewer.Forms
                 buttonBackColor = SystemColors.ControlDarkDark;
                 buttonForeColor = SystemColors.ControlLightLight;
                 label_SelectedDiagram.ForeColor = SystemColors.ControlLightLight;
+                label_SelectedPage.ForeColor = SystemColors.ControlLightLight;
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.LightGray;
                 statusStrip_Bottom.BackColor = SystemColors.ControlDarkDark;
                 statusStrip_Bottom.ForeColor = SystemColors.ControlLightLight;
@@ -198,10 +232,16 @@ namespace PlantUmlViewer.Forms
             button_ZoomReset.BackgroundImage = RemapImage(Resources.ZoomReset, buttonImageColorMap);
             button_PreviousDiagram.BackColor = buttonBackColor;
             button_PreviousDiagram.ForeColor = buttonForeColor;
-            button_PreviousDiagram.BackgroundImage = RemapImage(Resources.Previous, buttonImageColorMap);
+            button_PreviousDiagram.BackgroundImage = RemapImage(Resources.NavigateLeft, buttonImageColorMap);
             button_NextDiagram.BackColor = buttonBackColor;
             button_NextDiagram.ForeColor = buttonForeColor;
-            button_NextDiagram.BackgroundImage = RemapImage(Resources.Next, buttonImageColorMap);
+            button_NextDiagram.BackgroundImage = RemapImage(Resources.NavigateRight, buttonImageColorMap);
+            button_PreviousPage.BackColor = buttonBackColor;
+            button_PreviousPage.ForeColor = buttonForeColor;
+            button_PreviousPage.BackgroundImage = RemapImage(Resources.NavigateUp, buttonImageColorMap);
+            button_NextPage.BackColor = buttonBackColor;
+            button_NextPage.ForeColor = buttonForeColor;
+            button_NextPage.BackgroundImage = RemapImage(Resources.NavigateDown, buttonImageColorMap);
         }
 
         #region Button events
@@ -220,22 +260,24 @@ namespace PlantUmlViewer.Forms
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
                 loadingCircleToolStripMenuItem_Refreshing.Visible = true;
 
-                RendererFactory factory = new RendererFactory();
-                IPlantUmlRenderer renderer = factory.CreateRenderer(new PlantUmlSettings()
-                {
-                    ErrorReportMode = ErrorReportMode.Verbose,
-                    LocalPlantUmlPath = plantUmlBinary,
-                    JavaPath = settings.Settings.JavaPath,
-                    RenderingMode = RenderingMode.Local,
-                    Delimitor = ""
-                });
-
-                //The response could contain multiple XML documents / SVG images
-                List<SvgDocument> images = new List<SvgDocument>();
+                /*
+                 * The responses could contain multiple pages, where each page could contain the images for multiple diagrams
+                 * The list is build up like
+                 *  - Page 1
+                 *      - Diagram 1 image or null
+                 *      - ...
+                 *      - Diagram n image or null
+                 *  - ...
+                 *      - ...
+                 *  - Diaggram n
+                 *      - ...
+                 */
+                List<List<SvgDocument>> pages = new List<List<SvgDocument>>();
 
                 text = getText();
                 if (string.IsNullOrWhiteSpace(text))
                 {
+                    //Empty input
                     using (MemoryStream memoryStream = new MemoryStream(Resources.Empty))
                     {
                         SvgDocument emptyImage = SvgDocument.Open<SvgDocument>(memoryStream);
@@ -254,33 +296,70 @@ namespace PlantUmlViewer.Forms
                             }
                         }
                         Random rnd = new Random();
-                        setTextColor(emptyImage, new SvgColourServer(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))));
-                        images.Add(emptyImage);
+                        setTextColor(emptyImage, new SvgColourServer(
+                            Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))));
+                        pages.Add(new List<SvgDocument>() { emptyImage });
                     }
                 }
                 else
                 {
+                    RendererFactory renderFactory = new RendererFactory();
                     refreshCancellationTokenSource = new CancellationTokenSource();
-                    byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Svg,
-                        refreshCancellationTokenSource.Token).ConfigureAwait(true);
 
-                    //Find all start XML declarations to parse multiple images
-                    List<int> xmlStartDeclararationIndices = PatternAt(bytes, Encoding.UTF8.GetBytes("<?xml ")).ToList();
-                    for (int i = 0; i < xmlStartDeclararationIndices.Count; i++)
+                    //Run through all pages
+                    int pageIndex = 0;
+                    while(true)
                     {
-                        int start = xmlStartDeclararationIndices[i];
-                        int end = i == xmlStartDeclararationIndices.Count - 1 ? bytes.Length : xmlStartDeclararationIndices[i + 1];
-                        using (MemoryStream memoryStream = new MemoryStream(bytes, start, end - start))
+                        IPlantUmlRenderer renderer = renderFactory.CreateRenderer(new PlantUmlSettings()
                         {
-                            images.Add(SvgDocument.Open<SvgDocument>(memoryStream));
+                            ErrorReportMode = ErrorReportMode.Verbose,
+                            LocalPlantUmlPath = plantUmlBinary,
+                            JavaPath = settings.Settings.JavaPath,
+                            RenderingMode = RenderingMode.Local,
+                            Delimitor = DIAGRAM_DELIMITOR,
+                            ImageIndex = pageIndex
+                        });
+
+                        byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Svg,
+                            refreshCancellationTokenSource.Token).ConfigureAwait(true);
+
+                        //Find all delimitors to parse multiple diagram images
+                        List<SvgDocument> imagesOfPage = new List<SvgDocument>();
+                        List<int> delimitorIndices = new int[] { -(DIAGRAM_DELIMITOR.Length + 2) }
+                            .Concat(PatternAt(bytes, Encoding.UTF8.GetBytes(DIAGRAM_DELIMITOR))).ToList();
+                        for (int i = 0; i < delimitorIndices.Count - 1; i++)
+                        {
+                            int start = delimitorIndices[i] + DIAGRAM_DELIMITOR.Length + 2;
+                            int end = delimitorIndices[i + 1];
+                            using (MemoryStream memoryStream = new MemoryStream(bytes, start, end - start))
+                            {
+                                if (end - start > 0)
+                                {
+                                    Debug.WriteLine($"Generating image {i + 1} for page {pageIndex + 1}", nameof(PreviewWindow));
+                                    imagesOfPage.Add(SvgDocument.Open<SvgDocument>(memoryStream));
+                                }
+                                else
+                                {
+                                    Debug.WriteLine($"No image {i + 1} for page {pageIndex + 1}", nameof(PreviewWindow));
+                                    imagesOfPage.Add(null);
+                                }
+                            }
                         }
+                        //No more pages available
+                        if (imagesOfPage.All(i => i == null))
+                        {
+                            break;
+                        }
+                        pages.Add(imagesOfPage);
+                        pageIndex++;
                     }
                 }
-                Debug.WriteLine($"{images.Count} image(s) generated", nameof(PreviewWindow));
+                Debug.WriteLine($"{pages.SelectMany(p => p.Where(i => i != null)).Count()} images(s) at {pages.Count} page(s) generated",
+                    nameof(PreviewWindow));
 
                 this.InvokeIfRequired(() =>
                 {
-                    UpdateImages(images);
+                    UpdateImages(pages);
                     toolStripStatusLabel_Time.Text = $"{Path.GetFileName(getFilePath())} ({DateTime.Now.ToShortTimeString()})";
                     toolStripStatusLabel_Time.BackColor = colorSuccess;
                     button_Export.Enabled = true;
@@ -336,7 +415,7 @@ namespace PlantUmlViewer.Forms
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog()
                 {
                     Filter = "PNG file|*.png|SVG file|*.svg",
-                    FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}{(svgImages.Count > 1 ? $"_{GetSelectedImageIndex() + 1}" : "")}.png",
+                    FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}{(svgImages.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(svgImages[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
                     InitialDirectory = Path.GetDirectoryName(getFilePath())
                 })
                 {
@@ -345,7 +424,7 @@ namespace PlantUmlViewer.Forms
                         switch (Path.GetExtension(saveFileDialog.FileName))
                         {
                             case ".png":
-                                GetDiagramImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
+                                GetCurrentImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
                                 break;
                             case ".svg":
                                 GetSelectedImage().Write(saveFileDialog.FileName);
@@ -384,18 +463,44 @@ namespace PlantUmlViewer.Forms
 
         private void Button_PreviousDiagram_Click(object sender, EventArgs e)
         {
-            SetSelectedImage(GetSelectedImageIndex() - 1);
+            SetSelectedImage(GetSelectedDiagramIndex() - 1, 0);
+            if (!button_PreviousDiagram.Enabled)
+            {
+                button_NextDiagram.Focus();
+            }
         }
 
         private void Button_NextDiagram_Click(object sender, EventArgs e)
         {
-            SetSelectedImage(GetSelectedImageIndex() + 1);
+            SetSelectedImage(GetSelectedDiagramIndex() + 1, 0);
+            if (!button_NextDiagram.Enabled)
+            {
+                button_PreviousDiagram.Focus();
+            }
+        }
+
+        private void Button_PreviousPage_Click(object sender, EventArgs e)
+        {
+            SetSelectedImage(GetSelectedDiagramIndex(), GetSelectedPageIndex() - 1);
+            if (!button_PreviousPage.Enabled)
+            {
+                button_NextPage.Focus();
+            }
+        }
+
+        private void Button_NextPage_Click(object sender, EventArgs e)
+        {
+            SetSelectedImage(GetSelectedDiagramIndex(), GetSelectedPageIndex() + 1);
+            if (!button_NextPage.Enabled)
+            {
+                button_PreviousPage.Focus();
+            }
         }
         #endregion Button events
 
         private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
         {
-            Clipboard.SetImage(GetDiagramImage(settings.Settings.ExportSizeFactor));
+            Clipboard.SetImage(GetCurrentImage(settings.Settings.ExportSizeFactor));
         }
 
         private void ImageBox_ZoomChanged(object sender, EventArgs e)
@@ -403,7 +508,7 @@ namespace PlantUmlViewer.Forms
             toolStripStatusLabel_Zoom.Text = $"{imageBox_Diagram.Zoom}%";
         }
 
-        private Image GetDiagramImage(decimal exportSizeFactor)
+        private Image GetCurrentImage(decimal exportSizeFactor)
         {
             SvgDocument selectedImage = GetSelectedImage();
 
