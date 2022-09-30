@@ -36,7 +36,7 @@ PlantUML Viewer can be opened
 * via the Notepad++ *Plugins* submenu (*Plugins* --> *PlantUML Viewer* --> *Preview PlantUML*)
 
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
-![PlantUML Viewer](doc/PlantUmlViewerDark.png)
+![PlantUML Viewer dark](doc/PlantUmlViewerDark.png)
 
 By clicking the *Refresh* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Refresh.png" width="20">) button the diagram(s) are generated out of the current opened document. The file extension doesn't matter.
 The diagram can be moved by dragging and zoomed by scrolling or clicking the buttons (<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomIn.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomOut.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomFit.png" width="20">).
@@ -45,8 +45,8 @@ If your document contains multiple diagrams and or pages, you can use the naviga
 
 Make sure *JAVA_PATH* is set in your system or set the right path to your Java installation in the plugins options.
 
-![PlantUML Viewer](doc/Menu.png)
-![PlantUML Viewer](doc/Options.png)
+![PlantUML Viewer menu](doc/Menu.png)
+![PlantUML Viewer options](doc/Options.png)
 
 ### Usability hints
 * You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
