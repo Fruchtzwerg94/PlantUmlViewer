@@ -119,6 +119,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiagramGeneration\DiagramGenerator.cs" />
     <Compile Include="Forms\Controls\LoadingCircle.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -141,7 +142,7 @@
     <Compile Include="Forms\OptionsWindow.Designer.cs">
       <DependentUpon>OptionsWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RenderedDiagram.cs" />
+    <Compile Include="DiagramGeneration\GeneratedDiagram.cs" />
     <Compile Include="PlantUmlViewer.cs" />
     <Compile Include="PluginInfrastructure\ClikeStringArray.cs" />
     <Compile Include="PluginInfrastructure\DllExport\DllExportAttribute.cs" />

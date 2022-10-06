@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Drawing.Imaging;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
 
@@ -19,20 +18,20 @@ using PlantUml.Net.Java;
 
 using Svg;
 
-using PlantUmlViewer.Windows;
+using PlantUmlViewer.DiagramGeneration;
 using PlantUmlViewer.Properties;
 using PlantUmlViewer.Settings;
+using PlantUmlViewer.Windows;
 
 namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
-        private const string DIAGRAM_DELIMITOR = "|##|##|<PS>|##|##|";
-
-        private readonly string plantUmlBinary;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
         private readonly SettingsService settings;
+
+        private readonly DiagramGenerator diagramGenerator;
 
         private bool? isLight;
         private Color colorSuccess;
@@ -41,30 +40,16 @@ namespace PlantUmlViewer.Forms
         private CancellationTokenSource refreshCancellationTokenSource;
 
         #region Images
-        private object imagesLock = new object();
+        private readonly object imagesLock = new object();
         private int selectedDiagramIndex;
         private int selectedPageIndex;
-        private ReadOnlyCollection<RenderedDiagram> svgImages;
+        private ReadOnlyCollection<GeneratedDiagram> images;
 
-        private void UpdateImages(List<List<SvgDocument>> newPages)
+        private void UpdateImages(List<GeneratedDiagram> newImages)
         {
             lock (imagesLock)
             {
-                //Update the images
-                int numberOfDiagrams = newPages.Max(p => p.Count);
-                List<RenderedDiagram> newImagesList = Enumerable.Repeat<object>(null, numberOfDiagrams)
-                    .Select(_ => new RenderedDiagram()).ToList();
-                for (int diagramIndex = 0; diagramIndex < numberOfDiagrams; diagramIndex++)
-                {
-                    foreach (List<SvgDocument> newPage in newPages)
-                    {
-                        if (newPage[diagramIndex] != null)
-                        {
-                            newImagesList[diagramIndex].Pages.Add(newPage[diagramIndex]);
-                        }
-                    }
-                }
-                svgImages = new ReadOnlyCollection<RenderedDiagram>(newImagesList);
+                images = new ReadOnlyCollection<GeneratedDiagram>(newImages);
 
                 //Update the text of the selected diagram and visibility
                 SetSelectedImage(selectedDiagramIndex, selectedPageIndex);
@@ -91,7 +76,7 @@ namespace PlantUmlViewer.Forms
         {
             lock (imagesLock)
             {
-                return svgImages[selectedDiagramIndex].Pages[selectedPageIndex];
+                return images[selectedDiagramIndex].Pages[selectedPageIndex];
             }
         }
 
@@ -100,16 +85,16 @@ namespace PlantUmlViewer.Forms
             Debug.WriteLine($"Selecting image for diagram index {diagramIndex}, page index {pageIndex}", nameof(PreviewWindow));
             lock (imagesLock)
             {
-                selectedDiagramIndex = Math.Min(diagramIndex, svgImages.Count - 1);
+                selectedDiagramIndex = Math.Min(diagramIndex, images.Count - 1);
                 label_SelectedDiagram.Text = (selectedDiagramIndex + 1).ToString();
-                tableLayoutPanel_NavigationDiagram.Visible = svgImages.Count > 1;
-                button_NextDiagram.Enabled = selectedDiagramIndex < svgImages.Count - 1;
+                tableLayoutPanel_NavigationDiagram.Visible = images.Count > 1;
+                button_NextDiagram.Enabled = selectedDiagramIndex < images.Count - 1;
                 button_PreviousDiagram.Enabled = selectedDiagramIndex > 0;
 
-                selectedPageIndex = Math.Min(pageIndex, svgImages[selectedDiagramIndex].Pages.Count - 1);
+                selectedPageIndex = Math.Min(pageIndex, images[selectedDiagramIndex].Pages.Count - 1);
                 label_SelectedPage.Text = (selectedPageIndex + 1).ToString();
-                tableLayoutPanel_NavigationPage.Visible = svgImages.Any(i => i.Pages.Count > 1);
-                button_NextPage.Enabled = selectedPageIndex < svgImages[selectedDiagramIndex].Pages.Count - 1;
+                tableLayoutPanel_NavigationPage.Visible = images.Any(i => i.Pages.Count > 1);
+                button_NextPage.Enabled = selectedPageIndex < images[selectedDiagramIndex].Pages.Count - 1;
                 button_PreviousPage.Enabled = selectedPageIndex > 0;
 
                 imageBox_Diagram.Image = GetCurrentImage(1);
@@ -121,10 +106,11 @@ namespace PlantUmlViewer.Forms
 
         public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
-            this.plantUmlBinary = plantUmlBinary;
             this.getFilePath = getFilePath;
             this.getText = getText;
             this.settings = settings;
+
+            diagramGenerator = new DiagramGenerator(settings.Settings.JavaPath, plantUmlBinary);
 
             InitializeComponent();
 
@@ -253,6 +239,7 @@ namespace PlantUmlViewer.Forms
                 refreshCancellationTokenSource.Cancel();
                 return;
             }
+            refreshCancellationTokenSource = new CancellationTokenSource();
 
             string text = null;
             try
@@ -260,20 +247,7 @@ namespace PlantUmlViewer.Forms
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
                 loadingCircleToolStripMenuItem_Refreshing.Visible = true;
 
-                /*
-                 * The responses could contain multiple pages, where each page could contain the images for multiple diagrams
-                 * The list is build up like
-                 *  - Page 1
-                 *      - Diagram 1 image or null
-                 *      - ...
-                 *      - Diagram n image or null
-                 *  - ...
-                 *      - ...
-                 *  - Diaggram n
-                 *      - ...
-                 */
-                List<List<SvgDocument>> pages = new List<List<SvgDocument>>();
-
+                List<GeneratedDiagram> images;
                 text = getText();
                 if (string.IsNullOrWhiteSpace(text))
                 {
@@ -298,113 +272,59 @@ namespace PlantUmlViewer.Forms
                         Random rnd = new Random();
                         setTextColor(emptyImage, new SvgColourServer(
                             Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))));
-                        pages.Add(new List<SvgDocument>() { emptyImage });
+                        images = new List<GeneratedDiagram>()
+                        {
+                            new GeneratedDiagram(emptyImage)
+                        };
                     }
                 }
                 else
                 {
-                    RendererFactory renderFactory = new RendererFactory();
-                    refreshCancellationTokenSource = new CancellationTokenSource();
-
-                    //Run through all pages
-                    int pageIndex = 0;
-                    while(true)
-                    {
-                        IPlantUmlRenderer renderer = renderFactory.CreateRenderer(new PlantUmlSettings()
-                        {
-                            ErrorReportMode = ErrorReportMode.Verbose,
-                            LocalPlantUmlPath = plantUmlBinary,
-                            JavaPath = settings.Settings.JavaPath,
-                            RenderingMode = RenderingMode.Local,
-                            Delimitor = DIAGRAM_DELIMITOR,
-                            ImageIndex = pageIndex
-                        });
-
-                        byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Svg,
-                            refreshCancellationTokenSource.Token).ConfigureAwait(true);
-
-                        //Find all delimitors to parse multiple diagram images
-                        List<SvgDocument> imagesOfPage = new List<SvgDocument>();
-                        List<int> delimitorIndices = new int[] { -(DIAGRAM_DELIMITOR.Length + 2) }
-                            .Concat(PatternAt(bytes, Encoding.UTF8.GetBytes(DIAGRAM_DELIMITOR))).ToList();
-                        for (int i = 0; i < delimitorIndices.Count - 1; i++)
-                        {
-                            int start = delimitorIndices[i] + DIAGRAM_DELIMITOR.Length + 2;
-                            int end = delimitorIndices[i + 1];
-                            using (MemoryStream memoryStream = new MemoryStream(bytes, start, end - start))
-                            {
-                                if (end - start > 0)
-                                {
-                                    Debug.WriteLine($"Generating image {i + 1} for page {pageIndex + 1}", nameof(PreviewWindow));
-                                    imagesOfPage.Add(SvgDocument.Open<SvgDocument>(memoryStream));
-                                }
-                                else
-                                {
-                                    Debug.WriteLine($"No image {i + 1} for page {pageIndex + 1}", nameof(PreviewWindow));
-                                    imagesOfPage.Add(null);
-                                }
-                            }
-                        }
-                        //No more pages available
-                        if (imagesOfPage.All(i => i == null))
-                        {
-                            break;
-                        }
-                        pages.Add(imagesOfPage);
-                        pageIndex++;
-                    }
+                    images = await diagramGenerator.GenerateDocumentAsync(text, refreshCancellationTokenSource).ConfigureAwait(true);
                 }
-                Debug.WriteLine($"{pages.SelectMany(p => p.Where(i => i != null)).Count()} images(s) at {pages.Count} page(s) generated",
-                    nameof(PreviewWindow));
 
-                this.InvokeIfRequired(() =>
-                {
-                    UpdateImages(pages);
-                    toolStripStatusLabel_Time.Text = $"{Path.GetFileName(getFilePath())} ({DateTime.Now.ToShortTimeString()})";
-                    toolStripStatusLabel_Time.BackColor = colorSuccess;
-                    button_Export.Enabled = true;
-                    button_ZoomIn.Enabled = true;
-                    button_ZoomOut.Enabled = true;
-                    button_ZoomFit.Enabled = true;
-                    button_ZoomReset.Enabled = true;
-                    ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
-                    ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
-                });
+                UpdateImages(images);
+                toolStripStatusLabel_Time.Text = $"{Path.GetFileName(getFilePath())} ({DateTime.Now.ToShortTimeString()})";
+                toolStripStatusLabel_Time.BackColor = colorSuccess;
+                button_Export.Enabled = true;
+                button_ZoomIn.Enabled = true;
+                button_ZoomOut.Enabled = true;
+                button_ZoomFit.Enabled = true;
+                button_ZoomReset.Enabled = true;
+                ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
+                ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
             }
             catch (FileFormatException ffEx)
             {
-                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(this, ffEx.Message, "Failed to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (JavaNotFoundException jnfEx)
             {
-                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(this, $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
                     "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (TaskCanceledException)
             {
-                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(this, "Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (RenderingException rEx)
             {
-                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(this, rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                this.InvokeIfRequired(() => toolStripStatusLabel_Time.BackColor = colorFailure);
+                toolStripStatusLabel_Time.BackColor = colorFailure;
                 MessageBox.Show(this, ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                this.InvokeIfRequired(() =>
-                {
-                    loadingCircleToolStripMenuItem_Refreshing.Visible = false;
-                    loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
-                    refreshCancellationTokenSource = null;
-                });
+                loadingCircleToolStripMenuItem_Refreshing.Visible = false;
+                loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
+                refreshCancellationTokenSource = null;
             }
         }
 
@@ -415,7 +335,7 @@ namespace PlantUmlViewer.Forms
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog()
                 {
                     Filter = "PNG file|*.png|SVG file|*.svg",
-                    FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}{(svgImages.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(svgImages[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
+                    FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}{(images.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(images[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
                     InitialDirectory = Path.GetDirectoryName(getFilePath())
                 })
                 {
@@ -567,17 +487,6 @@ namespace PlantUmlViewer.Forms
                 }
                 while (line != null && currentLineNumber < lineNumber);
                 return (currentLineNumber == lineNumber) ? line : "";
-            }
-        }
-
-        private static IEnumerable<int> PatternAt(byte[] source, byte[] pattern)
-        {
-            for (int i = 0; i < source.Length; i++)
-            {
-                if (source.Skip(i).Take(pattern.Length).SequenceEqual(pattern))
-                {
-                    yield return i;
-                }
             }
         }
     }
