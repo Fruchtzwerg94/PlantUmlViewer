@@ -27,7 +27,7 @@ If you have the [Plugin Manager](https://github.com/bruderstein/nppPluginManager
 ### Compatibility
 This plugin requires at least
 * Notepad++ 32-bit or 64-bit
-* .NET Framework 4.6.1 or above
+* .NET Framework 4.6.2 or above
 * Java
 
 ## Usage
@@ -57,11 +57,12 @@ Make sure *JAVA_PATH* is set in your system or set the right path to your Java i
 PlantUML Viewer is released under the [MIT License](LICENSE).
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
-* The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by kbilsted provided under the Apache 2.0 license.
+* The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by Kasper B. Graversen provided under the Apache 2.0 license.
 * The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
 * The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License which depends on
-    * [Fizzler](https://github.com/atifaziz/Fizzler) by atifaziz provided under the GNU Lesser General Public License.
-* The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Cyotek provided under the MIT License.
+    * [Fizzler](https://github.com/atifaziz/Fizzler) by Atif Aziz provided under the GNU Lesser General Public License and
+    * [ExCSS](https://github.com/TylerBrinks/ExCSS) by Tyler Brinks provided under the Microsoft Public License.
+* The plugin uses the [ImageBox Control](https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox) by Richard Moss provided under the MIT License.
 * The plugin uses the [LoadingCircle](https://www.codeproject.com/articles/14841/how-to-write-a-loading-circle-animation-in-net) by Martin Gagne provided under the Code Project Open License.
 * The plugin uses [Json.NET](https://www.newtonsoft.com/json) by James Newton-King provided under the MIT License.
 * The plugin uses [Material Design Icons](https://materialdesignicons.com/) provided under the Pictogrammers Free License.

@@ -1,9 +1,10 @@
 # X.X.X.X (XX.XX.XXXX)
+- Plugin target framework updated to .NET Framework 4.6.2
 - Added support for multiple pages per document
 - Added error if the input document is not UTF-8 encoded
 - Added file name of generated diagram to bottom status bar
 - Update plugin colors automatically if Notepad++ colors changed
-- Non functional code improvements
+- SVG.NET library updated to 3.4.3
 
 # 1.3.0.7 (16.08.2022)
 - PlantUML version updated to 1.2022.6
