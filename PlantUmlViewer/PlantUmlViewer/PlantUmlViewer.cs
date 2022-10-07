@@ -16,7 +16,7 @@ namespace PlantUmlViewer
     {
         public const string PLUGIN_NAME = "PlantUML Viewer";
 
-        private const string PLANT_UML_BINARY = "plantuml-1.2022.6.jar";
+        private const string PLANT_UML_BINARY = "plantuml-1.2022.8.jar";
 
         private enum CommandId
         {
