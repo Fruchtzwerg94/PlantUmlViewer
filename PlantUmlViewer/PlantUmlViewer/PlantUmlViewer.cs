@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -32,30 +31,11 @@ namespace PlantUmlViewer
         private INotepadPPGateway notepadPp;
         private SettingsService settings;
 
-        private readonly Icon icon;
         private PreviewWindow previewWindow;
 
         public PlantUmlViewer()
         {
             assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            using (Bitmap bmp = new Bitmap(16, 16))
-            {
-                Graphics g = Graphics.FromImage(bmp);
-                ColorMap[] colorMap = new ColorMap[]
-                {
-                    new ColorMap
-                    {
-                        OldColor = Color.Transparent,
-                        NewColor = Color.FromKnownColor(KnownColor.ButtonFace)
-                    }
-                };
-                ImageAttributes attr = new ImageAttributes();
-                attr.SetRemapTable(colorMap);
-                g.DrawImage(Properties.Resources.Icon, new Rectangle(0, 0, 16, 16),
-                    0, 0, 16, 16, GraphicsUnit.Pixel, attr);
-                icon = Icon.FromHandle(bmp.GetHicon());
-            }
         }
 
         public void OnNotification(ScNotification notification)
@@ -82,7 +62,12 @@ namespace PlantUmlViewer
 
         public void SetToolBarIcon()
         {
-            notepadPp.AddToolbarIcon((int)CommandId.ShowPreview, Properties.Resources.Icon);
+            notepadPp.AddToolbarIcon((int)CommandId.ShowPreview, new toolbarIcons()
+            {
+                hToolbarBmp = Properties.Resources.Image.GetHbitmap(),
+                hToolbarIcon = Properties.Resources.IconFluent.Handle,
+                hToolbarIconDarkMode = Properties.Resources.IconFluentDark.Handle
+            });
 
             VisibilityChanged(false);
         }
@@ -139,7 +124,7 @@ namespace PlantUmlViewer
                     pszName = "PlantUML",
                     dlgID = (int)CommandId.ShowPreview,
                     uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR,
-                    hIconTab = (uint)icon.Handle,
+                    hIconTab = (uint)Properties.Resources.Icon.Handle,
                     pszModuleName = PLUGIN_NAME
                 };
                 IntPtr nppTbDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(nppTbData));

@@ -1,3 +1,6 @@
+# X.X.X.X (X.X.X.X)
+- Added fluent and dark style icons
+
 # 1.4.0.8 (07.10.2022)
 - Plugin target framework updated to .NET Framework 4.6.2
 - PlantUML version updated to 1.2022.8

@@ -143,7 +143,7 @@ namespace PlantUmlViewer.Forms
                     {
                         MessageBox.Show(IsDisposed ? null : this, "You are using the latest release", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you whish to proceed to the download site?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you wish to proceed to the download site?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         Process.Start(latestReleaseUrl);
                     }
