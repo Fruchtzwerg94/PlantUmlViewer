@@ -223,7 +223,7 @@
             this.Name = "OptionsWindow";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Options";
+            this.Text = "OptionsWindow";
             this.tableLayoutPanel_Window.ResumeLayout(false);
             this.tableLayoutPanel_Window.PerformLayout();
             this.tableLayoutPanel_Buttons.ResumeLayout(false);

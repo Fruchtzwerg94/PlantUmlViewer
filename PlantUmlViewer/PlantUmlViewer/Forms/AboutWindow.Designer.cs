@@ -29,7 +29,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutWindow));
             this.tableLayoutPanel_Window = new System.Windows.Forms.TableLayoutPanel();
-            this.label_ProductName = new System.Windows.Forms.Label();
             this.label_Copyright = new System.Windows.Forms.Label();
             this.button_Ok = new System.Windows.Forms.Button();
             this.tableLayoutPanel_Links = new System.Windows.Forms.TableLayoutPanel();
@@ -40,27 +39,32 @@
             this.tableLayoutPanel_Version = new System.Windows.Forms.TableLayoutPanel();
             this.label_Version = new System.Windows.Forms.Label();
             this.button_CheckForUpdate = new System.Windows.Forms.Button();
+            this.tableLayoutPanel_Header = new System.Windows.Forms.TableLayoutPanel();
+            this.label_ProductName = new System.Windows.Forms.Label();
+            this.pictureBox_Image = new System.Windows.Forms.PictureBox();
             this.loadingCircle_checkForUpdate = new MRG.Controls.UI.LoadingCircle();
             this.tableLayoutPanel_Window.SuspendLayout();
             this.tableLayoutPanel_Links.SuspendLayout();
             this.tableLayoutPanel_Version.SuspendLayout();
+            this.tableLayoutPanel_Header.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Image)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel_Window
             // 
             this.tableLayoutPanel_Window.ColumnCount = 1;
             this.tableLayoutPanel_Window.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Window.Controls.Add(this.label_ProductName, 0, 0);
             this.tableLayoutPanel_Window.Controls.Add(this.label_Copyright, 0, 2);
             this.tableLayoutPanel_Window.Controls.Add(this.button_Ok, 0, 5);
             this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Links, 0, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.richTextBox_Text, 0, 4);
             this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Version, 0, 1);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Header, 0, 0);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(9, 9);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
             this.tableLayoutPanel_Window.RowCount = 6;
-            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -69,23 +73,10 @@
             this.tableLayoutPanel_Window.Size = new System.Drawing.Size(417, 265);
             this.tableLayoutPanel_Window.TabIndex = 0;
             // 
-            // label_ProductName
-            // 
-            this.label_ProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_ProductName.Location = new System.Drawing.Point(6, 0);
-            this.label_ProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.label_ProductName.Name = "label_ProductName";
-            this.label_ProductName.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.label_ProductName.Size = new System.Drawing.Size(408, 17);
-            this.label_ProductName.TabIndex = 19;
-            this.label_ProductName.Text = "Product name";
-            this.label_ProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // label_Copyright
             // 
             this.label_Copyright.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_Copyright.Location = new System.Drawing.Point(6, 47);
+            this.label_Copyright.Location = new System.Drawing.Point(6, 65);
             this.label_Copyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.label_Copyright.Name = "label_Copyright";
             this.label_Copyright.Size = new System.Drawing.Size(408, 17);
@@ -113,7 +104,7 @@
             this.tableLayoutPanel_Links.Controls.Add(this.linkLabel_Mail, 1, 0);
             this.tableLayoutPanel_Links.Controls.Add(this.linkLabel_Github, 0, 0);
             this.tableLayoutPanel_Links.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_Links.Location = new System.Drawing.Point(3, 67);
+            this.tableLayoutPanel_Links.Location = new System.Drawing.Point(3, 85);
             this.tableLayoutPanel_Links.Name = "tableLayoutPanel_Links";
             this.tableLayoutPanel_Links.RowCount = 1;
             this.tableLayoutPanel_Links.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -163,10 +154,10 @@
             // richTextBox_Text
             // 
             this.richTextBox_Text.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_Text.Location = new System.Drawing.Point(3, 87);
+            this.richTextBox_Text.Location = new System.Drawing.Point(3, 105);
             this.richTextBox_Text.Name = "richTextBox_Text";
             this.richTextBox_Text.ReadOnly = true;
-            this.richTextBox_Text.Size = new System.Drawing.Size(411, 145);
+            this.richTextBox_Text.Size = new System.Drawing.Size(411, 127);
             this.richTextBox_Text.TabIndex = 27;
             this.richTextBox_Text.Text = "";
             // 
@@ -181,7 +172,7 @@
             this.tableLayoutPanel_Version.Controls.Add(this.button_CheckForUpdate, 2, 0);
             this.tableLayoutPanel_Version.Controls.Add(this.loadingCircle_checkForUpdate, 1, 0);
             this.tableLayoutPanel_Version.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_Version.Location = new System.Drawing.Point(0, 17);
+            this.tableLayoutPanel_Version.Location = new System.Drawing.Point(0, 35);
             this.tableLayoutPanel_Version.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_Version.Name = "tableLayoutPanel_Version";
             this.tableLayoutPanel_Version.RowCount = 1;
@@ -210,6 +201,45 @@
             this.button_CheckForUpdate.Text = "Check for update";
             this.button_CheckForUpdate.UseVisualStyleBackColor = true;
             this.button_CheckForUpdate.Click += new System.EventHandler(this.Button_CheckForUpdate_Click);
+            // 
+            // tableLayoutPanel_Header
+            // 
+            this.tableLayoutPanel_Header.ColumnCount = 2;
+            this.tableLayoutPanel_Header.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Header.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_Header.Controls.Add(this.label_ProductName, 0, 0);
+            this.tableLayoutPanel_Header.Controls.Add(this.pictureBox_Image, 1, 0);
+            this.tableLayoutPanel_Header.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_Header.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel_Header.Name = "tableLayoutPanel_Header";
+            this.tableLayoutPanel_Header.RowCount = 1;
+            this.tableLayoutPanel_Header.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Header.Size = new System.Drawing.Size(411, 29);
+            this.tableLayoutPanel_Header.TabIndex = 29;
+            // 
+            // label_ProductName
+            // 
+            this.label_ProductName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_ProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_ProductName.Location = new System.Drawing.Point(6, 0);
+            this.label_ProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.label_ProductName.Name = "label_ProductName";
+            this.label_ProductName.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.label_ProductName.Size = new System.Drawing.Size(296, 29);
+            this.label_ProductName.TabIndex = 20;
+            this.label_ProductName.Text = "Product name";
+            this.label_ProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox_Image
+            // 
+            this.pictureBox_Image.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox_Image.Image = global::PlantUmlViewer.Properties.Resources.Image;
+            this.pictureBox_Image.Location = new System.Drawing.Point(308, 3);
+            this.pictureBox_Image.Name = "pictureBox_Image";
+            this.pictureBox_Image.Size = new System.Drawing.Size(100, 23);
+            this.pictureBox_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox_Image.TabIndex = 21;
+            this.pictureBox_Image.TabStop = false;
             // 
             // loadingCircle_checkForUpdate
             // 
@@ -248,6 +278,8 @@
             this.tableLayoutPanel_Links.ResumeLayout(false);
             this.tableLayoutPanel_Links.PerformLayout();
             this.tableLayoutPanel_Version.ResumeLayout(false);
+            this.tableLayoutPanel_Header.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Image)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -255,7 +287,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Window;
-        private System.Windows.Forms.Label label_ProductName;
         private System.Windows.Forms.Button button_Ok;
         private System.Windows.Forms.RichTextBox richTextBox_Text;
         private System.Windows.Forms.Label label_Copyright;
@@ -267,5 +298,8 @@
         private System.Windows.Forms.Label label_Version;
         private System.Windows.Forms.Button button_CheckForUpdate;
         private MRG.Controls.UI.LoadingCircle loadingCircle_checkForUpdate;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Header;
+        private System.Windows.Forms.Label label_ProductName;
+        private System.Windows.Forms.PictureBox pictureBox_Image;
     }
 }

@@ -82,7 +82,7 @@ namespace PlantUmlViewer.Forms
         {
             InitializeComponent();
 
-            this.Text = PlantUmlViewer.PLUGIN_NAME;
+            this.Text = "About " + PlantUmlViewer.PLUGIN_NAME;
             this.label_ProductName.Text = AssemblyProduct;
             this.label_Version.Text = string.Format("Version {0}", AssemblyVersion);
             this.label_Copyright.Text = AssemblyCopyright;

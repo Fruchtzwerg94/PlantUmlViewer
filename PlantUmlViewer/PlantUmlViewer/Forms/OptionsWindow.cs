@@ -15,6 +15,8 @@ namespace PlantUmlViewer.Forms
 
             InitializeComponent();
 
+            this.Text = PlantUmlViewer.PLUGIN_NAME + " options";
+
             textBox_JavaPath.Text = settings.Settings.JavaPath;
             numericUpDown_ExportSizeFactor.Value = settings.Settings.ExportSizeFactor;
         }
