@@ -1,5 +1,6 @@
 # X.X.X.X (X.X.X.X)
 - Added fluent and dark style icons
+- Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
 
 # 1.4.0.8 (07.10.2022)
 - Plugin target framework updated to .NET Framework 4.6.2

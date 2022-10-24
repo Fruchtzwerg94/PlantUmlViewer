@@ -120,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiagramGeneration\DiagramGenerator.cs" />
+    <Compile Include="Forms\Controls\CustomImageBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Controls\LoadingCircle.cs">
       <SubType>Component</SubType>
     </Compile>

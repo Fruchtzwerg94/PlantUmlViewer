@@ -32,14 +32,18 @@ This plugin requires at least
 
 ## Usage
 PlantUML Viewer can be opened
-* by clicking the toolbar icon ![UML icon](PlantUmlViewer/PlantUmlViewer/Resources/Icon.png)
+* by clicking the toolbar icon ![UML icon](PlantUmlViewer/PlantUmlViewer/Resources/Image.png)
 * via the Notepad++ *Plugins* submenu (*Plugins* --> *PlantUML Viewer* --> *Preview PlantUML*)
 
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
 ![PlantUML Viewer dark](doc/PlantUmlViewerDark.png)
 
 By clicking the *Refresh* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Refresh.png" width="20">) button the diagram(s) are generated out of the current opened document. The file extension doesn't matter.
-The diagram can be moved by dragging and zoomed by scrolling or clicking the buttons (<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomIn.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomOut.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomFit.png" width="20">).
+The diagram can be
+* moved by dragging it,
+* zoomed by <kbd>Ctrl</kbd> + mouse wheel or clicking the buttons (<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomIn.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomOut.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomFit.png" width="20">)
+* or scrolled vertically and horizontally by (<kbd>Shift</kbd> +) mouse wheel.
+
 The currently showed diagram can be exported or copied to clipboard as PNG or SVG image by clicking the *Export* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Save.png" width="20">) button or using the right click context menu.
 If your document contains multiple diagrams and or pages, you can use the navigation buttons to show the next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateRight.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateLeft.png" width="20">) diagram and next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateUp.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateDown.png" width="20">) page.
 
