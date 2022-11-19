@@ -2,16 +2,16 @@
 https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net
 
 # Commit URL
-https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/commit/2efb1fcadde31311c4504eb2ac1b67525b0019a0
+https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/commit/b588f001e5684afbe61af572fc95bff4d21e51b0
 
 # Commit details
 ```
-Commit: 2efb1fcadde31311c4504eb2ac1b67525b0019a0 [2efb1fc]
-Parents: 7caa5b8a5d, fbc710de5b
-Author: Kasper B. Graversen <kbilsted@users.noreply.github.com>
-Date: Dienstag, 31. Mai 2022 09:46:57
+Commit: b588f001e5684afbe61af572fc95bff4d21e51b0 [b588f00]
+Parents: 529a28393b, a6ab346545
+Author: Magesh K <47920326+mahee96@users.noreply.github.com>
+Date: Freitag, 18. November 2022 01:28:36
 Committer: GitHub
-Merge pull request #92 from Fruchtzwerg94/fix_get_current_file_path
+Merge pull request #95 from Fruchtzwerg94/fix_64bit_notification
 
-Fixed GetCurrentFilePath due to unexpected return value
+Updated Position types to work also on 64 bit
 ```
