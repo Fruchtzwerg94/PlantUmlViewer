@@ -68,7 +68,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cyotek.Windows.Forms.ImageBox, Version=1.2.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
-      <HintPath>..\packages\CyotekImageBox.1.3.1\lib\net20\Cyotek.Windows.Forms.ImageBox.dll</HintPath>
+      <HintPath>..\packages\CyotekImageBox.1.4.0-beta.1\lib\net20\Cyotek.Windows.Forms.ImageBox.dll</HintPath>
     </Reference>
     <Reference Include="ExCSS, Version=4.1.4.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
       <HintPath>..\packages\ExCSS.4.1.4\lib\net452\ExCSS.dll</HintPath>
@@ -120,9 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiagramGeneration\DiagramGenerator.cs" />
-    <Compile Include="Forms\Controls\CustomImageBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\Controls\LoadingCircle.cs">
       <SubType>Component</SubType>
     </Compile>

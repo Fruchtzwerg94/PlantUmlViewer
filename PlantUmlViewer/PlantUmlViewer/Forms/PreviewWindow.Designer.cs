@@ -34,7 +34,7 @@
             this.loadingCircleToolStripMenuItem_Refreshing = new MRG.Controls.UI.LoadingCircleToolStripMenuItem();
             this.toolStripStatusLabel_Time = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Zoom = new System.Windows.Forms.ToolStripStatusLabel();
-            this.imageBox_Diagram = new Forms.Controls.CustomImageBox();
+            this.imageBox_Diagram = new Cyotek.Windows.Forms.ImageBox();
             this.contextMenuStrip_Diagram = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_Diagram_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Diagram_ExportFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,6 +138,7 @@
             this.imageBox_Diagram.GridDisplayMode = Cyotek.Windows.Forms.ImageBoxGridDisplayMode.None;
             this.imageBox_Diagram.Location = new System.Drawing.Point(0, 38);
             this.imageBox_Diagram.Margin = new System.Windows.Forms.Padding(0);
+            this.imageBox_Diagram.MouseWheelMode = Cyotek.Windows.Forms.ImageBoxMouseWheelMode.ScrollAndZoom;
             this.imageBox_Diagram.Name = "imageBox_Diagram";
             this.imageBox_Diagram.Size = new System.Drawing.Size(384, 201);
             this.imageBox_Diagram.TabIndex = 1;
@@ -408,7 +409,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Window;
         private System.Windows.Forms.Button button_Refresh;
-        private Forms.Controls.CustomImageBox imageBox_Diagram;
+        private Cyotek.Windows.Forms.ImageBox imageBox_Diagram;
         private System.Windows.Forms.Button button_Export;
         private System.Windows.Forms.StatusStrip statusStrip_Bottom;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Zoom;
