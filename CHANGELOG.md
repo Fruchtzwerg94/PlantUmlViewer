@@ -1,6 +1,8 @@
 # X.X.X.X (X.X.X.X)
 - Added fluent and dark style icons
 - Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
+- Added include option
+- Fixed potential crash if generation failed
 - SVG.NET library updated to 3.4.4
 
 # 1.4.0.8 (07.10.2022)

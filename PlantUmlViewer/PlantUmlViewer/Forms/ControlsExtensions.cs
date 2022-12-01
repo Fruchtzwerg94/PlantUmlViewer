@@ -3,13 +3,13 @@ using System.Windows.Forms;
 
 namespace PlantUmlViewer.Forms
 {
-    public static class FormsExtensions
+    public static class ControlsExtensions
     {
-        public static void InvokeIfRequired(this Form form, Action action)
+        public static void InvokeIfRequired(this Control control, Action action)
         {
-            if (form.InvokeRequired)
+            if (control.InvokeRequired)
             {
-                form.Invoke(action);
+                control.Invoke(action);
             }
             else
             {

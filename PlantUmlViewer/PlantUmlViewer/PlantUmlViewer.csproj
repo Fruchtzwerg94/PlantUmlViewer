@@ -135,7 +135,7 @@
     <Compile Include="Forms\AboutWindow.Designer.cs">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormsExtensions.cs" />
+    <Compile Include="Forms\ControlsExtensions.cs" />
     <Compile Include="Forms\OptionsWindow.cs">
       <SubType>Form</SubType>
     </Compile>

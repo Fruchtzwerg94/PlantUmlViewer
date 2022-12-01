@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsWindow));
             this.tableLayoutPanel_Window = new System.Windows.Forms.TableLayoutPanel();
+            this.label_IncludeDescription = new System.Windows.Forms.Label();
+            this.label_Include = new System.Windows.Forms.Label();
+            this.textBox_Include = new System.Windows.Forms.TextBox();
             this.label_headerGeneral = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Buttons = new System.Windows.Forms.TableLayoutPanel();
             this.button_Cancel = new System.Windows.Forms.Button();
@@ -50,19 +53,24 @@
             this.tableLayoutPanel_Window.ColumnCount = 2;
             this.tableLayoutPanel_Window.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel_Window.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_Window.Controls.Add(this.label_IncludeDescription, 1, 4);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_Include, 0, 3);
+            this.tableLayoutPanel_Window.Controls.Add(this.textBox_Include, 1, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.label_headerGeneral, 0, 0);
-            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 6);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 8);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPath, 0, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.textBox_JavaPath, 2, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPathDescription, 1, 2);
-            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportSizeFactor, 0, 3);
-            this.tableLayoutPanel_Window.Controls.Add(this.numericUpDown_ExportSizeFactor, 1, 3);
-            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportExportSizeFactorDescription, 1, 4);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportSizeFactor, 0, 5);
+            this.tableLayoutPanel_Window.Controls.Add(this.numericUpDown_ExportSizeFactor, 1, 5);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportExportSizeFactorDescription, 1, 6);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
             this.tableLayoutPanel_Window.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel_Window.RowCount = 7;
+            this.tableLayoutPanel_Window.RowCount = 9;
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -72,6 +80,38 @@
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel_Window.Size = new System.Drawing.Size(634, 261);
             this.tableLayoutPanel_Window.TabIndex = 0;
+            // 
+            // label_IncludeDescription
+            // 
+            this.label_IncludeDescription.AutoSize = true;
+            this.label_IncludeDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_IncludeDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_IncludeDescription.Location = new System.Drawing.Point(102, 92);
+            this.label_IncludeDescription.Name = "label_IncludeDescription";
+            this.label_IncludeDescription.Size = new System.Drawing.Size(524, 13);
+            this.label_IncludeDescription.TabIndex = 10;
+            this.label_IncludeDescription.Text = "Include a file as if \'!include file\' were used, also allowing pattern like \'*.pum" +
+    "l\'.";
+            this.label_IncludeDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label_Include
+            // 
+            this.label_Include.AutoSize = true;
+            this.label_Include.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_Include.Location = new System.Drawing.Point(8, 66);
+            this.label_Include.Name = "label_Include";
+            this.label_Include.Size = new System.Drawing.Size(88, 26);
+            this.label_Include.TabIndex = 9;
+            this.label_Include.Text = "Import";
+            this.label_Include.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox_Include
+            // 
+            this.textBox_Include.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_Include.Location = new System.Drawing.Point(102, 69);
+            this.textBox_Include.Name = "textBox_Include";
+            this.textBox_Include.Size = new System.Drawing.Size(524, 20);
+            this.textBox_Include.TabIndex = 2;
             // 
             // label_headerGeneral
             // 
@@ -100,7 +140,7 @@
             this.tableLayoutPanel_Buttons.RowCount = 1;
             this.tableLayoutPanel_Buttons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(618, 34);
-            this.tableLayoutPanel_Buttons.TabIndex = 3;
+            this.tableLayoutPanel_Buttons.TabIndex = 4;
             // 
             // button_Cancel
             // 
@@ -109,7 +149,7 @@
             this.button_Cancel.Location = new System.Drawing.Point(3, 3);
             this.button_Cancel.Name = "button_Cancel";
             this.button_Cancel.Size = new System.Drawing.Size(303, 28);
-            this.button_Cancel.TabIndex = 2;
+            this.button_Cancel.TabIndex = 6;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
             // 
@@ -119,7 +159,7 @@
             this.button_ok.Location = new System.Drawing.Point(312, 3);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(303, 28);
-            this.button_ok.TabIndex = 1;
+            this.button_ok.TabIndex = 5;
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.Button_Ok_Click);
@@ -160,7 +200,7 @@
             // 
             this.label_ExportSizeFactor.AutoSize = true;
             this.label_ExportSizeFactor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ExportSizeFactor.Location = new System.Drawing.Point(8, 66);
+            this.label_ExportSizeFactor.Location = new System.Drawing.Point(8, 105);
             this.label_ExportSizeFactor.Name = "label_ExportSizeFactor";
             this.label_ExportSizeFactor.Size = new System.Drawing.Size(88, 26);
             this.label_ExportSizeFactor.TabIndex = 5;
@@ -176,7 +216,7 @@
             0,
             0,
             65536});
-            this.numericUpDown_ExportSizeFactor.Location = new System.Drawing.Point(102, 69);
+            this.numericUpDown_ExportSizeFactor.Location = new System.Drawing.Point(102, 108);
             this.numericUpDown_ExportSizeFactor.Maximum = new decimal(new int[] {
             10,
             0,
@@ -189,7 +229,7 @@
             65536});
             this.numericUpDown_ExportSizeFactor.Name = "numericUpDown_ExportSizeFactor";
             this.numericUpDown_ExportSizeFactor.Size = new System.Drawing.Size(524, 20);
-            this.numericUpDown_ExportSizeFactor.TabIndex = 2;
+            this.numericUpDown_ExportSizeFactor.TabIndex = 3;
             this.numericUpDown_ExportSizeFactor.Value = new decimal(new int[] {
             1,
             0,
@@ -201,7 +241,7 @@
             this.label_ExportExportSizeFactorDescription.AutoSize = true;
             this.label_ExportExportSizeFactorDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_ExportExportSizeFactorDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label_ExportExportSizeFactorDescription.Location = new System.Drawing.Point(102, 92);
+            this.label_ExportExportSizeFactorDescription.Location = new System.Drawing.Point(102, 131);
             this.label_ExportExportSizeFactorDescription.Name = "label_ExportExportSizeFactorDescription";
             this.label_ExportExportSizeFactorDescription.Size = new System.Drawing.Size(524, 13);
             this.label_ExportExportSizeFactorDescription.TabIndex = 7;
@@ -245,5 +285,8 @@
         private System.Windows.Forms.Label label_ExportSizeFactor;
         private System.Windows.Forms.NumericUpDown numericUpDown_ExportSizeFactor;
         private System.Windows.Forms.Label label_ExportExportSizeFactorDescription;
+        private System.Windows.Forms.Label label_IncludeDescription;
+        private System.Windows.Forms.Label label_Include;
+        private System.Windows.Forms.TextBox textBox_Include;
     }
 }

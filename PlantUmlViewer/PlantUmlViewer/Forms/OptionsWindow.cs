@@ -18,12 +18,14 @@ namespace PlantUmlViewer.Forms
             this.Text = PlantUmlViewer.PLUGIN_NAME + " options";
 
             textBox_JavaPath.Text = settings.Settings.JavaPath;
+            textBox_Include.Text = settings.Settings.Include;
             numericUpDown_ExportSizeFactor.Value = settings.Settings.ExportSizeFactor;
         }
 
         private void Button_Ok_Click(object sender, EventArgs e)
         {
             settings.Settings.JavaPath = textBox_JavaPath.Text;
+            settings.Settings.Include = textBox_Include.Text;
             settings.Settings.ExportSizeFactor = numericUpDown_ExportSizeFactor.Value;
             settings.Save();
 
