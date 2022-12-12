@@ -35,8 +35,8 @@
             this.textBox_Include = new System.Windows.Forms.TextBox();
             this.label_headerGeneral = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Buttons = new System.Windows.Forms.TableLayoutPanel();
-            this.button_Cancel = new System.Windows.Forms.Button();
             this.button_ok = new System.Windows.Forms.Button();
+            this.button_Cancel = new System.Windows.Forms.Button();
             this.label_JavaPath = new System.Windows.Forms.Label();
             this.textBox_JavaPath = new System.Windows.Forms.TextBox();
             this.label_JavaPathDescription = new System.Windows.Forms.Label();
@@ -127,13 +127,13 @@
             // 
             // tableLayoutPanel_Buttons
             // 
-            this.tableLayoutPanel_Buttons.ColumnCount = 2;
+            this.tableLayoutPanel_Buttons.ColumnCount = 3;
             this.tableLayoutPanel_Window.SetColumnSpan(this.tableLayoutPanel_Buttons, 2);
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_Buttons.Controls.Add(this.button_Cancel, 0, 0);
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel_Buttons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_ok, 1, 0);
+            this.tableLayoutPanel_Buttons.Controls.Add(this.button_Cancel, 2, 0);
             this.tableLayoutPanel_Buttons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Buttons.Location = new System.Drawing.Point(8, 219);
             this.tableLayoutPanel_Buttons.Name = "tableLayoutPanel_Buttons";
@@ -142,27 +142,27 @@
             this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(618, 34);
             this.tableLayoutPanel_Buttons.TabIndex = 4;
             // 
-            // button_Cancel
-            // 
-            this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button_Cancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_Cancel.Location = new System.Drawing.Point(3, 3);
-            this.button_Cancel.Name = "button_Cancel";
-            this.button_Cancel.Size = new System.Drawing.Size(303, 28);
-            this.button_Cancel.TabIndex = 6;
-            this.button_Cancel.Text = "Cancel";
-            this.button_Cancel.UseVisualStyleBackColor = true;
-            // 
             // button_ok
             // 
             this.button_ok.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_ok.Location = new System.Drawing.Point(312, 3);
+            this.button_ok.Location = new System.Drawing.Point(209, 3);
             this.button_ok.Name = "button_ok";
-            this.button_ok.Size = new System.Drawing.Size(303, 28);
+            this.button_ok.Size = new System.Drawing.Size(200, 28);
             this.button_ok.TabIndex = 5;
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.Button_Ok_Click);
+            // 
+            // button_Cancel
+            // 
+            this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_Cancel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_Cancel.Location = new System.Drawing.Point(415, 3);
+            this.button_Cancel.Name = "button_Cancel";
+            this.button_Cancel.Size = new System.Drawing.Size(200, 28);
+            this.button_Cancel.TabIndex = 6;
+            this.button_Cancel.Text = "Cancel";
+            this.button_Cancel.UseVisualStyleBackColor = true;
             // 
             // label_JavaPath
             // 

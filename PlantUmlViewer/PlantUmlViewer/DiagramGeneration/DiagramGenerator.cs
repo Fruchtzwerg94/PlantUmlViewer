@@ -17,13 +17,13 @@ namespace PlantUmlViewer.DiagramGeneration
         private const string DIAGRAM_DELIMITOR = "|##|##|<PS>|##|##|";
 
         private readonly RendererFactory renderFactory = new RendererFactory();
-        private readonly string javaPath;
-        private readonly string plantUmlBinary;
+        public string JavaPath { get; set; }
+        public string PlantUmlBinary { get; set; }
 
         public DiagramGenerator(string javaPath, string plantUmlBinary)
         {
-            this.javaPath = javaPath;
-            this.plantUmlBinary = plantUmlBinary;
+            JavaPath = javaPath;
+            PlantUmlBinary = plantUmlBinary;
         }
 
         public async Task<List<GeneratedDiagram>> GenerateDocumentAsync(string text, string include, CancellationTokenSource cancellationTokenSource)
@@ -80,8 +80,8 @@ namespace PlantUmlViewer.DiagramGeneration
             IPlantUmlRenderer renderer = renderFactory.CreateRenderer(new PlantUmlSettings()
             {
                 ErrorReportMode = ErrorReportMode.Verbose,
-                LocalPlantUmlPath = plantUmlBinary,
-                JavaPath = javaPath,
+                LocalPlantUmlPath = PlantUmlBinary,
+                JavaPath = JavaPath,
                 RenderingMode = RenderingMode.Local,
                 Include = include,
                 Delimitor = DIAGRAM_DELIMITOR,

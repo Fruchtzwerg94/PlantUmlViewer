@@ -3,6 +3,8 @@
 - Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
 - Added include option
 - Fixed potential crash if generation failed
+- Fixed setting Java path in options not applied without restarting Notepad++
+- Switched order of Ok and Cancel button in options window
 - SVG.NET library updated to 3.4.4
 
 # 1.4.0.8 (07.10.2022)

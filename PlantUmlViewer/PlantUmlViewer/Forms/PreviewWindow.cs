@@ -280,6 +280,7 @@ namespace PlantUmlViewer.Forms
                 }
                 else
                 {
+                    diagramGenerator.JavaPath = settings.Settings.JavaPath;
                     images = await diagramGenerator.GenerateDocumentAsync(text, settings.Settings.Include,
                         refreshCancellationTokenSource).ConfigureAwait(true);
                 }
@@ -297,30 +298,45 @@ namespace PlantUmlViewer.Forms
             }
             catch (FileFormatException ffEx)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
-                this.InvokeIfRequired(() => MessageBox.Show(this, ffEx.Message, "Failed to load file", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.BackColor = colorFailure;
+                    MessageBox.Show(this, ffEx.Message, "Failed to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
             }
             catch (JavaNotFoundException jnfEx)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
-                this.InvokeIfRequired(() => MessageBox.Show(this,
-                    $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
-                    "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information));
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.BackColor = colorFailure;
+                    MessageBox.Show(this,
+                        $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
+                        "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
             }
             catch (TaskCanceledException)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
-                this.InvokeIfRequired(() => MessageBox.Show(this, "Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information));
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.BackColor = colorFailure;
+                    MessageBox.Show(this, "Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
             }
             catch (RenderingException rEx)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
-                this.InvokeIfRequired(() => MessageBox.Show(this, rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning));
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.BackColor = colorFailure;
+                    MessageBox.Show(this, rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                });
             }
             catch (Exception ex)
             {
-                toolStripStatusLabel_Time.BackColor = colorFailure;
-                this.InvokeIfRequired(() => MessageBox.Show(this, ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.BackColor = colorFailure;
+                    MessageBox.Show(this, ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                });
             }
             finally
             {
