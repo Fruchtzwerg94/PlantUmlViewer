@@ -43,6 +43,9 @@
             this.label_ExportSizeFactor = new System.Windows.Forms.Label();
             this.numericUpDown_ExportSizeFactor = new System.Windows.Forms.NumericUpDown();
             this.label_ExportExportSizeFactorDescription = new System.Windows.Forms.Label();
+            this.checkBox_ExportDocument = new System.Windows.Forms.CheckBox();
+            this.label_ExportDocument = new System.Windows.Forms.Label();
+            this.label_ExportDocumentDescription = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Window.SuspendLayout();
             this.tableLayoutPanel_Buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ExportSizeFactor)).BeginInit();
@@ -57,18 +60,23 @@
             this.tableLayoutPanel_Window.Controls.Add(this.label_Include, 0, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.textBox_Include, 1, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.label_headerGeneral, 0, 0);
-            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 8);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 10);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPath, 0, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.textBox_JavaPath, 2, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPathDescription, 1, 2);
             this.tableLayoutPanel_Window.Controls.Add(this.label_ExportSizeFactor, 0, 5);
             this.tableLayoutPanel_Window.Controls.Add(this.numericUpDown_ExportSizeFactor, 1, 5);
             this.tableLayoutPanel_Window.Controls.Add(this.label_ExportExportSizeFactorDescription, 1, 6);
+            this.tableLayoutPanel_Window.Controls.Add(this.checkBox_ExportDocument, 1, 7);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportDocument, 0, 7);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_ExportDocumentDescription, 1, 8);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
             this.tableLayoutPanel_Window.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel_Window.RowCount = 9;
+            this.tableLayoutPanel_Window.RowCount = 11;
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -140,15 +148,15 @@
             this.tableLayoutPanel_Buttons.RowCount = 1;
             this.tableLayoutPanel_Buttons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(618, 34);
-            this.tableLayoutPanel_Buttons.TabIndex = 4;
+            this.tableLayoutPanel_Buttons.TabIndex = 5;
             // 
             // button_ok
             // 
             this.button_ok.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_ok.Location = new System.Drawing.Point(209, 3);
+            this.button_ok.Location = new System.Drawing.Point(208, 3);
             this.button_ok.Name = "button_ok";
-            this.button_ok.Size = new System.Drawing.Size(200, 28);
-            this.button_ok.TabIndex = 5;
+            this.button_ok.Size = new System.Drawing.Size(199, 28);
+            this.button_ok.TabIndex = 6;
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.Button_Ok_Click);
@@ -157,10 +165,10 @@
             // 
             this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button_Cancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_Cancel.Location = new System.Drawing.Point(415, 3);
+            this.button_Cancel.Location = new System.Drawing.Point(413, 3);
             this.button_Cancel.Name = "button_Cancel";
-            this.button_Cancel.Size = new System.Drawing.Size(200, 28);
-            this.button_Cancel.TabIndex = 6;
+            this.button_Cancel.Size = new System.Drawing.Size(202, 28);
+            this.button_Cancel.TabIndex = 7;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
             // 
@@ -249,6 +257,39 @@
     "er images with better quality.";
             this.label_ExportExportSizeFactorDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // checkBox_ExportDocument
+            // 
+            this.checkBox_ExportDocument.AutoSize = true;
+            this.checkBox_ExportDocument.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBox_ExportDocument.Location = new System.Drawing.Point(102, 147);
+            this.checkBox_ExportDocument.Name = "checkBox_ExportDocument";
+            this.checkBox_ExportDocument.Size = new System.Drawing.Size(524, 14);
+            this.checkBox_ExportDocument.TabIndex = 4;
+            this.checkBox_ExportDocument.UseVisualStyleBackColor = true;
+            // 
+            // label_ExportDocument
+            // 
+            this.label_ExportDocument.AutoSize = true;
+            this.label_ExportDocument.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_ExportDocument.Location = new System.Drawing.Point(8, 144);
+            this.label_ExportDocument.Name = "label_ExportDocument";
+            this.label_ExportDocument.Size = new System.Drawing.Size(88, 20);
+            this.label_ExportDocument.TabIndex = 12;
+            this.label_ExportDocument.Text = "Export document";
+            this.label_ExportDocument.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label_ExportDocumentDescription
+            // 
+            this.label_ExportDocumentDescription.AutoSize = true;
+            this.label_ExportDocumentDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_ExportDocumentDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_ExportDocumentDescription.Location = new System.Drawing.Point(102, 164);
+            this.label_ExportDocumentDescription.Name = "label_ExportDocumentDescription";
+            this.label_ExportDocumentDescription.Size = new System.Drawing.Size(524, 12);
+            this.label_ExportDocumentDescription.TabIndex = 13;
+            this.label_ExportDocumentDescription.Text = "Include the original document to SVG exports.";
+            this.label_ExportDocumentDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // OptionsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -288,5 +329,8 @@
         private System.Windows.Forms.Label label_IncludeDescription;
         private System.Windows.Forms.Label label_Include;
         private System.Windows.Forms.TextBox textBox_Include;
+        private System.Windows.Forms.CheckBox checkBox_ExportDocument;
+        private System.Windows.Forms.Label label_ExportDocument;
+        private System.Windows.Forms.Label label_ExportDocumentDescription;
     }
 }

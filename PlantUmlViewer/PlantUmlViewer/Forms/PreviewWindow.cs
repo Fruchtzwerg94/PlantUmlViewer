@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -43,12 +45,19 @@ namespace PlantUmlViewer.Forms
         private readonly object imagesLock = new object();
         private int selectedDiagramIndex;
         private int selectedPageIndex;
+        private string generatedFile;
+        private string generatedText;
+        private DateTime generatedDateTime;
         private ReadOnlyCollection<GeneratedDiagram> images;
 
-        private void UpdateImages(List<GeneratedDiagram> newImages)
+        private void UpdateImages(string file, string text, DateTime dateTime,
+            List<GeneratedDiagram> newImages)
         {
             lock (imagesLock)
             {
+                generatedFile = file;
+                generatedText = text;
+                generatedDateTime = dateTime;
                 images = new ReadOnlyCollection<GeneratedDiagram>(newImages);
 
                 //Update the text of the selected diagram and visibility
@@ -248,7 +257,9 @@ namespace PlantUmlViewer.Forms
                 loadingCircleToolStripMenuItem_Refreshing.Visible = true;
 
                 List<GeneratedDiagram> images;
+                string file = getFilePath();
                 text = getText();
+                DateTime dateTime = DateTime.Now;
                 if (string.IsNullOrWhiteSpace(text))
                 {
                     //Empty input
@@ -285,8 +296,8 @@ namespace PlantUmlViewer.Forms
                         refreshCancellationTokenSource).ConfigureAwait(true);
                 }
 
-                UpdateImages(images);
-                toolStripStatusLabel_Time.Text = $"{Path.GetFileName(getFilePath())} ({DateTime.Now.ToShortTimeString()})";
+                UpdateImages(file, text, dateTime, images);
+                toolStripStatusLabel_Time.Text = $"{Path.GetFileName(file)} ({dateTime.ToShortTimeString()})";
                 toolStripStatusLabel_Time.BackColor = colorSuccess;
                 button_Export.Enabled = true;
                 button_ZoomIn.Enabled = true;
@@ -356,7 +367,7 @@ namespace PlantUmlViewer.Forms
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog()
                 {
                     Filter = "PNG file|*.png|SVG file|*.svg",
-                    FileName = $"{Path.GetFileNameWithoutExtension(getFilePath())}{(images.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(images[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
+                    FileName = $"{Path.GetFileNameWithoutExtension(generatedFile)}{(images.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(images[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
                     InitialDirectory = Path.GetDirectoryName(getFilePath())
                 })
                 {
@@ -368,7 +379,15 @@ namespace PlantUmlViewer.Forms
                                 GetCurrentImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
                                 break;
                             case ".svg":
-                                GetSelectedImage().Write(saveFileDialog.FileName);
+                                //Clone, add metadata and save
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    GetSelectedImage().Write(ms);
+                                    ms.Position = 0;
+                                    SvgDocument svgToExport = SvgDocument.Open<SvgDocument>(ms);
+                                    AddMetadata(svgToExport);
+                                    svgToExport.Write(saveFileDialog.FileName);
+                                }
                                 break;
                             default:
                                 throw new Exception("Invalid file extension");
@@ -508,6 +527,59 @@ namespace PlantUmlViewer.Forms
                 }
                 while (line != null && currentLineNumber < lineNumber);
                 return (currentLineNumber == lineNumber) ? line : "";
+            }
+        }
+
+        private const string NAMESPACE_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        private const string NAMESPACE_DC = "http://purl.org/dc/elements/1.1/";
+        private const string NAMESPACE_PUV = "https://github.com/Fruchtzwerg94/PlantUmlViewer";
+        private void AddMetadata(SvgDocument svg)
+        {
+            /*
+             * Add some metadata to the SVG like described in
+             *   - https://www.w3.org/TR/SVG11/metadata.html
+             *   - https://developer.mozilla.org/en-US/docs/Web/SVG/Element/metadata
+             *   - https://www.w3.org/TR/rdfa-syntax/
+             *   - https://www.dublincore.org/specifications/dublin-core/dces/
+             */
+
+            //Add title
+            svg.Children.Add(new SvgTitle()
+            {
+                Content = Path.GetFileNameWithoutExtension(generatedFile)
+            });
+
+            //Add metadata
+            SvgUnknownElement metadata = new SvgUnknownElement("metadata");
+            NonSvgElement rdfMetadata = new NonSvgElement("RDF", "rdf");
+            rdfMetadata.Namespaces["rdf"] = NAMESPACE_RDF;
+            rdfMetadata.Namespaces["dc"] = NAMESPACE_DC;
+            rdfMetadata.Namespaces["puv"] = NAMESPACE_PUV;
+
+            rdfMetadata.Children.Add(new NonSvgElement("product", NAMESPACE_PUV) { Content = AssemblyAttributes.Product });
+            rdfMetadata.Children.Add(new NonSvgElement("version", NAMESPACE_PUV) { Content = AssemblyAttributes.Version });
+            rdfMetadata.Children.Add(new NonSvgElement("plantuml", NAMESPACE_PUV) { Content = PlantUmlViewer.PLANT_UML_VERSION });
+
+            NonSvgElement rdfMetadataDescription = new NonSvgElement("Description", NAMESPACE_RDF);
+            rdfMetadataDescription.Children.Add(new NonSvgElement("creator", NAMESPACE_DC) { Content = WindowsIdentity.GetCurrent().Name });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("date", NAMESPACE_DC) { Content = generatedDateTime.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("source", NAMESPACE_DC) { Content = Path.GetFileName(generatedFile) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("title", NAMESPACE_DC) { Content = Path.GetFileNameWithoutExtension(generatedFile) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("format", NAMESPACE_DC) { Content = "image/svg" });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("page", NAMESPACE_PUV) { Content = (GetSelectedPageIndex() + 1).ToString() });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("diagram", NAMESPACE_PUV) { Content = (GetSelectedDiagramIndex() + 1).ToString() });
+            rdfMetadata.Children.Add(rdfMetadataDescription);
+
+            metadata.Children.Add(rdfMetadata);
+            svg.Children.Add(metadata);
+
+            //Add description
+            if (settings.Settings.ExportDocument)
+            {
+                svg.Children.Add(new SvgDescription()
+                {
+                    Content = generatedText
+                });
             }
         }
     }
