@@ -3,6 +3,8 @@
 - Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
 - Added include option
 - Added metadata with option to include generated document to SVG export
+- Disabled refresh button after generation until document was changed again
+- Grayed out disabled buttons
 - Fixed potential crash if generation failed
 - Fixed setting Java path in options not applied without restarting Notepad++
 - Switched order of Ok and Cancel button in options window

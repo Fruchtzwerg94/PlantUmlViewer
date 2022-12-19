@@ -46,6 +46,13 @@ namespace PlantUmlViewer
             {
                 UpdateStyle();
             }
+            //Text modification or document changed
+            else if((notification.Header.Code == (uint)SciMsg.SCN_MODIFIED
+                     && (notification.ModificationType & ((int)SciMsg.SC_MOD_INSERTTEXT | (int)SciMsg.SC_MOD_DELETETEXT)) != 0)
+                || notification.Header.Code == (uint)NppMsg.NPPN_BUFFERACTIVATED)
+            {
+                previewWindow?.DocumentChanged();
+            }
         }
 
         public void CommandMenuInit()

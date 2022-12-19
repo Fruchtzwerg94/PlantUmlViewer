@@ -33,6 +33,8 @@ namespace PlantUmlViewer.Forms
         private readonly Func<string> getText;
         private readonly SettingsService settings;
 
+        private readonly Dictionary<Button, Bitmap> buttonImages = new Dictionary<Button, Bitmap>();
+
         private readonly DiagramGenerator diagramGenerator;
 
         private bool? isLight;
@@ -123,6 +125,18 @@ namespace PlantUmlViewer.Forms
 
             InitializeComponent();
 
+            //Define the button images
+            buttonImages[button_Refresh] = Resources.Refresh;
+            buttonImages[button_Export] = Resources.Save;
+            buttonImages[button_ZoomIn] = Resources.ZoomIn;
+            buttonImages[button_ZoomOut] = Resources.ZoomOut;
+            buttonImages[button_ZoomFit] = Resources.ZoomFit;
+            buttonImages[button_ZoomReset] = Resources.ZoomReset;
+            buttonImages[button_PreviousDiagram] = Resources.NavigateLeft;
+            buttonImages[button_NextDiagram] = Resources.NavigateRight;
+            buttonImages[button_PreviousPage] = Resources.NavigateUp;
+            buttonImages[button_NextPage] = Resources.NavigateDown;
+
             //Add some tool tips
             toolTip_Buttons.SetToolTip(button_Refresh, "Refresh");
             toolTip_Buttons.SetToolTip(button_Export, "Export");
@@ -155,6 +169,12 @@ namespace PlantUmlViewer.Forms
             base.WndProc(ref m);
         }
 
+        public void DocumentChanged()
+        {
+            button_Refresh.Enabled = true;
+        }
+
+        #region Styling
         public void SetStyle(Color editorBackgroundColor)
         {
             //Set new background color
@@ -169,16 +189,12 @@ namespace PlantUmlViewer.Forms
             isLight = newIsLight;
             Debug.WriteLine("Setting style", nameof(PreviewWindow));
 
-            Color buttonBackColor;
-            Color buttonForeColor;
             if (isLight == true)
             {
                 //Light
                 colorSuccess = Color.LightGreen;
                 colorFailure = Color.Tomato;
                 BackColor = SystemColors.Control;
-                buttonBackColor = SystemColors.Control;
-                buttonForeColor = SystemColors.ControlText;
                 label_SelectedDiagram.ForeColor = SystemColors.ControlText;
                 label_SelectedPage.ForeColor = SystemColors.ControlText;
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.DarkGray;
@@ -191,13 +207,31 @@ namespace PlantUmlViewer.Forms
                 colorSuccess = Color.DarkGreen;
                 colorFailure = Color.DarkRed;
                 BackColor = SystemColors.ControlDarkDark;
-                buttonBackColor = SystemColors.ControlDarkDark;
-                buttonForeColor = SystemColors.ControlLightLight;
                 label_SelectedDiagram.ForeColor = SystemColors.ControlLightLight;
                 label_SelectedPage.ForeColor = SystemColors.ControlLightLight;
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Color = Color.LightGray;
                 statusStrip_Bottom.BackColor = SystemColors.ControlDarkDark;
                 statusStrip_Bottom.ForeColor = SystemColors.ControlLightLight;
+            }
+
+            foreach (KeyValuePair<Button, Bitmap> imageButton in buttonImages)
+            {
+                UpdateButtonStyle(imageButton.Key);
+            }
+        }
+
+        private void Button_EnabledChanged(object sender, EventArgs e)
+        {
+            UpdateButtonStyle((Button)sender);
+        }
+
+        private void UpdateButtonStyle(Button button)
+        {
+            Color buttonBackColor = isLight == true ? SystemColors.Control : SystemColors.ControlDarkDark;
+            Color buttonForeColor = isLight == true ? SystemColors.ControlText : SystemColors.ControlLightLight;
+            if (!button.Enabled)
+            {
+                buttonForeColor = Color.FromArgb(50, buttonForeColor);
             }
             ColorMap[] buttonImageColorMap = new ColorMap[] {
                 new ColorMap()
@@ -206,40 +240,13 @@ namespace PlantUmlViewer.Forms
                     NewColor = buttonForeColor
                 }
             };
-
-            button_Refresh.BackColor = buttonBackColor;
-            button_Refresh.ForeColor = buttonForeColor;
-            button_Refresh.BackgroundImage = RemapImage(Resources.Refresh, buttonImageColorMap);
-            button_Export.BackColor = buttonBackColor;
-            button_Export.ForeColor = buttonForeColor;
-            button_Export.BackgroundImage = RemapImage(Resources.Save, buttonImageColorMap);
-            button_ZoomIn.BackColor = buttonBackColor;
-            button_ZoomIn.ForeColor = buttonForeColor;
-            button_ZoomIn.BackgroundImage = RemapImage(Resources.ZoomIn, buttonImageColorMap);
-            button_ZoomOut.BackColor = buttonBackColor;
-            button_ZoomOut.ForeColor = buttonForeColor;
-            button_ZoomOut.BackgroundImage = RemapImage(Resources.ZoomOut, buttonImageColorMap);
-            button_ZoomFit.BackColor = buttonBackColor;
-            button_ZoomFit.ForeColor = buttonForeColor;
-            button_ZoomFit.BackgroundImage = RemapImage(Resources.ZoomFit, buttonImageColorMap);
-            button_ZoomReset.BackColor = buttonBackColor;
-            button_ZoomReset.ForeColor = buttonForeColor;
-            button_ZoomReset.BackgroundImage = RemapImage(Resources.ZoomReset, buttonImageColorMap);
-            button_PreviousDiagram.BackColor = buttonBackColor;
-            button_PreviousDiagram.ForeColor = buttonForeColor;
-            button_PreviousDiagram.BackgroundImage = RemapImage(Resources.NavigateLeft, buttonImageColorMap);
-            button_NextDiagram.BackColor = buttonBackColor;
-            button_NextDiagram.ForeColor = buttonForeColor;
-            button_NextDiagram.BackgroundImage = RemapImage(Resources.NavigateRight, buttonImageColorMap);
-            button_PreviousPage.BackColor = buttonBackColor;
-            button_PreviousPage.ForeColor = buttonForeColor;
-            button_PreviousPage.BackgroundImage = RemapImage(Resources.NavigateUp, buttonImageColorMap);
-            button_NextPage.BackColor = buttonBackColor;
-            button_NextPage.ForeColor = buttonForeColor;
-            button_NextPage.BackgroundImage = RemapImage(Resources.NavigateDown, buttonImageColorMap);
+            button.BackColor = buttonBackColor;
+            button.ForeColor = buttonForeColor;
+            button.BackgroundImage = RemapImage(buttonImages[button], buttonImageColorMap);
         }
+        #endregion Styling
 
-        #region Button events
+        #region Button clicks
         public async void Button_Refresh_Click(object sender, EventArgs e)
         {
             //Cancel if already running
@@ -253,6 +260,7 @@ namespace PlantUmlViewer.Forms
             string text = null;
             try
             {
+                button_Refresh.Enabled = false;
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
                 loadingCircleToolStripMenuItem_Refreshing.Visible = true;
 
@@ -456,7 +464,7 @@ namespace PlantUmlViewer.Forms
                 button_PreviousPage.Focus();
             }
         }
-        #endregion Button events
+        #endregion Button clicks
 
         private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
         {

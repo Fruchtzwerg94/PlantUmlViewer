@@ -226,6 +226,7 @@
             this.button_PreviousPage.Size = new System.Drawing.Size(42, 26);
             this.button_PreviousPage.TabIndex = 11;
             this.button_PreviousPage.UseVisualStyleBackColor = true;
+            this.button_PreviousPage.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_PreviousPage.Click += new System.EventHandler(this.Button_PreviousPage_Click);
             // 
             // button_NextPage
@@ -239,6 +240,7 @@
             this.button_NextPage.Size = new System.Drawing.Size(42, 26);
             this.button_NextPage.TabIndex = 12;
             this.button_NextPage.UseVisualStyleBackColor = true;
+            this.button_NextPage.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_NextPage.Click += new System.EventHandler(this.Button_NextPage_Click);
             // 
             // label_SelectedPage
@@ -262,6 +264,7 @@
             this.button_ZoomReset.Size = new System.Drawing.Size(23, 26);
             this.button_ZoomReset.TabIndex = 6;
             this.button_ZoomReset.UseVisualStyleBackColor = true;
+            this.button_ZoomReset.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_ZoomReset.Click += new System.EventHandler(this.Button_ZoomReset_Click);
             // 
             // button_ZoomFit
@@ -275,6 +278,7 @@
             this.button_ZoomFit.Size = new System.Drawing.Size(23, 26);
             this.button_ZoomFit.TabIndex = 5;
             this.button_ZoomFit.UseVisualStyleBackColor = true;
+            this.button_ZoomFit.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_ZoomFit.Click += new System.EventHandler(this.Button_ZoomFit_Click);
             // 
             // button_Refresh
@@ -287,6 +291,7 @@
             this.button_Refresh.Size = new System.Drawing.Size(23, 26);
             this.button_Refresh.TabIndex = 1;
             this.button_Refresh.UseVisualStyleBackColor = true;
+            this.button_Refresh.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_Refresh.Click += new System.EventHandler(this.Button_Refresh_Click);
             // 
             // button_ZoomIn
@@ -300,6 +305,7 @@
             this.button_ZoomIn.Size = new System.Drawing.Size(23, 26);
             this.button_ZoomIn.TabIndex = 3;
             this.button_ZoomIn.UseVisualStyleBackColor = true;
+            this.button_ZoomIn.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_ZoomIn.Click += new System.EventHandler(this.Button_ZoomIn_Click);
             // 
             // button_Export
@@ -313,6 +319,7 @@
             this.button_Export.Size = new System.Drawing.Size(23, 26);
             this.button_Export.TabIndex = 2;
             this.button_Export.UseVisualStyleBackColor = true;
+            this.button_Export.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_Export.Click += new System.EventHandler(this.Button_Export_Click);
             // 
             // button_ZoomOut
@@ -326,6 +333,7 @@
             this.button_ZoomOut.Size = new System.Drawing.Size(23, 26);
             this.button_ZoomOut.TabIndex = 4;
             this.button_ZoomOut.UseVisualStyleBackColor = true;
+            this.button_ZoomOut.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_ZoomOut.Click += new System.EventHandler(this.Button_ZoomOut_Click);
             // 
             // tableLayoutPanel_NavigationDiagram
@@ -358,6 +366,7 @@
             this.button_PreviousDiagram.Size = new System.Drawing.Size(42, 26);
             this.button_PreviousDiagram.TabIndex = 8;
             this.button_PreviousDiagram.UseVisualStyleBackColor = true;
+            this.button_PreviousDiagram.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_PreviousDiagram.Click += new System.EventHandler(this.Button_PreviousDiagram_Click);
             // 
             // button_NextDiagram
@@ -371,6 +380,7 @@
             this.button_NextDiagram.Size = new System.Drawing.Size(42, 26);
             this.button_NextDiagram.TabIndex = 9;
             this.button_NextDiagram.UseVisualStyleBackColor = true;
+            this.button_NextDiagram.EnabledChanged += new System.EventHandler(this.Button_EnabledChanged);
             this.button_NextDiagram.Click += new System.EventHandler(this.Button_NextDiagram_Click);
             // 
             // label_SelectedDiagram
