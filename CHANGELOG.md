@@ -6,6 +6,7 @@
 - Disabled refresh button after generation until document was changed again
 - Grayed out disabled buttons
 - Fixed potential crash if generation failed
+- Fixed generation may takes exponentially long for diagrams producing big images
 - Fixed setting Java path in options not applied without restarting Notepad++
 - Switched order of Ok and Cancel button in options window
 - Added information about used Plant UML version in about window

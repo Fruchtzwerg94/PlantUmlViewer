@@ -143,13 +143,34 @@ namespace PlantUmlViewer.DiagramGeneration
 
         private static IEnumerable<int> PatternAt(byte[] source, byte[] pattern)
         {
+            if (source == null || pattern == null || source.Length < pattern.Length)
+            {
+                yield break;
+            }
+
             for (int i = 0; i < source.Length; i++)
             {
-                if (source.Skip(i).Take(pattern.Length).SequenceEqual(pattern))
+                if (IsPatternMatch(source, i, pattern))
                 {
                     yield return i;
                 }
             }
+        }
+
+        private static bool IsPatternMatch(byte[] source, int position, byte[] pattern)
+        {
+            if (pattern.Length > (source.Length - position))
+            {
+                return false;
+            }
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (source[position + i] != pattern[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
