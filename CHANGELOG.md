@@ -1,4 +1,4 @@
-# X.X.X.X (X.X.X.X)
+# 1.5.0.9 (10.01.2023)
 - PlantUML version updated to 1.2023.0
 - Added fluent and dark style icons
 - Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
