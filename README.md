@@ -47,7 +47,7 @@ The diagram can be
 The currently showed diagram can be exported or copied to clipboard as PNG or SVG image by clicking the *Export* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Save.png" width="20">) button or using the right click context menu.
 If your document contains multiple diagrams and or pages, you can use the navigation buttons to show the next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateRight.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateLeft.png" width="20">) diagram and next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateUp.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateDown.png" width="20">) page.
 
-Make sure *JAVA_PATH* is set in your system or set the right path to your Java installation in the plugins options.
+Make sure *JAVA_PATH* is set in your system or set the right path to your Java installation. It can be set together with other options in the plugins options window.
 
 ![PlantUML Viewer menu](doc/Menu.png)
 ![PlantUML Viewer options](doc/Options.png)

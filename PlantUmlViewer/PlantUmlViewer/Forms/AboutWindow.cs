@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Windows.Forms;
 
 using Newtonsoft.Json.Linq;
@@ -19,7 +18,7 @@ namespace PlantUmlViewer.Forms
             this.Text = "About " + PlantUmlViewer.PLUGIN_NAME;
             this.label_ProductName.Text = AssemblyAttributes.Product;
             this.label_PluginVersion.Text = string.Format("Plugin version {0}", AssemblyAttributes.Version);
-            this.label_PlantUmlVersion.Text = string.Format("Plant UML version {0}", PlantUmlViewer.PLANT_UML_VERSION);
+            this.label_PlantUmlVersion.Text = string.Format("PlantUML version {0}", PlantUmlViewer.PLANT_UML_VERSION);
             this.label_Copyright.Text = AssemblyAttributes.Copyright;
             this.richTextBox_Text.SelectedRtf = Properties.Resources.AboutText;
         }

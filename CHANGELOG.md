@@ -1,4 +1,5 @@
 # X.X.X.X (X.X.X.X)
+- PlantUML version updated to 1.2023.0
 - Added fluent and dark style icons
 - Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
 - Added include option
@@ -9,7 +10,8 @@
 - Fixed generation may takes exponentially long for diagrams producing big images
 - Fixed setting Java path in options not applied without restarting Notepad++
 - Switched order of Ok and Cancel button in options window
-- Added information about used Plant UML version in about window
+- Added information about used PlantUML version in about window
+- Json.NET library updated to 13.0.2
 - SVG.NET library updated to 3.4.4
 
 # 1.4.0.8 (07.10.2022)
