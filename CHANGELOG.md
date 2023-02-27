@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Fixed potential generation errors after a generation failed due to Plant UML executable issues
+
 # 1.5.0.9 (10.01.2023)
 - PlantUML version updated to 1.2023.0
 - Added fluent and dark style icons

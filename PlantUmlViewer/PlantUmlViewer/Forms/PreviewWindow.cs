@@ -305,15 +305,18 @@ namespace PlantUmlViewer.Forms
                 }
 
                 UpdateImages(file, text, dateTime, images);
-                toolStripStatusLabel_Time.Text = $"{Path.GetFileName(file)} ({dateTime.ToShortTimeString()})";
-                toolStripStatusLabel_Time.BackColor = colorSuccess;
-                button_Export.Enabled = true;
-                button_ZoomIn.Enabled = true;
-                button_ZoomOut.Enabled = true;
-                button_ZoomFit.Enabled = true;
-                button_ZoomReset.Enabled = true;
-                ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
-                ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
+                this.InvokeIfRequired(() =>
+                {
+                    toolStripStatusLabel_Time.Text = $"{Path.GetFileName(file)} ({dateTime.ToShortTimeString()})";
+                    toolStripStatusLabel_Time.BackColor = colorSuccess;
+                    button_Export.Enabled = true;
+                    button_ZoomIn.Enabled = true;
+                    button_ZoomOut.Enabled = true;
+                    button_ZoomFit.Enabled = true;
+                    button_ZoomReset.Enabled = true;
+                    ToolStripMenuItem_Diagram_ExportFile.Enabled = true;
+                    ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
+                });
             }
             catch (FileFormatException ffEx)
             {
