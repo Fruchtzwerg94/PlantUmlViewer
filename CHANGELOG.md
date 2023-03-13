@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Ignored non expected generation content due to Java accessibility hooks output e.g. like PowerAutomate
 - Fixed potential generation errors after a generation failed due to Plant UML executable issues
 
 # 1.5.0.9 (10.01.2023)

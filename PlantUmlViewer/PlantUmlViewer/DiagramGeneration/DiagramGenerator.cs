@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace PlantUmlViewer.DiagramGeneration
     public class DiagramGenerator
     {
         private const string DIAGRAM_DELIMITOR = "|##|##|<PS>|##|##|";
+        private const string SVG_START = "<svg ";
+        private const string SVG_END = "</svg>";
 
         private readonly RendererFactory renderFactory = new RendererFactory();
         public string JavaPath { get; set; }
@@ -94,22 +97,32 @@ namespace PlantUmlViewer.DiagramGeneration
             //Find all delimitors to parse multiple diagram images
             Dictionary<int, SvgDocument> imagesOfPage = new Dictionary<int, SvgDocument>();
             List<int> delimitorIndices = new int[] { -(DIAGRAM_DELIMITOR.Length + 2) }
-                .Concat(PatternAt(bytes, Encoding.UTF8.GetBytes(DIAGRAM_DELIMITOR))).ToList();
+                .Concat(PatternAt(bytes, Encoding.UTF8.GetBytes(DIAGRAM_DELIMITOR), 0, bytes.Length)).ToList();
             for (int i = 0; i < delimitorIndices.Count - 1; i++)
             {
                 int start = delimitorIndices[i] + DIAGRAM_DELIMITOR.Length + 2;
                 int end = delimitorIndices[i + 1];
-                using (MemoryStream memoryStream = new MemoryStream(bytes, start, end - start))
+                if (end - start > 0)
                 {
-                    if (end - start > 0)
+                    //Remove all unexpected data which may is added due to Java accessibility hooks output e.g. like PowerAutomate
+                    List<int> startPatterns = PatternAt(bytes, Encoding.UTF8.GetBytes(SVG_START), start, end).ToList();
+                    List<int> endPatterns = PatternAt(bytes, Encoding.UTF8.GetBytes(SVG_END), start, end).ToList();
+                    if (startPatterns.Count != 1 || endPatterns.Count != 1)
+                    {
+                        throw new Exception("Failed to parse generated data");
+                    }
+                    start = startPatterns[0];
+                    end = endPatterns[0] + SVG_END.Length;
+
+                    using (MemoryStream memoryStream = new MemoryStream(bytes, start, end - start))
                     {
                         Debug.WriteLine($"Generating image {i + 1} at page {pageIndexToGenerate + 1}", nameof(DiagramGenerator));
                         imagesOfPage[i] = SvgDocument.Open<SvgDocument>(memoryStream);
                     }
-                    else
-                    {
-                        Debug.WriteLine($"No image {i + 1} at page {pageIndexToGenerate + 1}", nameof(DiagramGenerator));
-                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"No image {i + 1} at page {pageIndexToGenerate + 1}", nameof(DiagramGenerator));
                 }
             }
             //No more pages available
@@ -141,14 +154,15 @@ namespace PlantUmlViewer.DiagramGeneration
             return images;
         }
 
-        private static IEnumerable<int> PatternAt(byte[] source, byte[] pattern)
+        private static IEnumerable<int> PatternAt(byte[] source, byte[] pattern, int start, int end)
         {
             if (source == null || pattern == null || source.Length < pattern.Length)
             {
                 yield break;
             }
 
-            for (int i = 0; i < source.Length; i++)
+            end = Math.Min(source.Length, end);
+            for (int i = start; i < end; i++)
             {
                 if (IsPatternMatch(source, i, pattern))
                 {
