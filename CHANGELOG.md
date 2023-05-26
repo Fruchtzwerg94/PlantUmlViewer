@@ -1,6 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
 - Ignored non expected generation content due to Java accessibility hooks output e.g. like PowerAutomate
 - Fixed potential generation errors after a generation failed due to Plant UML executable issues
+- Json.NET library updated to 13.0.3
 
 # 1.5.0.9 (10.01.2023)
 - PlantUML version updated to 1.2023.0
