@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PlantUmlViewer.Forms
@@ -14,6 +16,27 @@ namespace PlantUmlViewer.Forms
             else
             {
                 action();
+            }
+        }
+
+        public static IEnumerable<T> GetChildren<T>(this Control control, int depth)
+        {
+            if (depth-- >= 1)
+            {
+                foreach (var childControl in control.Controls.Cast<Control>())
+                {
+                    if (childControl is T child)
+                    {
+                        yield return child;
+                    }
+                    else
+                    {
+                        foreach (T next in childControl.GetChildren<T>(depth))
+                        {
+                            yield return next;
+                        }
+                    }
+                }
             }
         }
     }

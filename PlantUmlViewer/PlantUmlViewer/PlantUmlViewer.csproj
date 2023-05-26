@@ -177,6 +177,7 @@
     <Compile Include="Settings\PlantUmlViewerSettings.cs" />
     <Compile Include="Settings\SettingsService.cs" />
     <Compile Include="Windows\Messages.cs" />
+    <Compile Include="Windows\NativeWindowApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutWindow.resx">

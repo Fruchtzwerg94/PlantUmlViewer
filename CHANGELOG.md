@@ -1,5 +1,6 @@
 # X.X.X.X (XX.XX.XXXX)
 - Ignored non expected generation content due to Java accessibility hooks output e.g. like PowerAutomate
+- Fixed Notepad++ may freezes if plugin is docked out and looses focus
 - Fixed potential generation errors after a generation failed due to Plant UML executable issues
 - Json.NET library updated to 13.0.3
 
