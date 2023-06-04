@@ -46,6 +46,9 @@
             this.checkBox_ExportDocument = new System.Windows.Forms.CheckBox();
             this.label_ExportDocument = new System.Windows.Forms.Label();
             this.label_ExportDocumentDescription = new System.Windows.Forms.Label();
+            this.comboBox_OpenExport = new System.Windows.Forms.ComboBox();
+            this.label_OpenExport = new System.Windows.Forms.Label();
+            this.label_OpenExportDescription = new System.Windows.Forms.Label();
             this.tableLayoutPanel_Window.SuspendLayout();
             this.tableLayoutPanel_Buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ExportSizeFactor)).BeginInit();
@@ -60,7 +63,7 @@
             this.tableLayoutPanel_Window.Controls.Add(this.label_Include, 0, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.textBox_Include, 1, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.label_headerGeneral, 0, 0);
-            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 10);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 12);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPath, 0, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.textBox_JavaPath, 2, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPathDescription, 1, 2);
@@ -70,11 +73,16 @@
             this.tableLayoutPanel_Window.Controls.Add(this.checkBox_ExportDocument, 1, 7);
             this.tableLayoutPanel_Window.Controls.Add(this.label_ExportDocument, 0, 7);
             this.tableLayoutPanel_Window.Controls.Add(this.label_ExportDocumentDescription, 1, 8);
+            this.tableLayoutPanel_Window.Controls.Add(this.comboBox_OpenExport, 1, 9);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_OpenExport, 0, 9);
+            this.tableLayoutPanel_Window.Controls.Add(this.label_OpenExportDescription, 1, 10);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
             this.tableLayoutPanel_Window.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel_Window.RowCount = 11;
+            this.tableLayoutPanel_Window.RowCount = 13;
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -86,7 +94,7 @@
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel_Window.Size = new System.Drawing.Size(634, 261);
+            this.tableLayoutPanel_Window.Size = new System.Drawing.Size(634, 294);
             this.tableLayoutPanel_Window.TabIndex = 0;
             // 
             // label_IncludeDescription
@@ -143,12 +151,12 @@
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_ok, 1, 0);
             this.tableLayoutPanel_Buttons.Controls.Add(this.button_Cancel, 2, 0);
             this.tableLayoutPanel_Buttons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_Buttons.Location = new System.Drawing.Point(8, 219);
+            this.tableLayoutPanel_Buttons.Location = new System.Drawing.Point(8, 252);
             this.tableLayoutPanel_Buttons.Name = "tableLayoutPanel_Buttons";
             this.tableLayoutPanel_Buttons.RowCount = 1;
             this.tableLayoutPanel_Buttons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Buttons.Size = new System.Drawing.Size(618, 34);
-            this.tableLayoutPanel_Buttons.TabIndex = 5;
+            this.tableLayoutPanel_Buttons.TabIndex = 6;
             // 
             // button_ok
             // 
@@ -156,7 +164,7 @@
             this.button_ok.Location = new System.Drawing.Point(208, 3);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(199, 28);
-            this.button_ok.TabIndex = 6;
+            this.button_ok.TabIndex = 7;
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.Button_Ok_Click);
@@ -168,7 +176,7 @@
             this.button_Cancel.Location = new System.Drawing.Point(413, 3);
             this.button_Cancel.Name = "button_Cancel";
             this.button_Cancel.Size = new System.Drawing.Size(202, 28);
-            this.button_Cancel.TabIndex = 7;
+            this.button_Cancel.TabIndex = 8;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
             // 
@@ -290,12 +298,45 @@
             this.label_ExportDocumentDescription.Text = "Include the original document to SVG exports.";
             this.label_ExportDocumentDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // comboBox_OpenExport
+            // 
+            this.comboBox_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox_OpenExport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_OpenExport.FormattingEnabled = true;
+            this.comboBox_OpenExport.Location = new System.Drawing.Point(102, 179);
+            this.comboBox_OpenExport.Name = "comboBox_OpenExport";
+            this.comboBox_OpenExport.Size = new System.Drawing.Size(524, 21);
+            this.comboBox_OpenExport.TabIndex = 5;
+            // 
+            // label_OpenExport
+            // 
+            this.label_OpenExport.AutoSize = true;
+            this.label_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_OpenExport.Location = new System.Drawing.Point(8, 176);
+            this.label_OpenExport.Name = "label_OpenExport";
+            this.label_OpenExport.Size = new System.Drawing.Size(88, 27);
+            this.label_OpenExport.TabIndex = 15;
+            this.label_OpenExport.Text = "Open export";
+            this.label_OpenExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label_OpenExportDescription
+            // 
+            this.label_OpenExportDescription.AutoSize = true;
+            this.label_OpenExportDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_OpenExportDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_OpenExportDescription.Location = new System.Drawing.Point(102, 203);
+            this.label_OpenExportDescription.Name = "label_OpenExportDescription";
+            this.label_OpenExportDescription.Size = new System.Drawing.Size(524, 12);
+            this.label_OpenExportDescription.TabIndex = 16;
+            this.label_OpenExportDescription.Text = "Open the file after export.";
+            this.label_OpenExportDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // OptionsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_Cancel;
-            this.ClientSize = new System.Drawing.Size(634, 261);
+            this.ClientSize = new System.Drawing.Size(634, 294);
             this.Controls.Add(this.tableLayoutPanel_Window);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -332,5 +373,8 @@
         private System.Windows.Forms.CheckBox checkBox_ExportDocument;
         private System.Windows.Forms.Label label_ExportDocument;
         private System.Windows.Forms.Label label_ExportDocumentDescription;
+        private System.Windows.Forms.ComboBox comboBox_OpenExport;
+        private System.Windows.Forms.Label label_OpenExport;
+        private System.Windows.Forms.Label label_OpenExportDescription;
     }
 }

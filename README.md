@@ -56,9 +56,8 @@ Make sure *JAVA_PATH* is set in your system or set the right path to your Java i
 * You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
 * Using the *Shortcut Mapper*, which is accessible via the *Settings* submenu of Notepad++, you can define a shortcut to generate the diagrams.
 
-
 ## License and credits
-PlantUML Viewer is released under the [MIT License](LICENSE).
+PlantUML Viewer is released under the [MIT License](LICENSE). This means, you can do with it whatever you want as long as you include the original copyright and license notice in any copy of the software.
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by Kasper B. Graversen provided under the Apache 2.0 license.

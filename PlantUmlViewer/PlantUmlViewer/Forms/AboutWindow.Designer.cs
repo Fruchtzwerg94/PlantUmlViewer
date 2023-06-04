@@ -71,7 +71,7 @@
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Window.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Window.Size = new System.Drawing.Size(427, 309);
+            this.tableLayoutPanel_Window.Size = new System.Drawing.Size(478, 309);
             this.tableLayoutPanel_Window.TabIndex = 0;
             // 
             // label_Copyright
@@ -80,7 +80,7 @@
             this.label_Copyright.Location = new System.Drawing.Point(6, 75);
             this.label_Copyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.label_Copyright.Name = "label_Copyright";
-            this.label_Copyright.Size = new System.Drawing.Size(418, 17);
+            this.label_Copyright.Size = new System.Drawing.Size(469, 17);
             this.label_Copyright.TabIndex = 21;
             this.label_Copyright.Text = "Copyright";
             this.label_Copyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -91,7 +91,7 @@
             this.button_Ok.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_Ok.Location = new System.Drawing.Point(3, 282);
             this.button_Ok.Name = "button_Ok";
-            this.button_Ok.Size = new System.Drawing.Size(421, 24);
+            this.button_Ok.Size = new System.Drawing.Size(472, 24);
             this.button_Ok.TabIndex = 24;
             this.button_Ok.Text = "OK";
             // 
@@ -110,16 +110,16 @@
             this.tableLayoutPanel_Links.RowCount = 1;
             this.tableLayoutPanel_Links.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_Links.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel_Links.Size = new System.Drawing.Size(421, 14);
+            this.tableLayoutPanel_Links.Size = new System.Drawing.Size(472, 14);
             this.tableLayoutPanel_Links.TabIndex = 26;
             // 
             // linkLabel_Donate
             // 
             this.linkLabel_Donate.AutoSize = true;
             this.linkLabel_Donate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel_Donate.Location = new System.Drawing.Point(283, 0);
+            this.linkLabel_Donate.Location = new System.Drawing.Point(317, 0);
             this.linkLabel_Donate.Name = "linkLabel_Donate";
-            this.linkLabel_Donate.Size = new System.Drawing.Size(135, 14);
+            this.linkLabel_Donate.Size = new System.Drawing.Size(152, 14);
             this.linkLabel_Donate.TabIndex = 27;
             this.linkLabel_Donate.TabStop = true;
             this.linkLabel_Donate.Text = "Buy me a coffee :-)";
@@ -130,9 +130,9 @@
             // 
             this.linkLabel_Mail.AutoSize = true;
             this.linkLabel_Mail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel_Mail.Location = new System.Drawing.Point(143, 0);
+            this.linkLabel_Mail.Location = new System.Drawing.Point(160, 0);
             this.linkLabel_Mail.Name = "linkLabel_Mail";
-            this.linkLabel_Mail.Size = new System.Drawing.Size(134, 14);
+            this.linkLabel_Mail.Size = new System.Drawing.Size(151, 14);
             this.linkLabel_Mail.TabIndex = 26;
             this.linkLabel_Mail.TabStop = true;
             this.linkLabel_Mail.Text = "Mail me";
@@ -145,7 +145,7 @@
             this.linkLabel_Github.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabel_Github.Location = new System.Drawing.Point(3, 0);
             this.linkLabel_Github.Name = "linkLabel_Github";
-            this.linkLabel_Github.Size = new System.Drawing.Size(134, 14);
+            this.linkLabel_Github.Size = new System.Drawing.Size(151, 14);
             this.linkLabel_Github.TabIndex = 25;
             this.linkLabel_Github.TabStop = true;
             this.linkLabel_Github.Text = "Visit project on GitHub";
@@ -158,7 +158,7 @@
             this.richTextBox_Text.Location = new System.Drawing.Point(3, 115);
             this.richTextBox_Text.Name = "richTextBox_Text";
             this.richTextBox_Text.ReadOnly = true;
-            this.richTextBox_Text.Size = new System.Drawing.Size(421, 161);
+            this.richTextBox_Text.Size = new System.Drawing.Size(472, 161);
             this.richTextBox_Text.TabIndex = 27;
             this.richTextBox_Text.Text = "";
             // 
@@ -179,7 +179,7 @@
             this.tableLayoutPanel_Version.RowCount = 2;
             this.tableLayoutPanel_Version.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel_Version.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_Version.Size = new System.Drawing.Size(427, 40);
+            this.tableLayoutPanel_Version.Size = new System.Drawing.Size(478, 40);
             this.tableLayoutPanel_Version.TabIndex = 28;
             // 
             // label_PluginVersion
@@ -188,7 +188,7 @@
             this.label_PluginVersion.Location = new System.Drawing.Point(6, 0);
             this.label_PluginVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.label_PluginVersion.Name = "label_PluginVersion";
-            this.label_PluginVersion.Size = new System.Drawing.Size(208, 20);
+            this.label_PluginVersion.Size = new System.Drawing.Size(259, 20);
             this.label_PluginVersion.TabIndex = 1;
             this.label_PluginVersion.Text = "PluginVersion";
             this.label_PluginVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -196,7 +196,7 @@
             // button_CheckForUpdate
             // 
             this.button_CheckForUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_CheckForUpdate.Location = new System.Drawing.Point(301, 3);
+            this.button_CheckForUpdate.Location = new System.Drawing.Point(352, 3);
             this.button_CheckForUpdate.Name = "button_CheckForUpdate";
             this.tableLayoutPanel_Version.SetRowSpan(this.button_CheckForUpdate, 2);
             this.button_CheckForUpdate.Size = new System.Drawing.Size(123, 34);
@@ -211,7 +211,7 @@
             this.loadingCircle_checkForUpdate.Color = System.Drawing.Color.DarkGray;
             this.loadingCircle_checkForUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.loadingCircle_checkForUpdate.InnerCircleRadius = 6;
-            this.loadingCircle_checkForUpdate.Location = new System.Drawing.Point(220, 3);
+            this.loadingCircle_checkForUpdate.Location = new System.Drawing.Point(271, 3);
             this.loadingCircle_checkForUpdate.Name = "loadingCircle_checkForUpdate";
             this.loadingCircle_checkForUpdate.NumberSpoke = 9;
             this.loadingCircle_checkForUpdate.OuterCircleRadius = 7;
@@ -246,7 +246,7 @@
             this.tableLayoutPanel_Header.Name = "tableLayoutPanel_Header";
             this.tableLayoutPanel_Header.RowCount = 1;
             this.tableLayoutPanel_Header.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_Header.Size = new System.Drawing.Size(421, 29);
+            this.tableLayoutPanel_Header.Size = new System.Drawing.Size(472, 29);
             this.tableLayoutPanel_Header.TabIndex = 29;
             // 
             // label_ProductName
@@ -257,7 +257,7 @@
             this.label_ProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
             this.label_ProductName.Name = "label_ProductName";
             this.label_ProductName.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.label_ProductName.Size = new System.Drawing.Size(306, 29);
+            this.label_ProductName.Size = new System.Drawing.Size(357, 29);
             this.label_ProductName.TabIndex = 20;
             this.label_ProductName.Text = "Product name";
             this.label_ProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -266,7 +266,7 @@
             // 
             this.pictureBox_Image.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox_Image.Image = global::PlantUmlViewer.Properties.Resources.Image;
-            this.pictureBox_Image.Location = new System.Drawing.Point(318, 3);
+            this.pictureBox_Image.Location = new System.Drawing.Point(369, 3);
             this.pictureBox_Image.Name = "pictureBox_Image";
             this.pictureBox_Image.Size = new System.Drawing.Size(100, 23);
             this.pictureBox_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -278,7 +278,7 @@
             this.AcceptButton = this.button_Ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 327);
+            this.ClientSize = new System.Drawing.Size(496, 327);
             this.Controls.Add(this.tableLayoutPanel_Window);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

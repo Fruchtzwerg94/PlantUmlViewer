@@ -399,7 +399,7 @@ namespace PlantUmlViewer.Forms
                     InitialDirectory = Path.GetDirectoryName(getFilePath())
                 })
                 {
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
                     {
                         switch (Path.GetExtension(saveFileDialog.FileName))
                         {
@@ -419,6 +419,18 @@ namespace PlantUmlViewer.Forms
                                 break;
                             default:
                                 throw new Exception("Invalid file extension");
+                        }
+
+                        if (settings.Settings.OpenExport == OpenExport.Always
+                            || (settings.Settings.OpenExport == OpenExport.Ask
+                                && MessageBox.Show(this, "Open the exported file?", "Open export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                        {
+                            ProcessStartInfo startInfo = new ProcessStartInfo()
+                            {
+                                FileName = saveFileDialog.FileName,
+                                UseShellExecute = true
+                            };
+                            Process.Start(startInfo);
                         }
                     }
                 }
