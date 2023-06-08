@@ -91,6 +91,11 @@ namespace PlantUmlViewer.Forms
             }
         }
 
+        private Image GetSelectedImage(decimal sizeFactor)
+        {
+            return DiagramGenerator.SvgImageToBitmap(GetSelectedImage(), sizeFactor);
+        }
+
         private void SetSelectedImage(int diagramIndex, int pageIndex)
         {
             Debug.WriteLine($"Selecting image for diagram index {diagramIndex}, page index {pageIndex}", nameof(PreviewWindow));
@@ -108,7 +113,7 @@ namespace PlantUmlViewer.Forms
                 button_NextPage.Enabled = selectedPageIndex < images[selectedDiagramIndex].Pages.Count - 1;
                 button_PreviousPage.Enabled = selectedPageIndex > 0;
 
-                imageBox_Diagram.Image = GetCurrentImage(1);
+                imageBox_Diagram.Image = GetSelectedImage(1);
             }
         }
         #endregion Images
@@ -404,7 +409,7 @@ namespace PlantUmlViewer.Forms
                         switch (Path.GetExtension(saveFileDialog.FileName))
                         {
                             case ".png":
-                                GetCurrentImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
+                                GetSelectedImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
                                 break;
                             case ".svg":
                                 //Clone, add metadata and save
@@ -500,43 +505,12 @@ namespace PlantUmlViewer.Forms
 
         private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
         {
-            Clipboard.SetImage(GetCurrentImage(settings.Settings.ExportSizeFactor));
+            Clipboard.SetImage(GetSelectedImage(settings.Settings.ExportSizeFactor));
         }
 
         private void ImageBox_ZoomChanged(object sender, EventArgs e)
         {
             toolStripStatusLabel_Zoom.Text = $"{imageBox_Diagram.Zoom}%";
-        }
-
-        private Image GetCurrentImage(decimal exportSizeFactor)
-        {
-            SvgDocument selectedImage = GetSelectedImage();
-
-            //Resize (See: https://github.com/svg-net/SVG/blob/master/Source/SvgDocument.Drawing.cs#L217)
-            SizeF svgSize = selectedImage.GetDimensions();
-            SizeF imageSize = svgSize;
-            selectedImage.RasterizeDimensions(ref imageSize,
-                (int)Math.Round((decimal)svgSize.Width * exportSizeFactor), (int)Math.Round((decimal)svgSize.Height * exportSizeFactor));
-            Size bitmapSize = Size.Round(imageSize);
-            Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
-
-            //Set background if defined in SVG
-            if (selectedImage.TryGetAttribute("background", out string backgroundAttribute))
-            {
-                using (Graphics g = Graphics.FromImage(image))
-                using (SolidBrush brush = new SolidBrush(ColorTranslator.FromHtml(backgroundAttribute)))
-                {
-                    g.FillRectangle(brush, 0, 0, image.Width, image.Height);
-                }
-            }
-
-            //Render
-            using (ISvgRenderer renderer = SvgRenderer.FromImage(image))
-            {
-                renderer.ScaleTransform(imageSize.Width / svgSize.Width, imageSize.Height / svgSize.Height);
-                selectedImage.Draw(renderer);
-            }
-            return image;
         }
 
         private static Bitmap RemapImage(Bitmap image, ColorMap[] colorMap)

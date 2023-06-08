@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,35 @@ namespace PlantUmlViewer.DiagramGeneration
                 nameof(DiagramGenerator));
 
             return ReorganizePagesToDiagram(pages);
+        }
+
+        public static Image SvgImageToBitmap(SvgDocument svgImage, decimal sizeFactor)
+        {
+            //Resize (see: https://github.com/svg-net/SVG/blob/master/Source/SvgDocument.Drawing.cs#L217)
+            SizeF svgSize = svgImage.GetDimensions();
+            SizeF imageSize = svgSize;
+            svgImage.RasterizeDimensions(ref imageSize,
+                (int)Math.Round((decimal)svgSize.Width * sizeFactor), (int)Math.Round((decimal)svgSize.Height * sizeFactor));
+            Size bitmapSize = Size.Round(imageSize);
+            Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
+
+            //Set background if defined in SVG
+            if (svgImage.TryGetAttribute("background", out string backgroundAttribute))
+            {
+                using (Graphics g = Graphics.FromImage(image))
+                using (SolidBrush brush = new SolidBrush(ColorTranslator.FromHtml(backgroundAttribute)))
+                {
+                    g.FillRectangle(brush, 0, 0, image.Width, image.Height);
+                }
+            }
+
+            //Render
+            using (ISvgRenderer renderer = SvgRenderer.FromImage(image))
+            {
+                renderer.ScaleTransform(imageSize.Width / svgSize.Width, imageSize.Height / svgSize.Height);
+                svgImage.Draw(renderer);
+            }
+            return image;
         }
 
         private async Task<bool> GeneratePageAsync(string text, string include, int pageIndexToGenerate,

@@ -4,7 +4,7 @@ using Kbg.NppPluginNET.PluginInfrastructure;
 
 namespace Kbg.NppPluginNET
 {
-    internal static class Main
+    public static class Main
     {
         public const string PluginName = PlantUmlViewer.PlantUmlViewer.PLUGIN_NAME;
 
@@ -16,19 +16,19 @@ namespace Kbg.NppPluginNET
             plantUmlViewer.OnNotification(notification);
         }
 
-        internal static void CommandMenuInit()
+        public static void CommandMenuInit()
         {
             Debug.WriteLine("CommandMenuInit", nameof(Main));
             plantUmlViewer.CommandMenuInit();
         }
 
-        internal static void SetToolBarIcon()
+        public static void SetToolBarIcon()
         {
             Debug.WriteLine("SetToolBarIcon", nameof(Main));
             plantUmlViewer.SetToolBarIcon();
         }
 
-        internal static void PluginCleanUp()
+        public static void PluginCleanUp()
         {
             Debug.WriteLine("PluginCleanUp", nameof(Main));
             plantUmlViewer.PluginCleanUp();

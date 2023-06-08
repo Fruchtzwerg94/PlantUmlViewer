@@ -80,9 +80,7 @@ namespace PlantUmlViewer
         }
 
         public void PluginCleanUp()
-        {
-
-        }
+        { }
 
         private void ShowPreview()
         {
@@ -181,7 +179,7 @@ namespace PlantUmlViewer
         {
             if (previewWindow?.Visible == true)
             {
-                previewWindow.Button_Refresh_Click(null, null);
+                previewWindow.Button_Refresh_Click(this, null);
             }
         }
 
