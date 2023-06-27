@@ -8,7 +8,8 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        build_configuration: [Release, Debug]
+        #[Release, Debug]
+        build_configuration: [Release]
         build_platform: [x64, x86]
 
     steps:
@@ -36,13 +37,14 @@ jobs:
 #    - uses: olegtarasov/get-tag@v2.1
 #      id: tagName
 
-#    - uses: suisei-cn/actions-download-file@v1
-#      id: plantUmlJarFile
-#      name: Download PlantUML JAR file
-#      with:
-#        url: https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar
-#        target: build/
-#        auto-match: false
+    - name: Download libraries
+      if: matrix.build_configuration == 'Release'
+      run: |
+        mkdir libraries
+        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output libraries/plantuml-1.2022.5.jar
+        curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output libraries\plantuml-jlatexmath.zip
+        tar -xf libraries\plantuml-jlatexmath.zip -C libraries
+        del /f libraries\plantuml-jlatexmath.zip
 
     - name: Archive artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
@@ -52,7 +54,7 @@ jobs:
           name: PlantUmlViewer_${{ matrix.build_platform }}
           path: |
               PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
-#              build/plantuml-1.2022.5.jar
+              libraries/
 
 #    - name: Create release on tagging
 #      if: startsWith(github.ref, 'refs/tags/')
