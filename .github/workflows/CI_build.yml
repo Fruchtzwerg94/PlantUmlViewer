@@ -34,9 +34,6 @@ jobs:
       working-directory: PlantUmlViewer/
       run: msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
 
-#    - uses: olegtarasov/get-tag@v2.1
-#      id: tagName
-
     - name: Download libraries
       if: matrix.build_configuration == 'Release'
       run: |
@@ -44,14 +41,13 @@ jobs:
         curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output libraries/plantuml-1.2022.5.jar
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output libraries\plantuml-jlatexmath.zip
         tar -xf libraries\plantuml-jlatexmath.zip -C libraries
-        del /f "libraries\plantuml-jlatexmath.zip"
+        Remove-Item libraries\plantuml-jlatexmath.zip
 
     - name: Archive artifacts
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v3
       with:
-#          name: PlantUmlViewer_v${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
-          name: PlantUmlViewer_${{ matrix.build_platform }}
+          name: PlantUmlViewer_${{ github.ref_name }}_${{ matrix.build_platform }}
           path: |
               PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
               libraries/
