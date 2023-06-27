@@ -31,9 +31,8 @@ jobs:
       run: nuget restore PlantUmlViewer.sln
 
     - name: MSBuild
-      working-directory: PlantUmlViewer/
       run: |
-        msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+        msbuild PlantUmlViewer/PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
         mkdir deploy
         Copy-Item -Path "PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll" -Destination "deploy"
 
