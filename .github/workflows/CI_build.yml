@@ -20,37 +20,37 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Add msbuild to PATH
+    - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
 
     - name: Setup NuGet
       uses: nuget/setup-nuget@v1
 
-    - name: Nuget restore solution
+    - name: Nuget restore
       working-directory: PlantUmlViewer/
       run: nuget restore PlantUmlViewer.sln
 
-    - name: MSBuild of solution
+    - name: MSBuild
       working-directory: PlantUmlViewer/
-      run: msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+      run: |
+        msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+        mkdir deploy
+        Copy-Item -Path "PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll" -Destination "deploy"
 
     - name: Download libraries
       if: matrix.build_configuration == 'Release'
       run: |
-        mkdir libraries
-        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output libraries/plantuml-1.2022.5.jar
-        curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output libraries\plantuml-jlatexmath.zip
-        tar -xf libraries\plantuml-jlatexmath.zip -C libraries
-        Remove-Item libraries\plantuml-jlatexmath.zip
+        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output deploy/plantuml-1.2022.5.jar
+        curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
+        tar -xf deploy/plantuml-jlatexmath.zip -C deploy
+        Remove-Item deploy/plantuml-jlatexmath.zip
 
-    - name: Archive artifacts
+    - name: Create artifact
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v3
       with:
           name: PlantUmlViewer_${{ github.ref_name }}_${{ matrix.build_platform }}
-          path: |
-              PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
-              libraries/
+          path: deploy/
 
 #    - name: Create release on tagging
 #      if: startsWith(github.ref, 'refs/tags/')
