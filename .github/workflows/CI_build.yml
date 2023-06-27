@@ -44,9 +44,9 @@ jobs:
         curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output libraries/plantuml-1.2022.5.jar
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output libraries\plantuml-jlatexmath.zip
         tar -xf libraries\plantuml-jlatexmath.zip -C libraries
-        del /f libraries\plantuml-jlatexmath.zip
+        del /f "libraries\plantuml-jlatexmath.zip"
 
-    - name: Archive artifacts for ${{ matrix.build_platform }}
+    - name: Archive artifacts
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v3
       with:
