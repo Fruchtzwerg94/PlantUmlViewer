@@ -8,55 +8,46 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        build_configuration: [Release, Debug]
+        #[Release, Debug]
+        build_configuration: [Release]
         build_platform: [x64, x86]
 
     steps:
-    - run: choco install netfx-4.6.2-devpack
+    - name: Install .NET Framework for developers
+      run: choco install netfx-4.6.2-devpack
 
     - name: Checkout repo
       uses: actions/checkout@v3
       with:
         submodules: recursive
 
-    - name: Add msbuild to PATH
+    - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
 
     - name: Setup NuGet
       uses: nuget/setup-nuget@v1
 
-    - name: Nuget restore solution
+    - name: Nuget restore
       working-directory: PlantUmlViewer/
       run: nuget restore PlantUmlViewer.sln
 
-    - name: MSBuild of solution
-      working-directory: PlantUmlViewer/
-      run: msbuild PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+    - name: MSBuild
+      run: |
+        msbuild PlantUmlViewer/PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+        mkdir deploy
+        Copy-Item -Path "PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll" -Destination "deploy"
 
-#    - uses: olegtarasov/get-tag@v2.1
-#      id: tagName
+    - name: Download libraries
+      if: matrix.build_configuration == 'Release'
+      run: |
+        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar --output deploy/plantuml-1.2022.5.jar
+        curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
+        tar -xf deploy/plantuml-jlatexmath.zip -C deploy
+        Remove-Item deploy/plantuml-jlatexmath.zip
 
-#    - uses: suisei-cn/actions-download-file@v1
-#      id: plantUmlJarFile
-#      name: Download PlantUML JAR file
-#      with:
-#        url: https://github.com/plantuml/plantuml/releases/download/v1.2022.5/plantuml-1.2022.5.jar
-#        target: build/
-#        auto-match: false
-
-    - name: Archive artifacts for ${{ matrix.build_platform }}
+    - name: Create artifact
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v3
       with:
-#          name: PlantUmlViewer_v${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
-          name: PlantUmlViewer_${{ matrix.build_platform }}
-          path: |
-              PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll
-#              build/plantuml-1.2022.5.jar
-
-#    - name: Create release on tagging
-#      if: startsWith(github.ref, 'refs/tags/')
-#      uses: softprops/action-gh-release@v1
-#      with:
-#          files: |
-#              PlantUmlViewer_v${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
+          name: PlantUmlViewer_${{ github.ref_name }}.${{ github.sha }}_${{ matrix.build_platform }}
+          path: deploy/
