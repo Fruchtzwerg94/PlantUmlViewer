@@ -13,7 +13,8 @@ jobs:
         build_platform: [x64, x86]
 
     steps:
-    - run: choco install netfx-4.6.2-devpack
+    - name: Install .NET Framework for developers
+      run: choco install netfx-4.6.2-devpack
 
     - name: Checkout repo
       uses: actions/checkout@v3
@@ -48,12 +49,5 @@ jobs:
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v3
       with:
-          name: PlantUmlViewer_${{ github.ref_name }}_${{ matrix.build_platform }}
+          name: PlantUmlViewer_${{ github.ref_name }}.{{ github.sha }}_${{ matrix.build_platform }}
           path: deploy/
-
-#    - name: Create release on tagging
-#      if: startsWith(github.ref, 'refs/tags/')
-#      uses: softprops/action-gh-release@v1
-#      with:
-#          files: |
-#              PlantUmlViewer_v${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}
