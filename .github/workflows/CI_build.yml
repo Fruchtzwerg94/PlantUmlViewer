@@ -41,7 +41,7 @@ jobs:
       if: matrix.build_configuration == 'Release'
       run: |
         curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2023.10/plantuml-1.2023.10.jar --output deploy/plantuml-1.2023.10.jar
-        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-1.2023.10.jar").Hash -ne "32a81facc3b8ed331f0d19f2c23d709da") { throw "MD5 sum is invalid" }
+        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-1.2023.10.jar").Hash -ne "b98ae548b0e26d0ca985c4fa6cdf5665") { throw "MD5 sum is invalid" }
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
         if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-jlatexmath.zip").Hash -ne "32a81facc3b8ed331f0d19f2c23d709a") { throw "MD5 sum is invalid" }
         tar -xf deploy/plantuml-jlatexmath.zip -C deploy
