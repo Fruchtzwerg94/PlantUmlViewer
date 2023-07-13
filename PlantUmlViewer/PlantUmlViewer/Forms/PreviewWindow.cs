@@ -118,7 +118,7 @@ namespace PlantUmlViewer.Forms
         }
         #endregion Images
 
-        public event EventHandler<EventArgs> DockablePanelClose;
+        public event EventHandler DockablePanelClose;
 
         public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
@@ -268,8 +268,8 @@ namespace PlantUmlViewer.Forms
         }
         #endregion Styling
 
-        #region Button clicks
         public async void Button_Refresh_Click(object sender, EventArgs e)
+        #region ButtonClicks
         {
             //Cancel if already running
             if (refreshCancellationTokenSource != null)
@@ -279,7 +279,6 @@ namespace PlantUmlViewer.Forms
             }
             refreshCancellationTokenSource = new CancellationTokenSource();
 
-            string text = null;
             try
             {
                 button_Refresh.Enabled = false;
@@ -288,8 +287,8 @@ namespace PlantUmlViewer.Forms
 
                 List<GeneratedDiagram> images;
                 string file = getFilePath();
-                text = getText();
-                DateTime dateTime = DateTime.Now;
+                string text = getText();
+                DateTime stamp = DateTime.Now;
                 if (string.IsNullOrWhiteSpace(text))
                 {
                     //Empty input
@@ -326,11 +325,12 @@ namespace PlantUmlViewer.Forms
                         refreshCancellationTokenSource).ConfigureAwait(true);
                 }
 
-                UpdateImages(file, text, dateTime, images);
+                UpdateImages(file, text, stamp, images);
                 this.InvokeIfRequired(() =>
                 {
-                    toolStripStatusLabel_Time.Text = $"{Path.GetFileName(file)} ({dateTime.ToShortTimeString()})";
-                    toolStripStatusLabel_Time.BackColor = colorSuccess;
+                    toolStripStatusLabel_Status.Text = $"{Path.GetFileName(file)} ({stamp.ToShortTimeString()})";
+                    toolStripStatusLabel_Status.BackColor = colorSuccess;
+                    toolStripStatusLabel_Status.ToolTipText = "";
                     button_Export.Enabled = true;
                     button_ZoomIn.Enabled = true;
                     button_ZoomOut.Enabled = true;
@@ -342,45 +342,24 @@ namespace PlantUmlViewer.Forms
             }
             catch (FileFormatException ffEx)
             {
-                this.InvokeIfRequired(() =>
-                {
-                    toolStripStatusLabel_Time.BackColor = colorFailure;
-                    MessageBox.Show(this, ffEx.Message, "Failed to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                });
+                GenerationFailed("Failed to load file", ffEx.Message);
             }
             catch (JavaNotFoundException jnfEx)
             {
-                this.InvokeIfRequired(() =>
-                {
-                    toolStripStatusLabel_Time.BackColor = colorFailure;
-                    MessageBox.Show(this,
-                        $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options",
-                        "Java not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                });
+                GenerationFailed("Java not found",
+                    $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options");
             }
             catch (TaskCanceledException)
             {
-                this.InvokeIfRequired(() =>
-                {
-                    toolStripStatusLabel_Time.BackColor = colorFailure;
-                    MessageBox.Show(this, "Refresh cancelled", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                });
+                GenerationFailed("Cancelled", "Refresh cancelled");
             }
             catch (RenderingException rEx)
             {
-                this.InvokeIfRequired(() =>
-                {
-                    toolStripStatusLabel_Time.BackColor = colorFailure;
-                    MessageBox.Show(this, rEx.Message, "Failed to render", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                });
+                GenerationFailed("Failed to render", rEx.Message);
             }
             catch (Exception ex)
             {
-                this.InvokeIfRequired(() =>
-                {
-                    toolStripStatusLabel_Time.BackColor = colorFailure;
-                    MessageBox.Show(this, ex.ToString(), "Failed to refresh", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                });
+                GenerationFailed("Failed to refresh", ex.ToString());
             }
             finally
             {
@@ -391,6 +370,16 @@ namespace PlantUmlViewer.Forms
                     refreshCancellationTokenSource = null;
                 });
             }
+        }
+
+        private void GenerationFailed(string title, string message)
+        {
+            this.InvokeIfRequired(() =>
+            {
+                toolStripStatusLabel_Status.BackColor = colorFailure;
+                MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                toolStripStatusLabel_Status.ToolTipText = $"{title}:{Environment.NewLine}{message}";
+            });
         }
 
         private void Button_Export_Click(object sender, EventArgs e)
@@ -501,7 +490,7 @@ namespace PlantUmlViewer.Forms
                 button_PreviousPage.Focus();
             }
         }
-        #endregion Button clicks
+        #endregion ButtonClicks
 
         private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
         {
@@ -525,22 +514,6 @@ namespace PlantUmlViewer.Forms
                         image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes);
                 }
                 return newImage;
-            }
-        }
-
-        private static string ReadLine(string text, int lineNumber)
-        {
-            using (StringReader reader = new StringReader(text))
-            {
-                string line;
-                int currentLineNumber = 0;
-                do
-                {
-                    currentLineNumber++;
-                    line = reader.ReadLine();
-                }
-                while (line != null && currentLineNumber < lineNumber);
-                return (currentLineNumber == lineNumber) ? line : "";
             }
         }
 

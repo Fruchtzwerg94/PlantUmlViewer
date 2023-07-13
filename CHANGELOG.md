@@ -1,5 +1,7 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.6.0.10 (13.07.2023)
+- PlantUML version updated to 1.2023.10
 - Added option to open the file after export
+- Added tooltip with potential generation error message to bottom status
 - Ignored non expected generation content due to Java accessibility hooks output like PowerAutomate
 - Fixed Notepad++ may freezes if plugin is docked out and looses focus
 - Fixed potential generation errors after a generation failed due to Plant UML executable issues

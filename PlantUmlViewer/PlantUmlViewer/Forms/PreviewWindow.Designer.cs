@@ -32,7 +32,7 @@
             this.tableLayoutPanel_Window = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip_Bottom = new System.Windows.Forms.StatusStrip();
             this.loadingCircleToolStripMenuItem_Refreshing = new MRG.Controls.UI.LoadingCircleToolStripMenuItem();
-            this.toolStripStatusLabel_Time = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Zoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.imageBox_Diagram = new Cyotek.Windows.Forms.ImageBox();
             this.contextMenuStrip_Diagram = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -86,10 +86,11 @@
             this.statusStrip_Bottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusStrip_Bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadingCircleToolStripMenuItem_Refreshing,
-            this.toolStripStatusLabel_Time,
+            this.toolStripStatusLabel_Status,
             this.toolStripStatusLabel_Zoom});
             this.statusStrip_Bottom.Location = new System.Drawing.Point(0, 239);
             this.statusStrip_Bottom.Name = "statusStrip_Bottom";
+            this.statusStrip_Bottom.ShowItemToolTips = true;
             this.statusStrip_Bottom.Size = new System.Drawing.Size(384, 22);
             this.statusStrip_Bottom.TabIndex = 2;
             // 
@@ -118,12 +119,12 @@
             this.loadingCircleToolStripMenuItem_Refreshing.Text = "Refreshing";
             this.loadingCircleToolStripMenuItem_Refreshing.Visible = false;
             // 
-            // toolStripStatusLabel_Time
+            // toolStripStatusLabel_Status
             // 
-            this.toolStripStatusLabel_Time.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.toolStripStatusLabel_Time.Name = "toolStripStatusLabel_Time";
-            this.toolStripStatusLabel_Time.Size = new System.Drawing.Size(334, 16);
-            this.toolStripStatusLabel_Time.Spring = true;
+            this.toolStripStatusLabel_Status.Size = new System.Drawing.Size(334, 16);
+            this.toolStripStatusLabel_Status.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.toolStripStatusLabel_Status.Name = "toolStripStatusLabel_Status";
+            this.toolStripStatusLabel_Status.Spring = true;
             // 
             // toolStripStatusLabel_Zoom
             // 
@@ -423,7 +424,7 @@
         private System.Windows.Forms.Button button_Export;
         private System.Windows.Forms.StatusStrip statusStrip_Bottom;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Zoom;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Time;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Status;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_Diagram;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_CopyToClipboard;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Diagram_ExportFile;
