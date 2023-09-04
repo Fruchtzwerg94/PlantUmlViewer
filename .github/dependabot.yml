@@ -5,12 +5,18 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/PlantUmlViewer/PlantUmlViewer" # Location of package manifests
+  #Maintain dependencies for NuGet packages
+  - package-ecosystem: "nuget"
+    directory: "/PlantUmlViewer/PlantUmlViewer"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "ExCSS"
+      - dependency-name: "Fizzler"
+      - dependency-name: "System.Memory"
+      - dependency-name: "System.Runtime.CompilerServices.Unsafe"
 
- # Maintain dependencies for GitHub Actions
+  #Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
