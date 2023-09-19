@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Set generation working directory to current file to allow relative includes
+
 # 1.6.0.10 (13.07.2023)
 - PlantUML version updated to 1.2023.10
 - Added option to open the file after export

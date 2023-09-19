@@ -322,7 +322,7 @@ namespace PlantUmlViewer.Forms
                 {
                     diagramGenerator.JavaPath = settings.Settings.JavaPath;
                     images = await diagramGenerator.GenerateDocumentAsync(text, settings.Settings.Include,
-                        refreshCancellationTokenSource).ConfigureAwait(true);
+                        Path.GetDirectoryName(file), refreshCancellationTokenSource).ConfigureAwait(true);
                 }
 
                 UpdateImages(file, text, stamp, images);

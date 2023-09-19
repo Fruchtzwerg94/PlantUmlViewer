@@ -30,7 +30,8 @@ namespace PlantUmlViewer.DiagramGeneration
             PlantUmlBinary = plantUmlBinary;
         }
 
-        public async Task<List<GeneratedDiagram>> GenerateDocumentAsync(string text, string include, CancellationTokenSource cancellationTokenSource)
+        public async Task<List<GeneratedDiagram>> GenerateDocumentAsync(string text, string include, string workingDirectory,
+            CancellationTokenSource cancellationTokenSource)
         {
             /*
              * The PlantUML responses could contain multiple pages, where each page could contain the images for multiple diagrams
@@ -55,13 +56,13 @@ namespace PlantUmlViewer.DiagramGeneration
             //Generate the first page directly at startup
             List<Task<bool>> generateTasks = new List<Task<bool>>()
             {
-                Task.Run(() => GeneratePageAsync(text, include, 0, pages, cancellationTokenSource))
+                Task.Run(() => GeneratePageAsync(text, include, workingDirectory, 0, pages, cancellationTokenSource))
             };
             //Generate the (maybe) following pages
             int pageIndex = 1;
             while (true)
             {
-                generateTasks.Add(Task.Run(() => GeneratePageAsync(text, include, pageIndex, pages, cancellationTokenSource)));
+                generateTasks.Add(Task.Run(() => GeneratePageAsync(text, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
                 await Task.WhenAll(generateTasks);
                 if (generateTasks.Any(rT => !rT.Result))
                 {
@@ -107,7 +108,7 @@ namespace PlantUmlViewer.DiagramGeneration
             return image;
         }
 
-        private async Task<bool> GeneratePageAsync(string text, string include, int pageIndexToGenerate,
+        private async Task<bool> GeneratePageAsync(string text, string include, string workingDirectory, int pageIndexToGenerate,
             Dictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
         {
             IPlantUmlRenderer renderer = renderFactory.CreateRenderer(new PlantUmlSettings()
@@ -117,6 +118,7 @@ namespace PlantUmlViewer.DiagramGeneration
                 JavaPath = JavaPath,
                 RenderingMode = RenderingMode.Local,
                 Include = include,
+                WorkingDirectory = workingDirectory,
                 Delimitor = DIAGRAM_DELIMITOR,
                 ImageIndex = pageIndexToGenerate
             });
