@@ -1,6 +1,6 @@
 # X.X.X.X (XX.XX.XXXX)
 - Set generation working directory to current file to allow relative includes
-- SVG.NET library updated to 3.4.5, dependent ExCSS library updated to 4.2.3
+- SVG.NET library updated to 3.4.6, dependent ExCSS library updated to 4.2.3
 
 # 1.6.0.10 (13.07.2023)
 - PlantUML version updated to 1.2023.10
