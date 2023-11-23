@@ -99,22 +99,25 @@ namespace PlantUmlViewer.Forms
         private void SetSelectedImage(int diagramIndex, int pageIndex)
         {
             Debug.WriteLine($"Selecting image for diagram index {diagramIndex}, page index {pageIndex}", nameof(PreviewWindow));
-            lock (imagesLock)
+            this.InvokeIfRequired(() =>
             {
-                selectedDiagramIndex = Math.Min(diagramIndex, images.Count - 1);
-                label_SelectedDiagram.Text = (selectedDiagramIndex + 1).ToString();
-                tableLayoutPanel_NavigationDiagram.Visible = images.Count > 1;
-                button_NextDiagram.Enabled = selectedDiagramIndex < images.Count - 1;
-                button_PreviousDiagram.Enabled = selectedDiagramIndex > 0;
+                lock (imagesLock)
+                {
+                    selectedDiagramIndex = Math.Min(diagramIndex, images.Count - 1);
+                    label_SelectedDiagram.Text = (selectedDiagramIndex + 1).ToString();
+                    tableLayoutPanel_NavigationDiagram.Visible = images.Count > 1;
+                    button_NextDiagram.Enabled = selectedDiagramIndex < images.Count - 1;
+                    button_PreviousDiagram.Enabled = selectedDiagramIndex > 0;
 
-                selectedPageIndex = Math.Min(pageIndex, images[selectedDiagramIndex].Pages.Count - 1);
-                label_SelectedPage.Text = (selectedPageIndex + 1).ToString();
-                tableLayoutPanel_NavigationPage.Visible = images.Any(i => i.Pages.Count > 1);
-                button_NextPage.Enabled = selectedPageIndex < images[selectedDiagramIndex].Pages.Count - 1;
-                button_PreviousPage.Enabled = selectedPageIndex > 0;
+                    selectedPageIndex = Math.Min(pageIndex, images[selectedDiagramIndex].Pages.Count - 1);
+                    label_SelectedPage.Text = (selectedPageIndex + 1).ToString();
+                    tableLayoutPanel_NavigationPage.Visible = images.Any(i => i.Pages.Count > 1);
+                    button_NextPage.Enabled = selectedPageIndex < images[selectedDiagramIndex].Pages.Count - 1;
+                    button_PreviousPage.Enabled = selectedPageIndex > 0;
 
-                imageBox_Diagram.Image = GetSelectedImage(1);
-            }
+                    imageBox_Diagram.Image = GetSelectedImage(1);
+                }
+            });
         }
         #endregion Images
 
@@ -553,8 +556,8 @@ namespace PlantUmlViewer.Forms
             rdfMetadataDescription.Children.Add(new NonSvgElement("source", NAMESPACE_DC) { Content = Path.GetFileName(generatedFile) });
             rdfMetadataDescription.Children.Add(new NonSvgElement("title", NAMESPACE_DC) { Content = Path.GetFileNameWithoutExtension(generatedFile) });
             rdfMetadataDescription.Children.Add(new NonSvgElement("format", NAMESPACE_DC) { Content = "image/svg" });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("page", NAMESPACE_PUV) { Content = (GetSelectedPageIndex() + 1).ToString() });
             rdfMetadataDescription.Children.Add(new NonSvgElement("diagram", NAMESPACE_PUV) { Content = (GetSelectedDiagramIndex() + 1).ToString() });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("page", NAMESPACE_PUV) { Content = (GetSelectedPageIndex() + 1).ToString() });
             rdfMetadata.Children.Add(rdfMetadataDescription);
 
             metadata.Children.Add(rdfMetadata);
