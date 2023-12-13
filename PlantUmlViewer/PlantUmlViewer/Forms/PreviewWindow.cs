@@ -542,7 +542,6 @@ namespace PlantUmlViewer.Forms
             //Add metadata
             SvgUnknownElement metadata = new SvgUnknownElement("metadata");
             NonSvgElement rdfMetadata = new NonSvgElement("RDF", NAMESPACE_RDF);
-            rdfMetadata.Namespaces["rdf"] = NAMESPACE_RDF;
             rdfMetadata.Namespaces["dc"] = NAMESPACE_DC;
             rdfMetadata.Namespaces["puv"] = NAMESPACE_PUV;
 
