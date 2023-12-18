@@ -47,9 +47,17 @@ jobs:
         tar -xf deploy/plantuml-jlatexmath.zip -C deploy
         Remove-Item deploy/plantuml-jlatexmath.zip
 
+    - name: Set artifact name
+      # Replace every invalid file name character
+      run: |
+        $artifact_name="PlantUmlViewer_${{ github.ref_name }}.${{ github.sha }}_${{ matrix.build_platform }}"
+        $illegal_chars = [string]::join('',([System.IO.Path]::GetInvalidFileNameChars())) -replace '\\','\\'
+        $artifact_name=($artifact_name -replace "[$illegal_chars]", '-')
+        echo "ARTIFACT_NAME=$artifact_name" >> $env:GITHUB_ENV
+
     - name: Create artifact
       if: matrix.build_configuration == 'Release'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-          name: PlantUmlViewer_${{ github.ref_name }}.${{ github.sha }}_${{ matrix.build_platform }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: deploy/
