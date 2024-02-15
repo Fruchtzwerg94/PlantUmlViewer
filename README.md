@@ -19,10 +19,13 @@ A [Notepad++](https://notepad-plus-plus.org/) plugin to generate, view and expor
 You can find the latest and all other changes in the [changelog](CHANGELOG.md).
 
 ## Installation
+Detailed information on how plugins and how they are installed can be found in the [Notepad++ User Manual](https://npp-user-manual.org/docs/plugins/).
+
+### Manual
 Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy the folder *PlantUmlViewer* with its content to the *plugins* subfolder of your Notepad++ installation directory.
 
-### Built-in Plugin Manager (after Notepad++ version 7.6)
-Alternatively, you can use the built-in plugin manager to install it directly. Just open Notepad++ and go to *Plugins*->*Plugins Admin* and then under the *Available* tab search for *PlantUML Viewer*. After checking the box, click *Install* at the top right corner of the window.
+### Plugins Admin (recommended)
+Use the built-in *Plugins Admin* to install it directly. Just open Notepad++ and navigate to *Plugins*->*Plugins Admin*. Here under the *Available* tab, search for *PlantUML Viewer*. After checking the corresponding box, click *Install* at the top right corner of the window.
 
 ### Compatibility
 This plugin requires at least
