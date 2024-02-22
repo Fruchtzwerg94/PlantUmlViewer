@@ -541,14 +541,14 @@ namespace PlantUmlViewer.Forms
 
             //Add metadata
             SvgUnknownElement metadata = new SvgUnknownElement("metadata");
-            NonSvgElement rdfMetadata = new NonSvgElement("RDF", "rdf");
+            NonSvgElement rdfMetadata = new NonSvgElement("RDF", NAMESPACE_RDF);
             rdfMetadata.Namespaces["rdf"] = NAMESPACE_RDF;
             rdfMetadata.Namespaces["dc"] = NAMESPACE_DC;
             rdfMetadata.Namespaces["puv"] = NAMESPACE_PUV;
 
             rdfMetadata.Children.Add(new NonSvgElement("product", NAMESPACE_PUV) { Content = AssemblyAttributes.Product });
             rdfMetadata.Children.Add(new NonSvgElement("version", NAMESPACE_PUV) { Content = AssemblyAttributes.Version });
-            rdfMetadata.Children.Add(new NonSvgElement("plantuml", NAMESPACE_PUV) { Content = PlantUmlViewer.PLANT_UML_VERSION });
+            rdfMetadata.Children.Add(new NonSvgElement("plantumlviewer", NAMESPACE_PUV) { Content = PlantUmlViewer.PLANT_UML_VERSION });
 
             NonSvgElement rdfMetadataDescription = new NonSvgElement("Description", NAMESPACE_RDF);
             rdfMetadataDescription.Children.Add(new NonSvgElement("creator", NAMESPACE_DC) { Content = WindowsIdentity.GetCurrent().Name });
