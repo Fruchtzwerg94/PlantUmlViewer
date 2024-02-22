@@ -1,4 +1,4 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.7.0.11 (22.02.2024)
 - PlantUML version updated to 1.2024.3
 - Set generation working directory to current file to allow relative includes
 - SVG.NET library updated to 3.4.7, dependent ExCSS library updated to 4.2.3 to fix SVG export namespace prefix not set accordingly
