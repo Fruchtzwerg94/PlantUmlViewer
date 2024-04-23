@@ -1,6 +1,6 @@
 ﻿namespace PlantUmlViewer.Settings
 {
-    public class PlantUmlViewerSettings
+    internal class PlantUmlViewerSettings
     {
         public string JavaPath { get; set; } = "";
         public string Include { get; set; } = "";

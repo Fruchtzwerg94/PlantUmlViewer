@@ -3,15 +3,15 @@ using System.Runtime.InteropServices;
 
 namespace PlantUmlViewer.Windows
 {
-    public static class NativeWindowApi
+    internal static class NativeWindowApi
     {
         [DllImport("User32.dll", CharSet = CharSet.Ansi)]
-        extern static Int32 SetWindowLong(IntPtr hWnd, int nIndex, Int32 dwNewLong);
+        private extern static Int32 SetWindowLong(IntPtr hWnd, int nIndex, Int32 dwNewLong);
 
         [DllImport("User32.dll", CharSet = CharSet.Ansi)]
-        extern static Int32 GetWindowLong(IntPtr hWnd, int nIndex);
+        private extern static Int32 GetWindowLong(IntPtr hWnd, int nIndex);
 
-        const Int32 GWL_EXSTYLE = -20;
+        private const Int32 GWL_EXSTYLE = -20;
 
         public const Int32 WS_EX_DLGMODALFRAME = 0x00000001;
         public const Int32 WS_EX_NOPARENTNOTIFY = 0x00000004;

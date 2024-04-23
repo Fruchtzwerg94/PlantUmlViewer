@@ -15,12 +15,11 @@ using System.Windows.Forms;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
 
-using PlantUml.Net;
-using PlantUml.Net.Java;
-
 using Svg;
 
 using PlantUmlViewer.DiagramGeneration;
+using PlantUmlViewer.DiagramGeneration.PlantUml;
+using PlantUmlViewer.Helpers;
 using PlantUmlViewer.Properties;
 using PlantUmlViewer.Settings;
 using PlantUmlViewer.Windows;
@@ -29,13 +28,12 @@ namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
+        private readonly string plantUmlJar;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
         private readonly SettingsService settings;
 
         private readonly Dictionary<Button, Bitmap> buttonImages = new Dictionary<Button, Bitmap>();
-
-        private readonly DiagramGenerator diagramGenerator;
 
         private bool? isLight;
         private Color colorSuccess;
@@ -123,13 +121,12 @@ namespace PlantUmlViewer.Forms
 
         public event EventHandler DockablePanelClose;
 
-        public PreviewWindow(string plantUmlBinary, Func<string> getFilePath, Func<string> getText, SettingsService settings)
+        public PreviewWindow(string plantUmlJar, Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
+            this.plantUmlJar = plantUmlJar;
             this.getFilePath = getFilePath;
             this.getText = getText;
             this.settings = settings;
-
-            diagramGenerator = new DiagramGenerator(settings.Settings.JavaPath, plantUmlBinary);
 
             InitializeComponent();
 
@@ -288,7 +285,7 @@ namespace PlantUmlViewer.Forms
                 loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = true;
                 loadingCircleToolStripMenuItem_Refreshing.Visible = true;
 
-                List<GeneratedDiagram> images;
+                List<GeneratedDiagram> generatedImages;
                 string file = getFilePath();
                 string text = getText();
                 DateTime stamp = DateTime.Now;
@@ -302,7 +299,7 @@ namespace PlantUmlViewer.Forms
                         {
                             if (element is SvgText textElement)
                             {
-                                element.Fill = color;
+                                textElement.Fill = color;
                             }
                             else
                             {
@@ -315,7 +312,7 @@ namespace PlantUmlViewer.Forms
                         Random rnd = new Random();
                         setTextColor(emptyImage, new SvgColourServer(
                             Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))));
-                        images = new List<GeneratedDiagram>()
+                        generatedImages = new List<GeneratedDiagram>()
                         {
                             new GeneratedDiagram(emptyImage)
                         };
@@ -323,12 +320,27 @@ namespace PlantUmlViewer.Forms
                 }
                 else
                 {
-                    diagramGenerator.JavaPath = settings.Settings.JavaPath;
-                    images = await diagramGenerator.GenerateDocumentAsync(text, settings.Settings.Include,
+                    string javaExecutable = settings.Settings.JavaPath;
+                    if (string.IsNullOrWhiteSpace(javaExecutable))
+                    {
+                        try
+                        {
+                            javaExecutable = JavaLocator.GetJavaExecutable();
+                        }
+                        catch (InvalidOperationException ex)
+                        {
+                            GenerationFailed("Java not found",
+                                $"{ex.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options");
+                            return;
+                        }
+                    }
+                    generatedImages = await DiagramGenerator.GenerateDocumentAsync(
+                        javaExecutable, plantUmlJar,
+                        text, settings.Settings.Include,
                         Path.GetDirectoryName(file), refreshCancellationTokenSource).ConfigureAwait(true);
                 }
 
-                UpdateImages(file, text, stamp, images);
+                UpdateImages(file, text, stamp, generatedImages);
                 this.InvokeIfRequired(() =>
                 {
                     toolStripStatusLabel_Status.Text = $"{Path.GetFileName(file)} ({stamp.ToShortTimeString()})";
@@ -347,16 +359,11 @@ namespace PlantUmlViewer.Forms
             {
                 GenerationFailed("Failed to load file", ffEx.Message);
             }
-            catch (JavaNotFoundException jnfEx)
-            {
-                GenerationFailed("Java not found",
-                    $"{jnfEx.Message}{Environment.NewLine}Make sure Java can be found by setting the right path in the plugins options");
-            }
             catch (TaskCanceledException)
             {
                 GenerationFailed("Cancelled", "Refresh cancelled");
             }
-            catch (RenderingException rEx)
+            catch (RenderException rEx)
             {
                 GenerationFailed("Failed to render", rEx.Message);
             }
@@ -415,19 +422,14 @@ namespace PlantUmlViewer.Forms
                                 }
                                 break;
                             default:
-                                throw new Exception("Invalid file extension");
+                                throw new InvalidOperationException("Invalid file extension");
                         }
 
                         if (settings.Settings.OpenExport == OpenExport.Always
                             || (settings.Settings.OpenExport == OpenExport.Ask
                                 && MessageBox.Show(this, "Open the exported file?", "Open export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
                         {
-                            ProcessStartInfo startInfo = new ProcessStartInfo()
-                            {
-                                FileName = saveFileDialog.FileName,
-                                UseShellExecute = true
-                            };
-                            Process.Start(startInfo);
+                            ProcessHelper.OpenDocument(saveFileDialog.FileName);
                         }
                     }
                 }

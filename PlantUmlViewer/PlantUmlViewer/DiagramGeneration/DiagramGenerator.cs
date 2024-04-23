@@ -10,27 +10,19 @@ using System.Threading.Tasks;
 
 using Svg;
 
-using PlantUml.Net;
+using PlantUmlViewer.DiagramGeneration.PlantUml;
 
 namespace PlantUmlViewer.DiagramGeneration
 {
-    public class DiagramGenerator
+    internal static class DiagramGenerator
     {
         private const string DIAGRAM_DELIMITOR = "|##|##|<PS>|##|##|";
         private const string SVG_START = "<svg ";
         private const string SVG_END = "</svg>";
 
-        private readonly RendererFactory renderFactory = new RendererFactory();
-        public string JavaPath { get; set; }
-        public string PlantUmlBinary { get; set; }
-
-        public DiagramGenerator(string javaPath, string plantUmlBinary)
-        {
-            JavaPath = javaPath;
-            PlantUmlBinary = plantUmlBinary;
-        }
-
-        public async Task<List<GeneratedDiagram>> GenerateDocumentAsync(string text, string include, string workingDirectory,
+        public static async Task<List<GeneratedDiagram>> GenerateDocumentAsync(
+            string javaExecutable, string plantUmlJar,
+            string text, string include, string workingDirectory,
             CancellationTokenSource cancellationTokenSource)
         {
             /*
@@ -56,15 +48,17 @@ namespace PlantUmlViewer.DiagramGeneration
             //Generate the first page directly at startup
             List<Task<bool>> generateTasks = new List<Task<bool>>()
             {
-                Task.Run(() => GeneratePageAsync(text, include, workingDirectory, 0, pages, cancellationTokenSource))
+                Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
+                  text, include, workingDirectory, 0, pages, cancellationTokenSource))
             };
             //Generate the (maybe) following pages
             int pageIndex = 1;
             while (true)
             {
-                generateTasks.Add(Task.Run(() => GeneratePageAsync(text, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
+                generateTasks.Add(Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
+                    text, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
                 await Task.WhenAll(generateTasks);
-                if (generateTasks.Any(rT => !rT.Result))
+                if (generateTasks.Exists(rT => !rT.Result))
                 {
                     //The last page was detected
                     break;
@@ -108,22 +102,21 @@ namespace PlantUmlViewer.DiagramGeneration
             return image;
         }
 
-        private async Task<bool> GeneratePageAsync(string text, string include, string workingDirectory, int pageIndexToGenerate,
+        private static async Task<bool> GeneratePageAsync(string javaExecutable, string plantUmlJar,
+            string text, string include, string workingDirectory, int pageIndexToGenerate,
             Dictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
         {
-            IPlantUmlRenderer renderer = renderFactory.CreateRenderer(new PlantUmlSettings()
+            PlantUmlArguments arguments = new PlantUmlArguments()
             {
-                ErrorReportMode = ErrorReportMode.Verbose,
-                LocalPlantUmlPath = PlantUmlBinary,
-                JavaPath = JavaPath,
-                RenderingMode = RenderingMode.Local,
+                OutputFormat = OutputFormat.Svg,
+                ErrorFormat = ErrorFormat.Verbose,
                 Include = include,
                 WorkingDirectory = workingDirectory,
                 Delimitor = DIAGRAM_DELIMITOR,
                 ImageIndex = pageIndexToGenerate
-            });
+            };
 
-            byte[] bytes = await renderer.RenderAsync(text, OutputFormat.Svg,
+            byte[] bytes = await PlantUmlRunner.Generate(javaExecutable, plantUmlJar, arguments, workingDirectory, text,
                 cancellationTokenSource.Token).ConfigureAwait(true);
 
             //Find all delimitors to parse multiple diagram images
@@ -141,7 +134,7 @@ namespace PlantUmlViewer.DiagramGeneration
                     List<int> endPatterns = PatternAt(bytes, Encoding.UTF8.GetBytes(SVG_END), start, end).ToList();
                     if (startPatterns.Count != 1 || endPatterns.Count != 1)
                     {
-                        throw new Exception("Failed to parse generated data");
+                        throw new InvalidOperationException("Failed to parse generated data");
                     }
                     start = startPatterns[0];
                     end = endPatterns[0] + SVG_END.Length;
@@ -166,7 +159,7 @@ namespace PlantUmlViewer.DiagramGeneration
             return true;
         }
 
-        private List<GeneratedDiagram> ReorganizePagesToDiagram(Dictionary<int, Dictionary<int, SvgDocument>> pages)
+        private static List<GeneratedDiagram> ReorganizePagesToDiagram(Dictionary<int, Dictionary<int, SvgDocument>> pages)
         {
             //Reorganize page based structure to intuitive diagram based structure
             //pages[pageIndex][diagramIndex] --> images[diagramIndex][nonEmptyPageIndex]

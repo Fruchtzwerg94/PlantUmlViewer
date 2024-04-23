@@ -208,8 +208,8 @@
             this.label_JavaPathDescription.Name = "label_JavaPathDescription";
             this.label_JavaPathDescription.Size = new System.Drawing.Size(524, 13);
             this.label_JavaPathDescription.TabIndex = 4;
-            this.label_JavaPathDescription.Text = "Path of the Java executable. Leavy empty if JAVA_HOME environment variable is set" +
-    " to auto detect.";
+            this.label_JavaPathDescription.Text = "Path of the Java executable. Leavy empty to autodetect using JAVA_HOME environmen" +
+    "t variable or registry.";
             this.label_JavaPathDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label_ExportSizeFactor
@@ -290,10 +290,10 @@
             // 
             this.label_ExportDocumentDescription.AutoSize = true;
             this.label_ExportDocumentDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ExportDocumentDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_ExportDocumentDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_ExportDocumentDescription.Location = new System.Drawing.Point(102, 164);
             this.label_ExportDocumentDescription.Name = "label_ExportDocumentDescription";
-            this.label_ExportDocumentDescription.Size = new System.Drawing.Size(524, 12);
+            this.label_ExportDocumentDescription.Size = new System.Drawing.Size(524, 13);
             this.label_ExportDocumentDescription.TabIndex = 13;
             this.label_ExportDocumentDescription.Text = "Include the original document to SVG exports.";
             this.label_ExportDocumentDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -303,7 +303,7 @@
             this.comboBox_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox_OpenExport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_OpenExport.FormattingEnabled = true;
-            this.comboBox_OpenExport.Location = new System.Drawing.Point(102, 179);
+            this.comboBox_OpenExport.Location = new System.Drawing.Point(102, 180);
             this.comboBox_OpenExport.Name = "comboBox_OpenExport";
             this.comboBox_OpenExport.Size = new System.Drawing.Size(524, 21);
             this.comboBox_OpenExport.TabIndex = 5;
@@ -312,7 +312,7 @@
             // 
             this.label_OpenExport.AutoSize = true;
             this.label_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_OpenExport.Location = new System.Drawing.Point(8, 176);
+            this.label_OpenExport.Location = new System.Drawing.Point(8, 177);
             this.label_OpenExport.Name = "label_OpenExport";
             this.label_OpenExport.Size = new System.Drawing.Size(88, 27);
             this.label_OpenExport.TabIndex = 15;
@@ -323,10 +323,10 @@
             // 
             this.label_OpenExportDescription.AutoSize = true;
             this.label_OpenExportDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_OpenExportDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_OpenExportDescription.Location = new System.Drawing.Point(102, 203);
+            this.label_OpenExportDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_OpenExportDescription.Location = new System.Drawing.Point(102, 204);
             this.label_OpenExportDescription.Name = "label_OpenExportDescription";
-            this.label_OpenExportDescription.Size = new System.Drawing.Size(524, 12);
+            this.label_OpenExportDescription.Size = new System.Drawing.Size(524, 13);
             this.label_OpenExportDescription.TabIndex = 16;
             this.label_OpenExportDescription.Text = "Open the file after export.";
             this.label_OpenExportDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

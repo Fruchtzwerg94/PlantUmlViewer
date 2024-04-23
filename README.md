@@ -64,7 +64,6 @@ PlantUML Viewer is released under the [MIT License](LICENSE). This means, you ca
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by Kasper B. Graversen provided under the Apache 2.0 license.
-* The plugin uses [PlantUml.Net](https://github.com/KevReed/PlantUml.Net) by KevReed provided under the MIT License.
 * The plugin uses [SVG.NET](https://github.com/svg-net/SVG) provided under the Microsoft Public License which depends on
     * [Fizzler](https://github.com/atifaziz/Fizzler) by Atif Aziz provided under the GNU Lesser General Public License and
     * [ExCSS](https://github.com/TylerBrinks/ExCSS) by Tyler Brinks provided under the Microsoft Public License.

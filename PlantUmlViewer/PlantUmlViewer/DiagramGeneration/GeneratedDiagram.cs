@@ -4,7 +4,7 @@ using Svg;
 
 namespace PlantUmlViewer.DiagramGeneration
 {
-    public class GeneratedDiagram
+    internal class GeneratedDiagram
     {
         public List<SvgDocument> Pages { get; }
 

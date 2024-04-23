@@ -15,7 +15,7 @@ namespace PlantUmlViewer
     {
         public const string PLUGIN_NAME = "PlantUML Viewer";
         public const string PLANT_UML_VERSION = "1.2024.3";
-        private const string PLANT_UML_BINARY = "plantuml-" + PLANT_UML_VERSION + ".jar";
+        private const string PLANT_UML_JAR = "plantuml-" + PLANT_UML_VERSION + ".jar";
 
         private enum CommandId
         {
@@ -87,7 +87,7 @@ namespace PlantUmlViewer
             if (previewWindow == null)
             {
                 previewWindow = new PreviewWindow(
-                    Path.Combine(assemblyDirectory, PLANT_UML_BINARY),
+                    Path.Combine(assemblyDirectory, PLANT_UML_JAR),
                     notepadPp.GetCurrentFilePath,
                     () =>
                     {

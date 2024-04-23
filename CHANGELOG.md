@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Removed dependency to PlantUml.Net library
+
 # 1.7.0.11 (22.02.2024)
 - PlantUML version updated to 1.2024.3
 - Set generation working directory to current file to allow relative includes

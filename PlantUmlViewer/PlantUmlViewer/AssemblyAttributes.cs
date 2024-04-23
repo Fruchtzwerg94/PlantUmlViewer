@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace PlantUmlViewer
 {
-    public static class AssemblyAttributes
+    internal static class AssemblyAttributes
     {
         public static string Title
         {
