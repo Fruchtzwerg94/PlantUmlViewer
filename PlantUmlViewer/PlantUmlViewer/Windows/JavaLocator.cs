@@ -20,20 +20,11 @@ namespace PlantUmlViewer.Windows
         public static string GetJavaExecutable()
         {
             string javaHome = GetJavaHome();
-            string javaExecutable;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                javaExecutable = Path.Combine(javaHome, "bin", "java.exe");
-            }
-            else
-            {
-                javaExecutable = Path.Combine(javaHome, "bin", "java");
-            }
+            string javaExecutable= Path.Combine(javaHome, "bin", "java.exe");
             if (!File.Exists(javaExecutable))
             {
                 throw new InvalidOperationException($"Java executable '{javaExecutable}' does not exist");
             }
-
             return javaExecutable;
         }
 
