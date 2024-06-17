@@ -25,7 +25,7 @@ Detailed information about plugins and how they are installed can be found in th
 Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy the folder *PlantUmlViewer* with its content to the *plugins* subfolder of your Notepad++ installation directory.
 
 ### Plugins Admin (recommended)
-Use the built-in *Plugins Admin* to install it directly. Just open Notepad++ and navigate to *Plugins*->*Plugins Admin*. Here under the *Available* tab, search for *PlantUML Viewer*. After checking the corresponding box, click *Install* at the top right corner of the window.
+Use the built-in *Plugins Admin* to install it directly. Just open Notepad++ and navigate to *Plugins* &rarr; *Plugins Admin*. Here under the *Available* tab, search for *PlantUML Viewer*. After checking the corresponding box, click *Install* at the top right corner of the window.
 
 ### Compatibility
 This plugin requires at least
@@ -36,7 +36,7 @@ This plugin requires at least
 ## Usage
 PlantUML Viewer can be opened
 * by clicking the toolbar icon ![UML icon](PlantUmlViewer/PlantUmlViewer/Resources/Image.png)
-* via the Notepad++ *Plugins* submenu (*Plugins* --> *PlantUML Viewer* --> *Preview PlantUML*)
+* via the Notepad++ *Plugins* submenu (*Plugins* &rarr; *PlantUML Viewer* &rarr; *Preview PlantUML*)
 
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
 ![PlantUML Viewer dark](doc/PlantUmlViewerDark.png)
