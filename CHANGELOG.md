@@ -1,7 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
 - Removed dependency to PlantUml.Net library
 - Removed dependency to Fizzler library
-- Fixed background diagram background not set e.g. if white
+- Fixed diagram background not set e.g. if white
 
 # 1.7.0.11 (22.02.2024)
 - PlantUML version updated to 1.2024.3
