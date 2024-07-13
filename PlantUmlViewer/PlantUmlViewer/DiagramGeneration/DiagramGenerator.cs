@@ -83,8 +83,8 @@ namespace PlantUmlViewer.DiagramGeneration
             Size bitmapSize = Size.Round(imageSize);
             Bitmap image = new Bitmap(bitmapSize.Width, bitmapSize.Height);
 
-            //Set background if defined in SVG
-            if (svgImage.TryGetAttribute("background", out string backgroundAttribute))
+            //Set background if defined in SVG style since PlantUml does not set it e.g. if white
+            if (svgImage.TryGetAttribute(ExCSS.PropertyNames.BackgroundColor, out string backgroundAttribute))
             {
                 using (Graphics g = Graphics.FromImage(image))
                 using (SolidBrush brush = new SolidBrush(ColorTranslator.FromHtml(backgroundAttribute)))
