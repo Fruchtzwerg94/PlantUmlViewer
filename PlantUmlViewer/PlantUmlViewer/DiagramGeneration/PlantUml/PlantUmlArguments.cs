@@ -13,6 +13,11 @@
         public OutputFormat OutputFormat { get; set; } = OutputFormat.Svg;
 
         /// <summary>
+        /// Override %filename% variable
+        /// </summary>
+        public string FileName { get; set; } = null;
+
+        /// <summary>
         /// Include a file as if '!include file' were used, also allowing pattern like '*.puml'
         /// </summary>
         public string Include { get; set; } = null;

@@ -1,6 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
 - Removed dependency to PlantUml.Net library
 - Removed dependency to Fizzler library
+- Added generated filename to support built in %filename() preprocessor function
 - Fixed diagram background not set e.g. if white
 
 # 1.7.0.11 (22.02.2024)

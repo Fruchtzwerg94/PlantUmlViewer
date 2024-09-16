@@ -287,6 +287,8 @@ namespace PlantUmlViewer.Forms
 
                 List<GeneratedDiagram> generatedImages;
                 string file = getFilePath();
+                string fileName = Path.GetFileName(file);
+                string fileDirectoryName = Path.GetDirectoryName(file);
                 string text = getText();
                 DateTime stamp = DateTime.Now;
                 if (string.IsNullOrWhiteSpace(text))
@@ -336,14 +338,14 @@ namespace PlantUmlViewer.Forms
                     }
                     generatedImages = await DiagramGenerator.GenerateDocumentAsync(
                         javaExecutable, plantUmlJar,
-                        text, settings.Settings.Include,
-                        Path.GetDirectoryName(file), refreshCancellationTokenSource).ConfigureAwait(true);
+                        text, fileName, settings.Settings.Include,
+                        fileDirectoryName, refreshCancellationTokenSource).ConfigureAwait(true);
                 }
 
                 UpdateImages(file, text, stamp, generatedImages);
                 this.InvokeIfRequired(() =>
                 {
-                    toolStripStatusLabel_Status.Text = $"{Path.GetFileName(file)} ({stamp.ToShortTimeString()})";
+                    toolStripStatusLabel_Status.Text = $"{fileName} ({stamp.ToShortTimeString()})";
                     toolStripStatusLabel_Status.BackColor = colorSuccess;
                     toolStripStatusLabel_Status.ToolTipText = "";
                     button_Export.Enabled = true;

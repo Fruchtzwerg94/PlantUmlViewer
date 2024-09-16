@@ -33,6 +33,7 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
                     "-charset UTF-8",
                     GetOutputFormatArgument(plantUmlArguments.OutputFormat),
                     GetErrorFormatArgument(plantUmlArguments.ErrorFormat),
+                    string.IsNullOrEmpty(plantUmlArguments.FileName) ? string.Empty : $"-filename \"{plantUmlArguments.FileName}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Include) ? string.Empty : $"\"-I{plantUmlArguments.Include}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Delimitor) ? string.Empty : $"-pipedelimitor \"{plantUmlArguments.Delimitor}\"",
                     $"-pipeimageindex {plantUmlArguments.ImageIndex}"
@@ -84,9 +85,9 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
                 case ErrorFormat.TwoLines:
                     return "";
                 case ErrorFormat.SingleLine:
-                    return " -stdrpt:2";
+                    return "-stdrpt:2";
                 case ErrorFormat.Verbose:
-                    return " -stdrpt:1";
+                    return "-stdrpt:1";
                 default:
                     throw new NotImplementedException($"Invalid {nameof(ErrorFormat)}");
             }

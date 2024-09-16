@@ -22,7 +22,7 @@ namespace PlantUmlViewer.DiagramGeneration
 
         public static async Task<List<GeneratedDiagram>> GenerateDocumentAsync(
             string javaExecutable, string plantUmlJar,
-            string text, string include, string workingDirectory,
+            string text, string fileName, string include, string workingDirectory,
             CancellationTokenSource cancellationTokenSource)
         {
             /*
@@ -49,14 +49,14 @@ namespace PlantUmlViewer.DiagramGeneration
             List<Task<bool>> generateTasks = new List<Task<bool>>()
             {
                 Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
-                  text, include, workingDirectory, 0, pages, cancellationTokenSource))
+                  text, fileName, include, workingDirectory, 0, pages, cancellationTokenSource))
             };
             //Generate the (maybe) following pages
             int pageIndex = 1;
             while (true)
             {
                 generateTasks.Add(Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
-                    text, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
+                    text, fileName, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
                 await Task.WhenAll(generateTasks);
                 if (generateTasks.Exists(rT => !rT.Result))
                 {
@@ -103,13 +103,14 @@ namespace PlantUmlViewer.DiagramGeneration
         }
 
         private static async Task<bool> GeneratePageAsync(string javaExecutable, string plantUmlJar,
-            string text, string include, string workingDirectory, int pageIndexToGenerate,
+            string text, string fileName, string include, string workingDirectory, int pageIndexToGenerate,
             Dictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
         {
             PlantUmlArguments arguments = new PlantUmlArguments()
             {
                 OutputFormat = OutputFormat.Svg,
                 ErrorFormat = ErrorFormat.Verbose,
+                FileName = fileName,
                 Include = include,
                 WorkingDirectory = workingDirectory,
                 Delimitor = DIAGRAM_DELIMITOR,
