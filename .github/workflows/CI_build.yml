@@ -40,8 +40,8 @@ jobs:
     - name: Download libraries
       if: matrix.build_configuration == 'Release'
       run: |
-        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2024.3/plantuml-1.2024.3.jar --output deploy/plantuml-1.2024.3.jar
-        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-1.2024.3.jar").Hash -ne "6a918f7a0710b7d6e5373e9151ffa481") { throw "MD5 sum is invalid" }
+        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2024.8/plantuml-1.2024.8.jar --output deploy/plantuml-1.2024.8.jar
+        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-1.2024.8.jar").Hash -ne "ea448bf2868d4c82bb3abad32ee32c0d") { throw "MD5 sum is invalid" }
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
         if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-jlatexmath.zip").Hash -ne "32a81facc3b8ed331f0d19f2c23d709a") { throw "MD5 sum is invalid" }
         tar -xf deploy/plantuml-jlatexmath.zip -C deploy

@@ -1,7 +1,8 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.8.0.12 (16.11.2024)
+- PlantUML version updated to 1.2024.8
 - Removed dependency to PlantUml.Net library
 - Removed dependency to Fizzler library
-- Added generated filename to support built in %filename() preprocessor function
+- Added generated file information to support built in %filename() and %dirpath() preprocessor functions
 - Fixed diagram background not set e.g. if white
 
 # 1.7.0.11 (22.02.2024)

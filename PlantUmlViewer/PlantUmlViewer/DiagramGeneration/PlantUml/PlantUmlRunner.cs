@@ -33,6 +33,7 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
                     "-charset UTF-8",
                     GetOutputFormatArgument(plantUmlArguments.OutputFormat),
                     GetErrorFormatArgument(plantUmlArguments.ErrorFormat),
+                    $"-filedir \"{workingDirectory}\"",
                     string.IsNullOrEmpty(plantUmlArguments.FileName) ? string.Empty : $"-filename \"{plantUmlArguments.FileName}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Include) ? string.Empty : $"\"-I{plantUmlArguments.Include}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Delimitor) ? string.Empty : $"-pipedelimitor \"{plantUmlArguments.Delimitor}\"",
