@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Fixed environment variables not available by executing PlantUML with the unsecure security profile 
+
 # 1.8.0.12 (16.11.2024)
 - PlantUML version updated to 1.2024.8
 - Removed dependency to PlantUml.Net library

@@ -27,6 +27,7 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
                 new string[]
                 {
                     "-Dfile.encoding=UTF-8",
+                    "-DPLANTUML_SECURITY_PROFILE=UNSECURE",
                     "-jar",
                     $"\"{plantUmlJar}\"",
                     "-pipe",
