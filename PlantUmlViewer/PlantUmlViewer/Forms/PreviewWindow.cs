@@ -28,7 +28,7 @@ namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
-        private readonly string plantUmlJar;
+        private readonly string defaultPlantUmlJar;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
         private readonly SettingsService settings;
@@ -121,9 +121,9 @@ namespace PlantUmlViewer.Forms
 
         public event EventHandler DockablePanelClose;
 
-        public PreviewWindow(string plantUmlJar, Func<string> getFilePath, Func<string> getText, SettingsService settings)
+        public PreviewWindow(string defaultPlantUmlJar, Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
-            this.plantUmlJar = plantUmlJar;
+            this.defaultPlantUmlJar = defaultPlantUmlJar;
             this.getFilePath = getFilePath;
             this.getText = getText;
             this.settings = settings;
@@ -336,6 +336,12 @@ namespace PlantUmlViewer.Forms
                             return;
                         }
                     }
+                    string plantUmlJar = settings.Settings.PlantUmlPath;
+                    if (string.IsNullOrWhiteSpace(plantUmlJar))
+                    {
+                        plantUmlJar = defaultPlantUmlJar;
+                    }
+
                     generatedImages = await DiagramGenerator.GenerateDocumentAsync(
                         javaExecutable, plantUmlJar,
                         text, fileName, settings.Settings.Include,

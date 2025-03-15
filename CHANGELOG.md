@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Added option to define custom PlantUML path
 - Fixed environment variables not available by executing PlantUML with the unsecure security profile 
 
 # 1.8.0.12 (16.11.2024)

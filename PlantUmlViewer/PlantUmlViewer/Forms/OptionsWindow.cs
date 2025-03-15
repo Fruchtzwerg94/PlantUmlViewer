@@ -20,6 +20,7 @@ namespace PlantUmlViewer.Forms
             comboBox_OpenExport.DataSource = Enum.GetValues(typeof(OpenExport));
 
             textBox_JavaPath.Text = settings.Settings.JavaPath;
+            textBox_PlantUmlPath.Text = settings.Settings.PlantUmlPath;
             textBox_Include.Text = settings.Settings.Include;
             numericUpDown_ExportSizeFactor.Value = settings.Settings.ExportSizeFactor;
             checkBox_ExportDocument.Checked = settings.Settings.ExportDocument;
@@ -29,6 +30,7 @@ namespace PlantUmlViewer.Forms
         private void Button_Ok_Click(object sender, EventArgs e)
         {
             settings.Settings.JavaPath = textBox_JavaPath.Text;
+            settings.Settings.PlantUmlPath = textBox_PlantUmlPath.Text;
             settings.Settings.Include = textBox_Include.Text;
             settings.Settings.ExportSizeFactor = numericUpDown_ExportSizeFactor.Value;
             settings.Settings.ExportDocument = checkBox_ExportDocument.Checked;

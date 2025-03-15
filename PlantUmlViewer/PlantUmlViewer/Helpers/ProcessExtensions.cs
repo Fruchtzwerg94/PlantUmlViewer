@@ -70,7 +70,9 @@ namespace PlantUmlViewer.Helpers
                             process.Kill();
                         }
                         catch
-                        { }
+                        {
+                            //Nothing else we can do here
+                        }
                     }
                 });
             }
