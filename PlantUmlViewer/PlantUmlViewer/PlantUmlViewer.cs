@@ -41,15 +41,15 @@ namespace PlantUmlViewer
         public void OnNotification(ScNotification notification)
         {
             //NPPN_DARKMODECHANGED or NPPN_WORDSTYLESUPDATED
-            if (notification.Header.Code == (uint)NppMsg.NPPN_FIRST + 27
-                || notification.Header.Code == (uint)NppMsg.NPPN_WORDSTYLESUPDATED)
+            if (   (notification.Header.Code == ((uint)NppMsg.NPPN_FIRST + 27))
+                || (notification.Header.Code == (uint)NppMsg.NPPN_WORDSTYLESUPDATED))
             {
                 UpdateStyle();
             }
             //Text modification or document changed
-            else if((notification.Header.Code == (uint)SciMsg.SCN_MODIFIED
-                     && (notification.ModificationType & ((int)SciMsg.SC_MOD_INSERTTEXT | (int)SciMsg.SC_MOD_DELETETEXT)) != 0)
-                || notification.Header.Code == (uint)NppMsg.NPPN_BUFFERACTIVATED)
+            else if((  (notification.Header.Code == (uint)SciMsg.SCN_MODIFIED)
+                    && ((notification.ModificationType & ((int)SciMsg.SC_MOD_INSERTTEXT | (int)SciMsg.SC_MOD_DELETETEXT)) != 0))
+                || (notification.Header.Code == (uint)NppMsg.NPPN_BUFFERACTIVATED))
             {
                 previewWindow?.DocumentChanged();
             }
@@ -86,40 +86,8 @@ namespace PlantUmlViewer
         {
             if (previewWindow == null)
             {
-                previewWindow = new PreviewWindow(
-                    Path.Combine(assemblyDirectory, PLANT_UML_JAR),
-                    notepadPp.GetCurrentFilePath,
-                    () =>
-                    {
-                        IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
-                        if (editor.GetCodePage() != (int)SciMsg.SC_CP_UTF8)
-                        {
-                            throw new FileFormatException("File encoding invalid, please use UTF-8 as encoding");
-                        }
-                        return editor.GetText(editor.GetLength() + 1);
-
-                        //const int GET_TEXT_STEP_SIZE = 10000;
-                        //StringBuilder textBuilder = new StringBuilder();
-                        //int length = editor.GetLength();
-                        //int position = 0;
-                        //int rest = length;
-                        //while (rest > 0)
-                        //{
-                        //    int step = Math.Min(rest, GET_TEXT_STEP_SIZE);
-                        //    using (TextRange textRange = new TextRange(position, position + step, step + 1))
-                        //    {
-                        //        int ret = editor.GetTextRange(textRange);
-                        //        if (ret != step)
-                        //        {
-                        //            throw new Exception("Failed to get text");
-                        //        }
-                        //        textBuilder.Append(textRange.lpstrText.TrimEnd('\0'));
-                        //    }
-                        //    position += step;
-                        //    rest -= step;
-                        //}
-                        //return textBuilder.ToString();
-                    }, settings);
+                previewWindow = new PreviewWindow(assemblyDirectory, PLANT_UML_JAR,
+                    notepadPp.GetCurrentFilePath, GetText, settings);
 
                 previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);
 
@@ -151,6 +119,38 @@ namespace PlantUmlViewer
                 }
             }
             VisibilityChanged(previewWindow.Visible);
+        }
+
+        private static string GetText()
+        {
+            IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
+            if (editor.GetCodePage() != (int)SciMsg.SC_CP_UTF8)
+            {
+                throw new FileFormatException("File encoding invalid, please use UTF-8 as encoding");
+            }
+            return editor.GetText(editor.GetLength() + 1);
+
+            //const int GET_TEXT_STEP_SIZE = 10000;
+            //StringBuilder textBuilder = new StringBuilder();
+            //int length = editor.GetLength();
+            //int position = 0;
+            //int rest = length;
+            //while (rest > 0)
+            //{
+            //    int step = Math.Min(rest, GET_TEXT_STEP_SIZE);
+            //    using (TextRange textRange = new TextRange(position, position + step, step + 1))
+            //    {
+            //        int ret = editor.GetTextRange(textRange);
+            //        if (ret != step)
+            //        {
+            //            throw new Exception("Failed to get text");
+            //        }
+            //        textBuilder.Append(textRange.lpstrText.TrimEnd('\0'));
+            //    }
+            //    position += step;
+            //    rest -= step;
+            //}
+            //return textBuilder.ToString();
         }
 
         private void UpdateStyle()

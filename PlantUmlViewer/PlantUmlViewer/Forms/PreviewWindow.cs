@@ -28,6 +28,7 @@ namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
+        private readonly string assemblyDirectory;
         private readonly string defaultPlantUmlJar;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
@@ -121,8 +122,10 @@ namespace PlantUmlViewer.Forms
 
         public event EventHandler DockablePanelClose;
 
-        public PreviewWindow(string defaultPlantUmlJar, Func<string> getFilePath, Func<string> getText, SettingsService settings)
+        public PreviewWindow(string assemblyDirectory, string defaultPlantUmlJar,
+            Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
+            this.assemblyDirectory = assemblyDirectory;
             this.defaultPlantUmlJar = defaultPlantUmlJar;
             this.getFilePath = getFilePath;
             this.getText = getText;
@@ -336,11 +339,14 @@ namespace PlantUmlViewer.Forms
                             return;
                         }
                     }
+                    javaExecutable = ResolvePathToAssembly(javaExecutable);
+
                     string plantUmlJar = settings.Settings.PlantUmlPath;
                     if (string.IsNullOrWhiteSpace(plantUmlJar))
                     {
                         plantUmlJar = defaultPlantUmlJar;
                     }
+                    plantUmlJar = ResolvePathToAssembly(plantUmlJar);
 
                     generatedImages = await DiagramGenerator.GenerateDocumentAsync(
                         javaExecutable, plantUmlJar,
@@ -387,6 +393,18 @@ namespace PlantUmlViewer.Forms
                     loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
                     refreshCancellationTokenSource = null;
                 });
+            }
+        }
+
+        private string ResolvePathToAssembly(string path)
+        {
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            else
+            {
+                return Path.GetFullPath(Path.Combine(assemblyDirectory, path));
             }
         }
 

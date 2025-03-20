@@ -103,21 +103,21 @@ namespace PlantUmlViewer.DiagramGeneration
         }
 
         private static async Task<bool> GeneratePageAsync(string javaExecutable, string plantUmlJar,
-            string text, string fileName, string include, string workingDirectory, int pageIndexToGenerate,
+            string text, string fileName, string include, string fileDirectory, int pageIndexToGenerate,
             Dictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
         {
             PlantUmlArguments arguments = new PlantUmlArguments()
             {
                 OutputFormat = OutputFormat.Svg,
                 ErrorFormat = ErrorFormat.Verbose,
-                FileName = fileName,
+                FileDirectory = fileDirectory,
                 Include = include,
-                WorkingDirectory = workingDirectory,
+                FileName = fileName,
                 Delimitor = DIAGRAM_DELIMITOR,
                 ImageIndex = pageIndexToGenerate
             };
 
-            byte[] bytes = await PlantUmlRunner.Generate(javaExecutable, plantUmlJar, arguments, workingDirectory, text,
+            byte[] bytes = await PlantUmlRunner.Generate(javaExecutable, plantUmlJar, arguments, text,
                 cancellationTokenSource.Token).ConfigureAwait(true);
 
             //Find all delimitors to parse multiple diagram images

@@ -11,8 +11,7 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
     internal static class PlantUmlRunner
     {
         public static async Task<byte[]> Generate(string javaExecutable, string plantUmlJar,
-            PlantUmlArguments plantUmlArguments, string workingDirectory, string code,
-            CancellationToken cancellationToken = default)
+            PlantUmlArguments plantUmlArguments, string code, CancellationToken cancellationToken = default)
         {
             if (!File.Exists(javaExecutable))
             {
@@ -34,13 +33,13 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
                     "-charset UTF-8",
                     GetOutputFormatArgument(plantUmlArguments.OutputFormat),
                     GetErrorFormatArgument(plantUmlArguments.ErrorFormat),
-                    $"-filedir \"{workingDirectory}\"",
-                    string.IsNullOrEmpty(plantUmlArguments.FileName) ? string.Empty : $"-filename \"{plantUmlArguments.FileName}\"",
+                    $"-filedir \"{plantUmlArguments.FileDirectory}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Include) ? string.Empty : $"\"-I{plantUmlArguments.Include}\"",
+                    string.IsNullOrEmpty(plantUmlArguments.FileName) ? string.Empty : $"-filename \"{plantUmlArguments.FileName}\"",
                     string.IsNullOrEmpty(plantUmlArguments.Delimitor) ? string.Empty : $"-pipedelimitor \"{plantUmlArguments.Delimitor}\"",
                     $"-pipeimageindex {plantUmlArguments.ImageIndex}"
                 },
-                workingDirectory, Encoding.UTF8.GetBytes(code), cancellationToken);
+                plantUmlArguments.FileDirectory, Encoding.UTF8.GetBytes(code), cancellationToken);
             if (result.ExitCode != 0)
             {
                 string message = Encoding.UTF8.GetString(result.Error);

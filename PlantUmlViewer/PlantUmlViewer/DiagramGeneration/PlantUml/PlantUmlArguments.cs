@@ -13,9 +13,10 @@
         public OutputFormat OutputFormat { get; set; } = OutputFormat.Svg;
 
         /// <summary>
-        /// Override %filename% variable
+        /// The file directory to use which may is needed for relative includes,
+        /// null or empty to use the applications executable directory
         /// </summary>
-        public string FileName { get; set; } = null;
+        public string FileDirectory { get; set; } = null;
 
         /// <summary>
         /// Include a file as if '!include file' were used, also allowing pattern like '*.puml'
@@ -23,10 +24,9 @@
         public string Include { get; set; } = null;
 
         /// <summary>
-        /// The working directory to use which may is needed for relative includes,
-        /// null or empty to use the applications executable directory
+        /// Override %filename% variable
         /// </summary>
-        public string WorkingDirectory { get; set; } = null;
+        public string FileName { get; set; } = null;
 
         /// <summary>
         /// Separators between diagrams to determine where
