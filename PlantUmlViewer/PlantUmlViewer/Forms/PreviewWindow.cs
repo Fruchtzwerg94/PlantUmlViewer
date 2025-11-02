@@ -28,8 +28,6 @@ namespace PlantUmlViewer.Forms
 {
     internal partial class PreviewWindow : Form
     {
-        private readonly string assemblyDirectory;
-        private readonly string defaultPlantUmlJar;
         private readonly Func<string> getFilePath;
         private readonly Func<string> getText;
         private readonly SettingsService settings;
@@ -122,11 +120,8 @@ namespace PlantUmlViewer.Forms
 
         public event EventHandler DockablePanelClose;
 
-        public PreviewWindow(string assemblyDirectory, string defaultPlantUmlJar,
-            Func<string> getFilePath, Func<string> getText, SettingsService settings)
+        public PreviewWindow(Func<string> getFilePath, Func<string> getText, SettingsService settings)
         {
-            this.assemblyDirectory = assemblyDirectory;
-            this.defaultPlantUmlJar = defaultPlantUmlJar;
             this.getFilePath = getFilePath;
             this.getText = getText;
             this.settings = settings;
@@ -339,14 +334,14 @@ namespace PlantUmlViewer.Forms
                             return;
                         }
                     }
-                    javaExecutable = ResolvePathToAssembly(javaExecutable);
+                    javaExecutable = PathHelper.ResolvePathToAssembly(javaExecutable);
 
                     string plantUmlJar = settings.Settings.PlantUmlPath;
                     if (string.IsNullOrWhiteSpace(plantUmlJar))
                     {
-                        plantUmlJar = defaultPlantUmlJar;
+                        plantUmlJar = PlantUmlViewer.PLANT_UML_JAR;
                     }
-                    plantUmlJar = ResolvePathToAssembly(plantUmlJar);
+                    plantUmlJar = PathHelper.ResolvePathToAssembly(plantUmlJar);
 
                     generatedImages = await DiagramGenerator.GenerateDocumentAsync(
                         javaExecutable, plantUmlJar,
@@ -393,18 +388,6 @@ namespace PlantUmlViewer.Forms
                     loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
                     refreshCancellationTokenSource = null;
                 });
-            }
-        }
-
-        private string ResolvePathToAssembly(string path)
-        {
-            if (Path.IsPathRooted(path))
-            {
-                return path;
-            }
-            else
-            {
-                return Path.GetFullPath(Path.Combine(assemblyDirectory, path));
             }
         }
 

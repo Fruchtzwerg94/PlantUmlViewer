@@ -15,7 +15,7 @@ namespace PlantUmlViewer
     {
         public const string PLUGIN_NAME = "PlantUML Viewer";
         public const string PLANT_UML_VERSION = "1.2024.8";
-        private const string PLANT_UML_JAR = "plantuml-" + PLANT_UML_VERSION + ".jar";
+        public const string PLANT_UML_JAR = "plantuml-" + PLANT_UML_VERSION + ".jar";
 
         private enum CommandId
         {
@@ -26,17 +26,13 @@ namespace PlantUmlViewer
             ShowAbout       = 4
         }
 
-        private readonly string assemblyDirectory;
-
         private INotepadPPGateway notepadPp;
         private SettingsService settings;
 
         private PreviewWindow previewWindow;
 
         public PlantUmlViewer()
-        {
-            assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        }
+        { }
 
         public void OnNotification(ScNotification notification)
         {
@@ -86,8 +82,7 @@ namespace PlantUmlViewer
         {
             if (previewWindow == null)
             {
-                previewWindow = new PreviewWindow(assemblyDirectory, PLANT_UML_JAR,
-                    notepadPp.GetCurrentFilePath, GetText, settings);
+                previewWindow = new PreviewWindow(notepadPp.GetCurrentFilePath, GetText, settings);
 
                 previewWindow.DockablePanelClose += (_, __) => VisibilityChanged(false);
 

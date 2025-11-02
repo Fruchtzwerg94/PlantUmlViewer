@@ -38,7 +38,6 @@
             this.button_ok = new System.Windows.Forms.Button();
             this.button_Cancel = new System.Windows.Forms.Button();
             this.label_JavaPath = new System.Windows.Forms.Label();
-            this.textBox_JavaPath = new System.Windows.Forms.TextBox();
             this.label_JavaPathDescription = new System.Windows.Forms.Label();
             this.label_ExportSizeFactor = new System.Windows.Forms.Label();
             this.numericUpDown_ExportSizeFactor = new System.Windows.Forms.NumericUpDown();
@@ -50,11 +49,18 @@
             this.label_OpenExport = new System.Windows.Forms.Label();
             this.label_OpenExportDescription = new System.Windows.Forms.Label();
             this.label_PlantUmlPathDescription = new System.Windows.Forms.Label();
-            this.textBox_PlantUmlPath = new System.Windows.Forms.TextBox();
             this.label_PlantUmlPath = new System.Windows.Forms.Label();
+            this.tableLayoutPanel_JavaPath = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox_JavaPath = new System.Windows.Forms.TextBox();
+            this.button_JavaPathCheck = new System.Windows.Forms.Button();
+            this.tableLayoutPanel_PlantUmlPath = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox_PlantUmlPath = new System.Windows.Forms.TextBox();
+            this.button_PlantUmlPathCheck = new System.Windows.Forms.Button();
             this.tableLayoutPanel_Window.SuspendLayout();
             this.tableLayoutPanel_Buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ExportSizeFactor)).BeginInit();
+            this.tableLayoutPanel_JavaPath.SuspendLayout();
+            this.tableLayoutPanel_PlantUmlPath.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel_Window
@@ -68,7 +74,6 @@
             this.tableLayoutPanel_Window.Controls.Add(this.label_headerGeneral, 0, 0);
             this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_Buttons, 0, 14);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPath, 0, 1);
-            this.tableLayoutPanel_Window.Controls.Add(this.textBox_JavaPath, 2, 1);
             this.tableLayoutPanel_Window.Controls.Add(this.label_JavaPathDescription, 1, 2);
             this.tableLayoutPanel_Window.Controls.Add(this.label_ExportSizeFactor, 0, 7);
             this.tableLayoutPanel_Window.Controls.Add(this.numericUpDown_ExportSizeFactor, 1, 7);
@@ -80,8 +85,9 @@
             this.tableLayoutPanel_Window.Controls.Add(this.label_OpenExport, 0, 11);
             this.tableLayoutPanel_Window.Controls.Add(this.label_OpenExportDescription, 1, 12);
             this.tableLayoutPanel_Window.Controls.Add(this.label_PlantUmlPathDescription, 1, 4);
-            this.tableLayoutPanel_Window.Controls.Add(this.textBox_PlantUmlPath, 1, 3);
             this.tableLayoutPanel_Window.Controls.Add(this.label_PlantUmlPath, 0, 3);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_JavaPath, 1, 1);
+            this.tableLayoutPanel_Window.Controls.Add(this.tableLayoutPanel_PlantUmlPath, 1, 3);
             this.tableLayoutPanel_Window.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel_Window.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel_Window.Name = "tableLayoutPanel_Window";
@@ -110,7 +116,7 @@
             this.label_IncludeDescription.AutoSize = true;
             this.label_IncludeDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_IncludeDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_IncludeDescription.Location = new System.Drawing.Point(102, 131);
+            this.label_IncludeDescription.Location = new System.Drawing.Point(102, 137);
             this.label_IncludeDescription.Name = "label_IncludeDescription";
             this.label_IncludeDescription.Size = new System.Drawing.Size(524, 13);
             this.label_IncludeDescription.TabIndex = 10;
@@ -122,17 +128,17 @@
             // 
             this.label_Include.AutoSize = true;
             this.label_Include.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_Include.Location = new System.Drawing.Point(8, 105);
+            this.label_Include.Location = new System.Drawing.Point(8, 111);
             this.label_Include.Name = "label_Include";
             this.label_Include.Size = new System.Drawing.Size(88, 26);
             this.label_Include.TabIndex = 9;
-            this.label_Include.Text = "Import";
+            this.label_Include.Text = "Include";
             this.label_Include.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBox_Include
             // 
             this.textBox_Include.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_Include.Location = new System.Drawing.Point(102, 108);
+            this.textBox_Include.Location = new System.Drawing.Point(102, 114);
             this.textBox_Include.Name = "textBox_Include";
             this.textBox_Include.Size = new System.Drawing.Size(524, 20);
             this.textBox_Include.TabIndex = 3;
@@ -172,7 +178,7 @@
             this.button_ok.Location = new System.Drawing.Point(208, 3);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(199, 28);
-            this.button_ok.TabIndex = 8;
+            this.button_ok.TabIndex = 1;
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.Button_Ok_Click);
@@ -184,7 +190,7 @@
             this.button_Cancel.Location = new System.Drawing.Point(413, 3);
             this.button_Cancel.Name = "button_Cancel";
             this.button_Cancel.Size = new System.Drawing.Size(202, 28);
-            this.button_Cancel.TabIndex = 9;
+            this.button_Cancel.TabIndex = 2;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
             // 
@@ -194,37 +200,29 @@
             this.label_JavaPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_JavaPath.Location = new System.Drawing.Point(8, 27);
             this.label_JavaPath.Name = "label_JavaPath";
-            this.label_JavaPath.Size = new System.Drawing.Size(88, 26);
+            this.label_JavaPath.Size = new System.Drawing.Size(88, 29);
             this.label_JavaPath.TabIndex = 0;
             this.label_JavaPath.Text = "Java path";
             this.label_JavaPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBox_JavaPath
-            // 
-            this.textBox_JavaPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_JavaPath.Location = new System.Drawing.Point(102, 30);
-            this.textBox_JavaPath.Name = "textBox_JavaPath";
-            this.textBox_JavaPath.Size = new System.Drawing.Size(524, 20);
-            this.textBox_JavaPath.TabIndex = 1;
             // 
             // label_JavaPathDescription
             // 
             this.label_JavaPathDescription.AutoSize = true;
             this.label_JavaPathDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_JavaPathDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_JavaPathDescription.Location = new System.Drawing.Point(102, 53);
+            this.label_JavaPathDescription.Location = new System.Drawing.Point(102, 56);
             this.label_JavaPathDescription.Name = "label_JavaPathDescription";
             this.label_JavaPathDescription.Size = new System.Drawing.Size(524, 13);
             this.label_JavaPathDescription.TabIndex = 5;
-            this.label_JavaPathDescription.Text = "Path of the Java executable. Leavy empty to autodetect using JAVA_HOME environmen" +
-    "t variable or registry.";
+            this.label_JavaPathDescription.Text = "Path of the Java executable. Leavy empty to autodetect using JAVA_HOME, Windows r" +
+    "egistry or PATH.";
             this.label_JavaPathDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label_ExportSizeFactor
             // 
             this.label_ExportSizeFactor.AutoSize = true;
             this.label_ExportSizeFactor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ExportSizeFactor.Location = new System.Drawing.Point(8, 144);
+            this.label_ExportSizeFactor.Location = new System.Drawing.Point(8, 150);
             this.label_ExportSizeFactor.Name = "label_ExportSizeFactor";
             this.label_ExportSizeFactor.Size = new System.Drawing.Size(88, 26);
             this.label_ExportSizeFactor.TabIndex = 6;
@@ -240,7 +238,7 @@
             0,
             0,
             65536});
-            this.numericUpDown_ExportSizeFactor.Location = new System.Drawing.Point(102, 147);
+            this.numericUpDown_ExportSizeFactor.Location = new System.Drawing.Point(102, 153);
             this.numericUpDown_ExportSizeFactor.Maximum = new decimal(new int[] {
             10,
             0,
@@ -265,7 +263,7 @@
             this.label_ExportExportSizeFactorDescription.AutoSize = true;
             this.label_ExportExportSizeFactorDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_ExportExportSizeFactorDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label_ExportExportSizeFactorDescription.Location = new System.Drawing.Point(102, 170);
+            this.label_ExportExportSizeFactorDescription.Location = new System.Drawing.Point(102, 176);
             this.label_ExportExportSizeFactorDescription.Name = "label_ExportExportSizeFactorDescription";
             this.label_ExportExportSizeFactorDescription.Size = new System.Drawing.Size(524, 13);
             this.label_ExportExportSizeFactorDescription.TabIndex = 7;
@@ -277,7 +275,7 @@
             // 
             this.checkBox_ExportDocument.AutoSize = true;
             this.checkBox_ExportDocument.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox_ExportDocument.Location = new System.Drawing.Point(102, 186);
+            this.checkBox_ExportDocument.Location = new System.Drawing.Point(102, 192);
             this.checkBox_ExportDocument.Name = "checkBox_ExportDocument";
             this.checkBox_ExportDocument.Size = new System.Drawing.Size(524, 14);
             this.checkBox_ExportDocument.TabIndex = 5;
@@ -287,7 +285,7 @@
             // 
             this.label_ExportDocument.AutoSize = true;
             this.label_ExportDocument.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ExportDocument.Location = new System.Drawing.Point(8, 183);
+            this.label_ExportDocument.Location = new System.Drawing.Point(8, 189);
             this.label_ExportDocument.Name = "label_ExportDocument";
             this.label_ExportDocument.Size = new System.Drawing.Size(88, 20);
             this.label_ExportDocument.TabIndex = 12;
@@ -299,7 +297,7 @@
             this.label_ExportDocumentDescription.AutoSize = true;
             this.label_ExportDocumentDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_ExportDocumentDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_ExportDocumentDescription.Location = new System.Drawing.Point(102, 203);
+            this.label_ExportDocumentDescription.Location = new System.Drawing.Point(102, 209);
             this.label_ExportDocumentDescription.Name = "label_ExportDocumentDescription";
             this.label_ExportDocumentDescription.Size = new System.Drawing.Size(524, 13);
             this.label_ExportDocumentDescription.TabIndex = 13;
@@ -311,7 +309,7 @@
             this.comboBox_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox_OpenExport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_OpenExport.FormattingEnabled = true;
-            this.comboBox_OpenExport.Location = new System.Drawing.Point(102, 219);
+            this.comboBox_OpenExport.Location = new System.Drawing.Point(102, 225);
             this.comboBox_OpenExport.Name = "comboBox_OpenExport";
             this.comboBox_OpenExport.Size = new System.Drawing.Size(524, 21);
             this.comboBox_OpenExport.TabIndex = 6;
@@ -320,7 +318,7 @@
             // 
             this.label_OpenExport.AutoSize = true;
             this.label_OpenExport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_OpenExport.Location = new System.Drawing.Point(8, 216);
+            this.label_OpenExport.Location = new System.Drawing.Point(8, 222);
             this.label_OpenExport.Name = "label_OpenExport";
             this.label_OpenExport.Size = new System.Drawing.Size(88, 27);
             this.label_OpenExport.TabIndex = 15;
@@ -332,7 +330,7 @@
             this.label_OpenExportDescription.AutoSize = true;
             this.label_OpenExportDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_OpenExportDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_OpenExportDescription.Location = new System.Drawing.Point(102, 243);
+            this.label_OpenExportDescription.Location = new System.Drawing.Point(102, 249);
             this.label_OpenExportDescription.Name = "label_OpenExportDescription";
             this.label_OpenExportDescription.Size = new System.Drawing.Size(524, 13);
             this.label_OpenExportDescription.TabIndex = 16;
@@ -344,31 +342,94 @@
             this.label_PlantUmlPathDescription.AutoSize = true;
             this.label_PlantUmlPathDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_PlantUmlPathDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label_PlantUmlPathDescription.Location = new System.Drawing.Point(102, 92);
+            this.label_PlantUmlPathDescription.Location = new System.Drawing.Point(102, 98);
             this.label_PlantUmlPathDescription.Name = "label_PlantUmlPathDescription";
             this.label_PlantUmlPathDescription.Size = new System.Drawing.Size(524, 13);
             this.label_PlantUmlPathDescription.TabIndex = 17;
             this.label_PlantUmlPathDescription.Text = "Path of the PlantUML JAR. Leave empty to use the plugins default included one.";
             this.label_PlantUmlPathDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox_PlantUmlPath
-            // 
-            this.textBox_PlantUmlPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_PlantUmlPath.Location = new System.Drawing.Point(102, 69);
-            this.textBox_PlantUmlPath.Name = "textBox_PlantUmlPath";
-            this.textBox_PlantUmlPath.Size = new System.Drawing.Size(524, 20);
-            this.textBox_PlantUmlPath.TabIndex = 2;
-            // 
             // label_PlantUmlPath
             // 
             this.label_PlantUmlPath.AutoSize = true;
             this.label_PlantUmlPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_PlantUmlPath.Location = new System.Drawing.Point(8, 66);
+            this.label_PlantUmlPath.Location = new System.Drawing.Point(8, 69);
             this.label_PlantUmlPath.Name = "label_PlantUmlPath";
-            this.label_PlantUmlPath.Size = new System.Drawing.Size(88, 26);
+            this.label_PlantUmlPath.Size = new System.Drawing.Size(88, 29);
             this.label_PlantUmlPath.TabIndex = 19;
             this.label_PlantUmlPath.Text = "PlantUML path";
             this.label_PlantUmlPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel_JavaPath
+            // 
+            this.tableLayoutPanel_JavaPath.ColumnCount = 2;
+            this.tableLayoutPanel_JavaPath.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_JavaPath.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_JavaPath.Controls.Add(this.textBox_JavaPath, 0, 0);
+            this.tableLayoutPanel_JavaPath.Controls.Add(this.button_JavaPathCheck, 1, 0);
+            this.tableLayoutPanel_JavaPath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_JavaPath.Location = new System.Drawing.Point(99, 27);
+            this.tableLayoutPanel_JavaPath.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_JavaPath.Name = "tableLayoutPanel_JavaPath";
+            this.tableLayoutPanel_JavaPath.RowCount = 1;
+            this.tableLayoutPanel_JavaPath.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_JavaPath.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel_JavaPath.Size = new System.Drawing.Size(530, 29);
+            this.tableLayoutPanel_JavaPath.TabIndex = 1;
+            // 
+            // textBox_JavaPath
+            // 
+            this.textBox_JavaPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_JavaPath.Location = new System.Drawing.Point(3, 4);
+            this.textBox_JavaPath.Name = "textBox_JavaPath";
+            this.textBox_JavaPath.Size = new System.Drawing.Size(443, 20);
+            this.textBox_JavaPath.TabIndex = 1;
+            // 
+            // button_JavaPathCheck
+            // 
+            this.button_JavaPathCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_JavaPathCheck.Location = new System.Drawing.Point(452, 3);
+            this.button_JavaPathCheck.Name = "button_JavaPathCheck";
+            this.button_JavaPathCheck.Size = new System.Drawing.Size(75, 23);
+            this.button_JavaPathCheck.TabIndex = 2;
+            this.button_JavaPathCheck.Text = "Check";
+            this.button_JavaPathCheck.UseVisualStyleBackColor = true;
+            this.button_JavaPathCheck.Click += new System.EventHandler(this.Button_JavaPathCheck_Click);
+            // 
+            // tableLayoutPanel_PlantUmlPath
+            // 
+            this.tableLayoutPanel_PlantUmlPath.ColumnCount = 2;
+            this.tableLayoutPanel_PlantUmlPath.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_PlantUmlPath.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_PlantUmlPath.Controls.Add(this.textBox_PlantUmlPath, 0, 0);
+            this.tableLayoutPanel_PlantUmlPath.Controls.Add(this.button_PlantUmlPathCheck, 1, 0);
+            this.tableLayoutPanel_PlantUmlPath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_PlantUmlPath.Location = new System.Drawing.Point(99, 69);
+            this.tableLayoutPanel_PlantUmlPath.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_PlantUmlPath.Name = "tableLayoutPanel_PlantUmlPath";
+            this.tableLayoutPanel_PlantUmlPath.RowCount = 1;
+            this.tableLayoutPanel_PlantUmlPath.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_PlantUmlPath.Size = new System.Drawing.Size(530, 29);
+            this.tableLayoutPanel_PlantUmlPath.TabIndex = 2;
+            // 
+            // textBox_PlantUmlPath
+            // 
+            this.textBox_PlantUmlPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_PlantUmlPath.Location = new System.Drawing.Point(3, 4);
+            this.textBox_PlantUmlPath.Name = "textBox_PlantUmlPath";
+            this.textBox_PlantUmlPath.Size = new System.Drawing.Size(443, 20);
+            this.textBox_PlantUmlPath.TabIndex = 4;
+            // 
+            // button_PlantUmlPathCheck
+            // 
+            this.button_PlantUmlPathCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_PlantUmlPathCheck.Location = new System.Drawing.Point(452, 3);
+            this.button_PlantUmlPathCheck.Name = "button_PlantUmlPathCheck";
+            this.button_PlantUmlPathCheck.Size = new System.Drawing.Size(75, 23);
+            this.button_PlantUmlPathCheck.TabIndex = 5;
+            this.button_PlantUmlPathCheck.Text = "Check";
+            this.button_PlantUmlPathCheck.UseVisualStyleBackColor = true;
+            this.button_PlantUmlPathCheck.Click += new System.EventHandler(this.Button_PlantUmlPathCheck_Click);
             // 
             // OptionsWindow
             // 
@@ -389,6 +450,10 @@
             this.tableLayoutPanel_Window.PerformLayout();
             this.tableLayoutPanel_Buttons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ExportSizeFactor)).EndInit();
+            this.tableLayoutPanel_JavaPath.ResumeLayout(false);
+            this.tableLayoutPanel_JavaPath.PerformLayout();
+            this.tableLayoutPanel_PlantUmlPath.ResumeLayout(false);
+            this.tableLayoutPanel_PlantUmlPath.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -398,7 +463,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Window;
         private System.Windows.Forms.Label label_headerGeneral;
         private System.Windows.Forms.Label label_JavaPath;
-        private System.Windows.Forms.TextBox textBox_JavaPath;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Buttons;
         private System.Windows.Forms.Button button_Cancel;
         private System.Windows.Forms.Button button_ok;
@@ -416,7 +480,12 @@
         private System.Windows.Forms.Label label_OpenExport;
         private System.Windows.Forms.Label label_OpenExportDescription;
         private System.Windows.Forms.Label label_PlantUmlPathDescription;
-        private System.Windows.Forms.TextBox textBox_PlantUmlPath;
         private System.Windows.Forms.Label label_PlantUmlPath;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_JavaPath;
+        private System.Windows.Forms.TextBox textBox_JavaPath;
+        private System.Windows.Forms.Button button_JavaPathCheck;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_PlantUmlPath;
+        private System.Windows.Forms.TextBox textBox_PlantUmlPath;
+        private System.Windows.Forms.Button button_PlantUmlPathCheck;
     }
 }

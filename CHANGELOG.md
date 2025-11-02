@@ -1,5 +1,7 @@
 # X.X.X.X (XX.XX.XXXX)
+- Improved Java path resolvement by also checking the PATH environment variable
 - Added option to define custom PlantUML path
+- Added buttons to check the Java and PlantUML paths in options
 - Fixed environment variables not available by executing PlantUML with the unsecure security profile 
 
 # 1.8.0.12 (16.11.2024)

@@ -7,33 +7,42 @@ using Microsoft.Win32;
 namespace PlantUmlViewer.Windows
 {
     /// <summary>
-    /// Allows localization of the Java installation by checking the JAVA_HOME environment variable or optionally the Windows registry
+    /// Allows localization of Java by checking JAVA_HOME, Windows registry and PATH
     /// </summary>
     internal static class JavaLocator
     {
         /// <summary>
-        /// Gets the path of the installed Java executable by checking the JAVA_HOME environment variable or optionally the Windows registry
+        /// Gets the path of the Java executable by checking JAVA_HOME, Windows registry and PATH
         /// </summary>
-        /// <returns>The path of the installed Java executable</returns>
-        /// <exception cref="InvalidOperationException">Java executable does not exist</exception>
-        /// <exception cref="InvalidOperationException">Failed to get Java installation checking JAVA_HOME and optionally Windows registry</exception>
+        /// <returns>The path of the Java executable</returns>
+        /// <exception cref="InvalidOperationException">Failed to find Java checking JAVA_HOME, Windows registry and PATH</exception>
+        /// <exception cref="FileNotFoundException">"Found Java but the executable does not exist</exception>
         public static string GetJavaExecutable()
         {
+            string javaExecutable;
+
             string javaHome = GetJavaHome();
-            string javaExecutable= Path.Combine(javaHome, "bin", "java.exe");
+            if (!string.IsNullOrEmpty(javaHome))
+            {
+                javaExecutable = Path.Combine(javaHome, "bin", "java.exe");
+            }
+            else
+            {
+                javaExecutable = FindExecutableInPath("java.exe");
+            }
+
+            if (string.IsNullOrEmpty(javaExecutable))
+            {
+                throw new InvalidOperationException("Failed to find Java checking JAVA_HOME, Windows registry and PATH");
+            }
             if (!File.Exists(javaExecutable))
             {
-                throw new InvalidOperationException($"Java executable '{javaExecutable}' does not exist");
+                throw new FileNotFoundException($"Found Java but the executable '{javaExecutable}' does not exist");
             }
             return javaExecutable;
         }
 
-        /// <summary>
-        /// Gets the installed Java home path by checking the JAVA_HOME environment variable or optionally the Windows registry
-        /// </summary>
-        /// <returns>The installed Java home path</returns>
-        /// <exception cref="InvalidOperationException">Failed to get Java installation checking JAVA_HOME and optionally Windows registry</exception>
-        public static string GetJavaHome()
+        private static string GetJavaHome()
         {
             //First use JAVA_HOME
             string javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
@@ -65,7 +74,34 @@ namespace PlantUmlViewer.Windows
                 }
             }
 
-            throw new InvalidOperationException("Failed to get Java installation checking JAVA_HOME and optionally Windows registry");
+            return null;
+        }
+
+        private static string FindExecutableInPath(string executableName)
+        {
+            string pathEnv = Environment.GetEnvironmentVariable("PATH");
+            if (string.IsNullOrWhiteSpace(pathEnv))
+            {
+                return null;
+            }
+
+            string[] paths = pathEnv.Split(Path.PathSeparator);
+            foreach (string path in paths)
+            {
+                try
+                {
+                    string fullPath = Path.Combine(path.Trim(), executableName);
+                    if (File.Exists(fullPath))
+                    {
+                        return fullPath;
+                    }
+                }
+                catch
+                {
+                    //Ignore invalid paths or access issues
+                }
+            }
+            return null;
         }
     }
 }

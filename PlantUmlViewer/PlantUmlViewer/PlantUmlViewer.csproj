@@ -123,6 +123,7 @@
     <Compile Include="DiagramGeneration\PlantUml\OutputFormat.cs" />
     <Compile Include="DiagramGeneration\PlantUml\PlantUmlArguments.cs" />
     <Compile Include="DiagramGeneration\PlantUml\RenderException.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\ProcessExtensions.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Windows\JavaLocator.cs" />
