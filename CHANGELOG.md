@@ -1,8 +1,9 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.9.0.13 (14.12.2025)
+- PlantUML version updated to 1.2025.10
 - Improved Java path resolvement by also checking the PATH environment variable
 - Added option to define custom PlantUML path
 - Added buttons to check the Java and PlantUML paths in options
-- Fixed environment variables not available by executing PlantUML with the unsecure security profile 
+- Fixed environment variables not available by executing PlantUML with the unsecure security profile
 
 # 1.8.0.12 (16.11.2024)
 - PlantUML version updated to 1.2024.8

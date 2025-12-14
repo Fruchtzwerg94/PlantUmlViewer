@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Schmidt")]
 [assembly: AssemblyProduct("PlantUML Viewer by Philipp Schmidt")]
-[assembly: AssemblyCopyright("Copyright © 2022 - 2024, all rights reserved")]
+[assembly: AssemblyCopyright("Copyright © 2022 - 2025, all rights reserved")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.0.12")]
-[assembly: AssemblyFileVersion("1.8.0.12")]
+[assembly: AssemblyVersion("1.9.0.13")]
+[assembly: AssemblyFileVersion("1.9.0.13")]
