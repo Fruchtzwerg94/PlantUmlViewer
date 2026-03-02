@@ -1,3 +1,6 @@
+# X.X.X.X (XX.XX.XXXX)
+- Json.NET library updated to 13.0.4
+
 # 1.9.0.13 (14.12.2025)
 - PlantUML version updated to 1.2025.10
 - Improved Java path resolvement by also checking the PATH environment variable
