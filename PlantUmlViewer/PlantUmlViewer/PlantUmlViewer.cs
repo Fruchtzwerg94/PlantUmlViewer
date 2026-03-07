@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
@@ -19,11 +18,21 @@ namespace PlantUmlViewer
 
         private enum CommandId
         {
-            ShowPreview     = 0,
-            Refresh         = 1,
-            Separator1      = 2,
-            ShowOptions     = 3,
-            ShowAbout       = 4
+            ShowPreview,
+            Refresh,
+            Separator1,
+            ShowOptions,
+            ShowAbout,
+            //Commands to map shortcuts to, hidden in the menu
+            Export,
+            ZoomIn,
+            ZoomOut,
+            ZoomFit,
+            ZoomReset,
+            PreviousDiagram,
+            NextDiagram,
+            PreviousPage,
+            NextPage
         }
 
         private INotepadPPGateway notepadPp;
@@ -61,6 +70,15 @@ namespace PlantUmlViewer
             PluginBase.SetCommand((int)CommandId.Separator1, "---", null);
             PluginBase.SetCommand((int)CommandId.ShowOptions, "Options", ShowOptions);
             PluginBase.SetCommand((int)CommandId.ShowAbout, "About", ShowAbout);
+            PluginBase.SetCommand((int)CommandId.Export, "Export", () => previewWindow?.Button_Export_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.ZoomIn, "Zoom in", () => previewWindow?.Button_ZoomIn_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.ZoomOut, "Zoom out", () => previewWindow?.Button_ZoomOut_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.ZoomFit, "Zoom to fit", () => previewWindow?.Button_ZoomFit_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.ZoomReset, "Reset zoom", () => previewWindow?.Button_ZoomReset_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.PreviousDiagram, "Previous diagram", () => previewWindow?.Button_PreviousDiagram_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.NextDiagram, "Next diagram", () => previewWindow?.Button_NextDiagram_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.PreviousPage, "Previous page", () => previewWindow?.Button_PreviousPage_Click(null, null));
+            PluginBase.SetCommand((int)CommandId.NextPage, "Next page", () => previewWindow?.Button_NextPage_Click(null, null));
         }
 
         public void SetToolBarIcon()
@@ -71,6 +89,19 @@ namespace PlantUmlViewer
                 hToolbarIcon = Properties.Resources.IconFluent.Handle,
                 hToolbarIconDarkMode = Properties.Resources.IconFluentDark.Handle
             });
+
+            //Hide some commands of the menu
+            IntPtr hMenu = Win32.SendMessage(PluginBase.nppData._nppHandle,
+                (uint)NppMsg.NPPM_GETMENUHANDLE, (int)NppMsg.NPPPLUGINMENU, 0);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.Export]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.ZoomIn]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.ZoomOut]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.ZoomFit]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.ZoomReset]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.PreviousDiagram]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.NextDiagram]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.PreviousPage]._cmdID, Win32.MF_BYCOMMAND);
+            Win32.RemoveMenu(hMenu, PluginBase._funcItems.Items[(int)CommandId.NextPage]._cmdID, Win32.MF_BYCOMMAND);
 
             VisibilityChanged(false);
         }

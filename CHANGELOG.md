@@ -1,4 +1,5 @@
 # X.X.X.X (XX.XX.XXXX)
+- Added commands which can be mapped to shortcuts for all buttons
 - Json.NET library updated to 13.0.4
 
 # 1.9.0.13 (14.12.2025)

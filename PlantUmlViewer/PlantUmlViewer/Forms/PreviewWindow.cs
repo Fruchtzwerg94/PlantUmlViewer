@@ -100,6 +100,11 @@ namespace PlantUmlViewer.Forms
             {
                 lock (imagesLock)
                 {
+                    if (images == null)
+                    {
+                        return;
+                    }
+
                     selectedDiagramIndex = Math.Min(diagramIndex, images.Count - 1);
                     label_SelectedDiagram.Text = (selectedDiagramIndex + 1).ToString();
                     tableLayoutPanel_NavigationDiagram.Visible = images.Count > 1;
@@ -401,44 +406,52 @@ namespace PlantUmlViewer.Forms
             });
         }
 
-        private void Button_Export_Click(object sender, EventArgs e)
+        public void Button_Export_Click(object sender, EventArgs e)
         {
             try
             {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog()
+                lock (imagesLock)
                 {
-                    Filter = "PNG file|*.png|SVG file|*.svg",
-                    FileName = $"{Path.GetFileNameWithoutExtension(generatedFile)}{(images.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(images[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
-                    InitialDirectory = Path.GetDirectoryName(getFilePath())
-                })
-                {
-                    if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+                    if (images == null)
                     {
-                        switch (Path.GetExtension(saveFileDialog.FileName))
-                        {
-                            case ".png":
-                                GetSelectedImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
-                                break;
-                            case ".svg":
-                                //Clone, add metadata and save
-                                using (MemoryStream ms = new MemoryStream())
-                                {
-                                    GetSelectedImage().Write(ms);
-                                    ms.Position = 0;
-                                    SvgDocument svgToExport = SvgDocument.Open<SvgDocument>(ms);
-                                    AddMetadata(svgToExport);
-                                    svgToExport.Write(saveFileDialog.FileName);
-                                }
-                                break;
-                            default:
-                                throw new InvalidOperationException("Invalid file extension");
-                        }
+                        return;
+                    }
 
-                        if (settings.Settings.OpenExport == OpenExport.Always
-                            || (settings.Settings.OpenExport == OpenExport.Ask
-                                && MessageBox.Show(this, "Open the exported file?", "Open export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                    using (SaveFileDialog saveFileDialog = new SaveFileDialog()
+                    {
+                        Filter = "PNG file|*.png|SVG file|*.svg",
+                        FileName = $"{Path.GetFileNameWithoutExtension(generatedFile)}{(images.Count > 1 ? $"_d{GetSelectedDiagramIndex() + 1}" : "")}{(images[GetSelectedDiagramIndex()].Pages.Count > 1 ? $"_p{GetSelectedPageIndex() + 1}" : "")}.png",
+                        InitialDirectory = Path.GetDirectoryName(getFilePath())
+                    })
+                    {
+                        if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
                         {
-                            ProcessHelper.OpenDocument(saveFileDialog.FileName);
+                            switch (Path.GetExtension(saveFileDialog.FileName))
+                            {
+                                case ".png":
+                                    GetSelectedImage(settings.Settings.ExportSizeFactor).Save(saveFileDialog.FileName);
+                                    break;
+                                case ".svg":
+                                    //Clone, add metadata and save
+                                    using (MemoryStream ms = new MemoryStream())
+                                    {
+                                        GetSelectedImage().Write(ms);
+                                        ms.Position = 0;
+                                        SvgDocument svgToExport = SvgDocument.Open<SvgDocument>(ms);
+                                        AddMetadata(svgToExport);
+                                        svgToExport.Write(saveFileDialog.FileName);
+                                    }
+                                    break;
+                                default:
+                                    throw new InvalidOperationException("Invalid file extension");
+                            }
+
+                            if (settings.Settings.OpenExport == OpenExport.Always
+                                || (   settings.Settings.OpenExport == OpenExport.Ask
+                                    && MessageBox.Show(this, "Open the exported file?", "Open export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                            {
+                                ProcessHelper.OpenDocument(saveFileDialog.FileName);
+                            }
                         }
                     }
                 }
@@ -449,27 +462,27 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private void Button_ZoomIn_Click(object sender, EventArgs e)
+        public void Button_ZoomIn_Click(object sender, EventArgs e)
         {
             imageBox_Diagram.ZoomIn();
         }
 
-        private void Button_ZoomOut_Click(object sender, EventArgs e)
+        public void Button_ZoomOut_Click(object sender, EventArgs e)
         {
             imageBox_Diagram.ZoomOut();
         }
 
-        private void Button_ZoomFit_Click(object sender, EventArgs e)
+        public void Button_ZoomFit_Click(object sender, EventArgs e)
         {
             imageBox_Diagram.ZoomToFit();
         }
 
-        private void Button_ZoomReset_Click(object sender, EventArgs e)
+        public void Button_ZoomReset_Click(object sender, EventArgs e)
         {
             imageBox_Diagram.Zoom = 100;
         }
 
-        private void Button_PreviousDiagram_Click(object sender, EventArgs e)
+        public void Button_PreviousDiagram_Click(object sender, EventArgs e)
         {
             SetSelectedImage(GetSelectedDiagramIndex() - 1, 0);
             if (!button_PreviousDiagram.Enabled)
@@ -478,7 +491,7 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private void Button_NextDiagram_Click(object sender, EventArgs e)
+        public void Button_NextDiagram_Click(object sender, EventArgs e)
         {
             SetSelectedImage(GetSelectedDiagramIndex() + 1, 0);
             if (!button_NextDiagram.Enabled)
@@ -487,7 +500,7 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private void Button_PreviousPage_Click(object sender, EventArgs e)
+        public void Button_PreviousPage_Click(object sender, EventArgs e)
         {
             SetSelectedImage(GetSelectedDiagramIndex(), GetSelectedPageIndex() - 1);
             if (!button_PreviousPage.Enabled)
@@ -496,7 +509,7 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private void Button_NextPage_Click(object sender, EventArgs e)
+        public void Button_NextPage_Click(object sender, EventArgs e)
         {
             SetSelectedImage(GetSelectedDiagramIndex(), GetSelectedPageIndex() + 1);
             if (!button_NextPage.Enabled)

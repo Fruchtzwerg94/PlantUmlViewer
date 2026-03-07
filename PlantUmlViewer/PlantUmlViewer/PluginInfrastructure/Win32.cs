@@ -301,6 +301,9 @@ namespace Kbg.NppPluginNET.PluginInfrastructure
         [DllImport("user32")]
         public static extern bool EnableMenuItem(IntPtr hMenu, int uIDEnableItem, int uEnable);
 
+        [DllImport("user32")]
+        public static extern bool RemoveMenu(IntPtr hMenu, int uPosition, int uFlags);
+
         public const int WM_CREATE = 1;
 
         [DllImport("user32")]
