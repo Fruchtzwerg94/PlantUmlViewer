@@ -1,5 +1,6 @@
 # X.X.X.X (XX.XX.XXXX)
 - Added commands which can be mapped to shortcuts for all buttons
+- Added horizontal mouse wheel scroll support (Cyotek.Windows.Forms.ImageBox 1.5.0)
 - Json.NET library updated to 13.0.4
 
 # 1.9.0.13 (14.12.2025)
@@ -33,7 +34,7 @@
 # 1.5.0.9 (10.01.2023)
 - PlantUML version updated to 1.2023.0
 - Added fluent and dark style icons
-- Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally
+- Updated to common zoom and scroll behaviour Ctrl + mouse wheel to zoom and (Shift +) mouse wheel to scroll vertically and horizontally (Cyotek.Windows.Forms.ImageBox 1.4.0-beta.1)
 - Added include option
 - Added metadata with option to include generated document to SVG export
 - Disabled refresh button after generation until document was changed again
