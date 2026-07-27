@@ -2,6 +2,7 @@
 - Added commands which can be mapped to shortcuts for all buttons
 - Added horizontal mouse wheel scroll support (Cyotek.Windows.Forms.ImageBox 1.5.0)
 - Json.NET library updated to 13.0.4
+- SVG.NET library updated to 3.4.8
 
 # 1.9.0.13 (14.12.2025)
 - PlantUML version updated to 1.2025.10
