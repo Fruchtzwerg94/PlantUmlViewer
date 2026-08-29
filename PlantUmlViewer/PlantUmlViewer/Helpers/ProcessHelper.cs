@@ -41,8 +41,8 @@ namespace PlantUmlViewer.Helpers
         /// <param name="fileName">The name of the application to start, or the name of a document of a file type</param>
         /// <param name="arguments">Command-line arguments to pass to the application when the process starts</param>
         /// <param name="workingDirectory">The working directory for the process to be started</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel execution and kill the process</param>
         /// <param name="input">Data to write to the standard input of the process</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel execution and kill the process</param>
         /// <returns>A task running the process and providing its result</returns>
         public static async Task<ProcessResult> RunProcessAsync(string fileName, IEnumerable<string> arguments,
             string workingDirectory, byte[] input = null, CancellationToken cancellationToken = default)

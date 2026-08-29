@@ -344,7 +344,7 @@ namespace PlantUmlViewer.Forms
                     string plantUmlJar = settings.Settings.PlantUmlPath;
                     if (string.IsNullOrWhiteSpace(plantUmlJar))
                     {
-                        plantUmlJar = PlantUmlViewer.PLANT_UML_JAR;
+                        plantUmlJar = PlantUmlViewer.PlantUmlJar;
                     }
                     plantUmlJar = PathHelper.ResolvePathToAssembly(plantUmlJar);
 
@@ -391,6 +391,7 @@ namespace PlantUmlViewer.Forms
                 {
                     loadingCircleToolStripMenuItem_Refreshing.Visible = false;
                     loadingCircleToolStripMenuItem_Refreshing.LoadingCircleControl.Active = false;
+                    refreshCancellationTokenSource?.Dispose();
                     refreshCancellationTokenSource = null;
                 });
             }
@@ -544,9 +545,9 @@ namespace PlantUmlViewer.Forms
             }
         }
 
-        private const string NAMESPACE_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-        private const string NAMESPACE_DC = "http://purl.org/dc/elements/1.1/";
-        private const string NAMESPACE_PUV = "https://github.com/Fruchtzwerg94/PlantUmlViewer";
+        private const string NamespaceRdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        private const string NamespaceDc = "http://purl.org/dc/elements/1.1/";
+        private const string NamespacePuv = "https://github.com/Fruchtzwerg94/PlantUmlViewer";
         private void AddMetadata(SvgDocument svg)
         {
             /*
@@ -565,23 +566,23 @@ namespace PlantUmlViewer.Forms
 
             //Add metadata
             SvgUnknownElement metadata = new SvgUnknownElement("metadata");
-            NonSvgElement rdfMetadata = new NonSvgElement("RDF", NAMESPACE_RDF);
-            rdfMetadata.Namespaces["rdf"] = NAMESPACE_RDF;
-            rdfMetadata.Namespaces["dc"] = NAMESPACE_DC;
-            rdfMetadata.Namespaces["puv"] = NAMESPACE_PUV;
+            NonSvgElement rdfMetadata = new NonSvgElement("RDF", NamespaceRdf);
+            rdfMetadata.Namespaces["rdf"] = NamespaceRdf;
+            rdfMetadata.Namespaces["dc"] = NamespaceDc;
+            rdfMetadata.Namespaces["puv"] = NamespacePuv;
 
-            rdfMetadata.Children.Add(new NonSvgElement("product", NAMESPACE_PUV) { Content = AssemblyAttributes.Product });
-            rdfMetadata.Children.Add(new NonSvgElement("version", NAMESPACE_PUV) { Content = AssemblyAttributes.Version });
-            rdfMetadata.Children.Add(new NonSvgElement("plantumlviewer", NAMESPACE_PUV) { Content = PlantUmlViewer.PLANT_UML_VERSION });
+            rdfMetadata.Children.Add(new NonSvgElement("product", NamespacePuv) { Content = AssemblyAttributes.Product });
+            rdfMetadata.Children.Add(new NonSvgElement("version", NamespacePuv) { Content = AssemblyAttributes.Version });
+            rdfMetadata.Children.Add(new NonSvgElement("plantumlviewer", NamespacePuv) { Content = PlantUmlViewer.PlantUmlVersion });
 
-            NonSvgElement rdfMetadataDescription = new NonSvgElement("Description", NAMESPACE_RDF);
-            rdfMetadataDescription.Children.Add(new NonSvgElement("creator", NAMESPACE_DC) { Content = WindowsIdentity.GetCurrent().Name });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("date", NAMESPACE_DC) { Content = generatedDateTime.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture) });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("source", NAMESPACE_DC) { Content = Path.GetFileName(generatedFile) });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("title", NAMESPACE_DC) { Content = Path.GetFileNameWithoutExtension(generatedFile) });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("format", NAMESPACE_DC) { Content = "image/svg" });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("diagram", NAMESPACE_PUV) { Content = (GetSelectedDiagramIndex() + 1).ToString() });
-            rdfMetadataDescription.Children.Add(new NonSvgElement("page", NAMESPACE_PUV) { Content = (GetSelectedPageIndex() + 1).ToString() });
+            NonSvgElement rdfMetadataDescription = new NonSvgElement("Description", NamespaceRdf);
+            rdfMetadataDescription.Children.Add(new NonSvgElement("creator", NamespaceDc) { Content = WindowsIdentity.GetCurrent().Name });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("date", NamespaceDc) { Content = generatedDateTime.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("source", NamespaceDc) { Content = Path.GetFileName(generatedFile) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("title", NamespaceDc) { Content = Path.GetFileNameWithoutExtension(generatedFile) });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("format", NamespaceDc) { Content = "image/svg" });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("diagram", NamespacePuv) { Content = (GetSelectedDiagramIndex() + 1).ToString() });
+            rdfMetadataDescription.Children.Add(new NonSvgElement("page", NamespacePuv) { Content = (GetSelectedPageIndex() + 1).ToString() });
             rdfMetadata.Children.Add(rdfMetadataDescription);
 
             metadata.Children.Add(rdfMetadata);

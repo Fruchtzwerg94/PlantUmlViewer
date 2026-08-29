@@ -11,12 +11,6 @@ namespace PlantUmlViewer.DiagramGeneration.PlantUml
             Code = code;
         }
 
-        public override string Message
-        {
-            get
-            {
-                return base.Message + $", Code={Code}";
-            }
-        }
+        public override string Message => $"{base.Message}, Code={Code}";
     }
 }

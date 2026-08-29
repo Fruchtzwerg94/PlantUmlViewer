@@ -19,7 +19,7 @@ namespace PlantUmlViewer.Forms
 
             InitializeComponent();
 
-            this.Text = PlantUmlViewer.PLUGIN_NAME + " options";
+            this.Text = PlantUmlViewer.PluginName + " options";
 
             comboBox_OpenExport.DataSource = Enum.GetValues(typeof(OpenExport));
 
@@ -105,7 +105,7 @@ namespace PlantUmlViewer.Forms
             string plantUmlJar = textBox_PlantUmlPath.Text;
             if (string.IsNullOrWhiteSpace(plantUmlJar))
             {
-                plantUmlJar = PlantUmlViewer.PLANT_UML_JAR;
+                plantUmlJar = PlantUmlViewer.PlantUmlJar;
             }
             plantUmlJar = PathHelper.ResolvePathToAssembly(plantUmlJar);
 

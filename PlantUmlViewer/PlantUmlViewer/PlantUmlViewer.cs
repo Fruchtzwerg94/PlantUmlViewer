@@ -12,9 +12,9 @@ namespace PlantUmlViewer
 {
     internal class PlantUmlViewer
     {
-        public const string PLUGIN_NAME = "PlantUML Viewer";
-        public const string PLANT_UML_VERSION = "1.2025.10";
-        public const string PLANT_UML_JAR = "plantuml-" + PLANT_UML_VERSION + ".jar";
+        public const string PluginName = "PlantUML Viewer";
+        public const string PlantUmlVersion = "1.2025.10";
+        public const string PlantUmlJar = "plantuml-" + PlantUmlVersion + ".jar";
 
         private enum CommandId
         {
@@ -124,7 +124,7 @@ namespace PlantUmlViewer
                     dlgID = (int)CommandId.ShowPreview,
                     uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR,
                     hIconTab = (uint)Properties.Resources.Icon.Handle,
-                    pszModuleName = PLUGIN_NAME
+                    pszModuleName = PluginName
                 };
                 IntPtr nppTbDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(nppTbData));
                 Marshal.StructureToPtr(nppTbData, nppTbDataPtr, false);
@@ -156,14 +156,14 @@ namespace PlantUmlViewer
             }
             return editor.GetText(editor.GetLength() + 1);
 
-            //const int GET_TEXT_STEP_SIZE = 10000;
+            //const int GetTextStepSize = 10000;
             //StringBuilder textBuilder = new StringBuilder();
             //int length = editor.GetLength();
             //int position = 0;
             //int rest = length;
             //while (rest > 0)
             //{
-            //    int step = Math.Min(rest, GET_TEXT_STEP_SIZE);
+            //    int step = Math.Min(rest, GetTextStepSize);
             //    using (TextRange textRange = new TextRange(position, position + step, step + 1))
             //    {
             //        int ret = editor.GetTextRange(textRange);

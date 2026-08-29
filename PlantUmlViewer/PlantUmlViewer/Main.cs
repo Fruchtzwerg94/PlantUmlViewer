@@ -6,7 +6,7 @@ namespace Kbg.NppPluginNET
 {
     public static class Main
     {
-        public const string PluginName = PlantUmlViewer.PlantUmlViewer.PLUGIN_NAME;
+        public const string PluginName = PlantUmlViewer.PlantUmlViewer.PluginName;
 
         private static readonly PlantUmlViewer.PlantUmlViewer plantUmlViewer = new PlantUmlViewer.PlantUmlViewer();
 

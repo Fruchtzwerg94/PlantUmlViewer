@@ -15,10 +15,10 @@ namespace PlantUmlViewer.Forms
         {
             InitializeComponent();
 
-            this.Text = "About " + PlantUmlViewer.PLUGIN_NAME;
+            this.Text = "About " + PlantUmlViewer.PluginName;
             this.label_ProductName.Text = AssemblyAttributes.Product;
             this.label_PluginVersion.Text = string.Format("Plugin version {0}", AssemblyAttributes.Version);
-            this.label_PlantUmlVersion.Text = string.Format("PlantUML version {0}", PlantUmlViewer.PLANT_UML_VERSION);
+            this.label_PlantUmlVersion.Text = string.Format("PlantUML version {0}", PlantUmlViewer.PlantUmlVersion);
             this.label_Copyright.Text = AssemblyAttributes.Copyright;
             this.richTextBox_Text.SelectedRtf = Properties.Resources.AboutText;
         }
@@ -42,7 +42,7 @@ namespace PlantUmlViewer.Forms
         private void LinkLabel_Mail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             linkLabel_Mail.LinkVisited = true;
-            Process.Start($"mailto:phi_dev@gmx.de?subject={PlantUmlViewer.PLUGIN_NAME}");
+            Process.Start($"mailto:phi_dev@gmx.de?subject={PlantUmlViewer.PluginName}");
         }
 
         private void LinkLabel_Donate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
