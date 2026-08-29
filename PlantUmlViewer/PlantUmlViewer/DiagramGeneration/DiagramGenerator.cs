@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -43,20 +44,20 @@ namespace PlantUmlViewer.DiagramGeneration
              * Afterwards page by page is generated
              */
 
-            Dictionary<int, Dictionary<int, SvgDocument>> pages = new Dictionary<int, Dictionary<int, SvgDocument>>();
+            ConcurrentDictionary<int, Dictionary<int, SvgDocument>> pages = new ConcurrentDictionary<int, Dictionary<int, SvgDocument>>();
 
             //Generate the first page directly at startup
             List<Task<bool>> generateTasks = new List<Task<bool>>()
             {
-                Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
-                  text, fileName, include, workingDirectory, 0, pages, cancellationTokenSource))
+                GeneratePageAsync(javaExecutable, plantUmlJar,
+                  text, fileName, include, workingDirectory, 0, pages, cancellationTokenSource)
             };
             //Generate the (maybe) following pages
             int pageIndex = 1;
             while (true)
             {
-                generateTasks.Add(Task.Run(() => GeneratePageAsync(javaExecutable, plantUmlJar,
-                    text, fileName, include, workingDirectory, pageIndex, pages, cancellationTokenSource)));
+                generateTasks.Add(GeneratePageAsync(javaExecutable, plantUmlJar,
+                    text, fileName, include, workingDirectory, pageIndex, pages, cancellationTokenSource));
                 await Task.WhenAll(generateTasks);
                 if (generateTasks.Exists(rT => !rT.Result))
                 {
@@ -104,7 +105,7 @@ namespace PlantUmlViewer.DiagramGeneration
 
         private static async Task<bool> GeneratePageAsync(string javaExecutable, string plantUmlJar,
             string text, string fileName, string include, string fileDirectory, int pageIndexToGenerate,
-            Dictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
+            ConcurrentDictionary<int, Dictionary<int, SvgDocument>> pages, CancellationTokenSource cancellationTokenSource)
         {
             PlantUmlArguments arguments = new PlantUmlArguments()
             {
@@ -124,16 +125,16 @@ namespace PlantUmlViewer.DiagramGeneration
             Dictionary<int, SvgDocument> imagesOfPage = new Dictionary<int, SvgDocument>();
             List<int> delimitorIndices = new int[] { -(DIAGRAM_DELIMITOR.Length + 2) }
                 .Concat(PatternAt(bytes, Encoding.UTF8.GetBytes(DIAGRAM_DELIMITOR), 0, bytes.Length)).ToList();
-            for (int i = 0; i < delimitorIndices.Count - 1; i++)
+            for (int i = 0; i < (delimitorIndices.Count - 1); i++)
             {
                 int start = delimitorIndices[i] + DIAGRAM_DELIMITOR.Length + 2;
                 int end = delimitorIndices[i + 1];
-                if (end - start > 0)
+                if (end > start)
                 {
                     //Remove all unexpected data which may is added due to Java accessibility hooks output e.g. like PowerAutomate
                     List<int> startPatterns = PatternAt(bytes, Encoding.UTF8.GetBytes(SVG_START), start, end).ToList();
                     List<int> endPatterns = PatternAt(bytes, Encoding.UTF8.GetBytes(SVG_END), start, end).ToList();
-                    if (startPatterns.Count != 1 || endPatterns.Count != 1)
+                    if ((startPatterns.Count != 1) || (endPatterns.Count != 1))
                     {
                         throw new InvalidOperationException("Failed to parse generated data");
                     }
@@ -156,11 +157,11 @@ namespace PlantUmlViewer.DiagramGeneration
             {
                 return false;
             }
-            pages[pageIndexToGenerate] = imagesOfPage;
+            pages.TryAdd(pageIndexToGenerate, imagesOfPage);
             return true;
         }
 
-        private static List<GeneratedDiagram> ReorganizePagesToDiagram(Dictionary<int, Dictionary<int, SvgDocument>> pages)
+        private static List<GeneratedDiagram> ReorganizePagesToDiagram(ConcurrentDictionary<int, Dictionary<int, SvgDocument>> pages)
         {
             //Reorganize page based structure to intuitive diagram based structure
             //pages[pageIndex][diagramIndex] --> images[diagramIndex][nonEmptyPageIndex]
@@ -182,7 +183,7 @@ namespace PlantUmlViewer.DiagramGeneration
 
         private static IEnumerable<int> PatternAt(byte[] source, byte[] pattern, int start, int end)
         {
-            if (source == null || pattern == null || source.Length < pattern.Length)
+            if ((source == null) || (pattern == null) || (source.Length < pattern.Length))
             {
                 yield break;
             }

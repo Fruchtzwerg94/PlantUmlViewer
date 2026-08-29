@@ -1,8 +1,11 @@
 # X.X.X.X (XX.XX.XXXX)
 - Added commands which can be mapped to shortcuts for all buttons
 - Added horizontal mouse wheel scroll support (Cyotek.Windows.Forms.ImageBox 1.5.0)
+- Improved open export file by running asynchronously
 - Improved security by validating update URLs against the expected GitHub repository before opening them
 - Improved security of settings deserialization by prohibiting DTD processing
+- Fixed potential race condition generating multiple pages in parallel
+- Fixed potential memory leak copying generated diagrams to clipboard
 - Json.NET library updated to 13.0.4
 - SVG.NET library updated to 3.4.8
 

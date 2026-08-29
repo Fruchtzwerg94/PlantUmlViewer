@@ -451,7 +451,22 @@ namespace PlantUmlViewer.Forms
                                 || (   settings.Settings.OpenExport == OpenExport.Ask
                                     && MessageBox.Show(this, "Open the exported file?", "Open export", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
                             {
-                                ProcessHelper.OpenDocument(saveFileDialog.FileName);
+                                _ = Task.Run(() =>
+                                {
+                                    try
+                                    {
+                                        ProcessHelper.OpenDocument(saveFileDialog.FileName);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Debug.WriteLine($"Failed to open the exported file: '{ex}'", nameof(PreviewWindow));
+                                        this.InvokeIfRequired(() =>
+                                        {
+                                            MessageBox.Show(this, "Failed to open the exported file",
+                                                "Failed to open export", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        });
+                                    }
+                                });
                             }
                         }
                     }
@@ -522,7 +537,10 @@ namespace PlantUmlViewer.Forms
 
         private void ToolStripMenuItem_Diagram_CopyToClipboard_Click(object sender, EventArgs e)
         {
-            Clipboard.SetImage(GetSelectedImage(settings.Settings.ExportSizeFactor));
+            using (Image clipboardImage = GetSelectedImage(settings.Settings.ExportSizeFactor))
+            {
+                Clipboard.SetImage(clipboardImage);
+            }
         }
 
         private void ImageBox_ZoomChanged(object sender, EventArgs e)
