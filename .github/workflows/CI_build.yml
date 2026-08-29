@@ -1,6 +1,6 @@
 name: Continuous Integration
 
-on: [push, pull_request,workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
@@ -17,23 +17,31 @@ jobs:
       run: choco install netfx-4.6.2-devpack
 
     - name: Checkout repo
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         submodules: recursive
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v3
+      uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
 
     - name: Setup NuGet
-      uses: nuget/setup-nuget@v4
+      uses: nuget/setup-nuget@fd55a6f3b34392fa83fde1454582407d8c714123 # v4
+
+    - name: Cache NuGet packages
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('PlantUmlViewer/**/packages.config') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
 
     - name: Nuget restore
       working-directory: PlantUmlViewer/
-      run: nuget restore PlantUmlViewer.sln
+      run: nuget restore PlantUmlViewer.slnx
 
     - name: MSBuild
       run: |
-        msbuild PlantUmlViewer/PlantUmlViewer.sln /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
+        msbuild PlantUmlViewer/PlantUmlViewer.slnx /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}" /m /verbosity:minimal
         mkdir deploy
         Copy-Item -Path "PlantUmlViewer/PlantUmlViewer/bin/${{ matrix.build_configuration }}-${{ matrix.build_platform }}/PlantUmlViewer.dll" -Destination "deploy"
 
@@ -41,9 +49,9 @@ jobs:
       if: matrix.build_configuration == 'Release'
       run: |
         curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2025.10/plantuml-1.2025.10.jar --output deploy/plantuml-1.2025.10.jar
-        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-1.2025.10.jar").Hash -ne "5ec3e9f1419fdf1d0bc9ee3a8ba5375d") { throw "MD5 sum is invalid" }
+        if ((Get-FileHash -Algorithm SHA256 -Path "deploy/plantuml-1.2025.10.jar").Hash -ne "4a01ea09b317180fb8e7eef712dfdca725409d2ee1919e4b5adfe9d8362b6fe5") { throw "SHA256 sum is invalid" }
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
-        if ((Get-FileHash -Algorithm MD5 -Path "deploy/plantuml-jlatexmath.zip").Hash -ne "32a81facc3b8ed331f0d19f2c23d709a") { throw "MD5 sum is invalid" }
+        if ((Get-FileHash -Algorithm SHA256 -Path "deploy/plantuml-jlatexmath.zip").Hash -ne "e041164c6dce5dec3377242a0664c1855d863094dd51c28880888f59820fc7e2") { throw "SHA256 sum is invalid" }
         tar -xf deploy/plantuml-jlatexmath.zip -C deploy
         Remove-Item deploy/plantuml-jlatexmath.zip
 
@@ -57,7 +65,7 @@ jobs:
 
     - name: Create artifact
       if: matrix.build_configuration == 'Release'
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
           name: ${{ env.ARTIFACT_NAME }}
           path: deploy/
