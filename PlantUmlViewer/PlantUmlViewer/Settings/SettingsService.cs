@@ -30,10 +30,19 @@ namespace PlantUmlViewer.Settings
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(PlantUmlViewerSettings));
-                using (StreamReader settingsFileReader = new StreamReader(settingsFilePath))
+                if (!File.Exists(settingsFilePath))
                 {
-                    Settings = (PlantUmlViewerSettings)serializer.Deserialize(settingsFileReader);
+                    Debug.WriteLine("Settings file does not exist, using defaults", nameof(SettingsService));
+                    return;
+                }
+                XmlSerializer serializer = new XmlSerializer(typeof(PlantUmlViewerSettings));
+                using (XmlReader xmlReader = XmlReader.Create(settingsFilePath, new XmlReaderSettings()
+                {
+                    DtdProcessing = DtdProcessing.Prohibit,
+                    XmlResolver = null
+                }))
+                {
+                    Settings = (PlantUmlViewerSettings)serializer.Deserialize(xmlReader);
                 }
                 Debug.WriteLine("Settings loaded", nameof(SettingsService));
             }

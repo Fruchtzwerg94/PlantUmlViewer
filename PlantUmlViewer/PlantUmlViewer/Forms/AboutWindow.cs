@@ -73,11 +73,23 @@ namespace PlantUmlViewer.Forms
                     string latestReleaseVersion = latestRelease.Value<string>("name");
                     string latestReleaseUrl = latestRelease.Value<string>("html_url");
 
+                      if (!(
+                           Uri.TryCreate(latestReleaseUrl, UriKind.Absolute, out Uri releaseUri)
+                        && (releaseUri.Scheme == Uri.UriSchemeHttps)
+                        && releaseUri.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase)
+                        && releaseUri.AbsolutePath.StartsWith("/Fruchtzwerg94/PlantUmlViewer/releases", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show(IsDisposed ? null : this, $"Received invalid release URL '{latestReleaseUrl}'",
+                            "Failed to check for update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     if (latestReleaseVersion == AssemblyAttributes.Version)
                     {
                         MessageBox.Show(IsDisposed ? null : this, "You are using the latest release", "Congrats", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you wish to proceed to the download site?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    else if (MessageBox.Show(IsDisposed ? null : this, $"A newer version {latestReleaseVersion} is available, do you wish to proceed to the download site?",
+                                "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         Process.Start(latestReleaseUrl);
                     }
