@@ -31,7 +31,7 @@ jobs:
       uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('PlantUmlViewer/**/packages.config') }}
+        key: ${{ runner.os }}-nuget-${{ hashFiles('PlantUmlViewer/**/*.csproj') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
 

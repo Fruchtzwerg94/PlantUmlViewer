@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Runtime.InteropServices;
 
 using Kbg.NppPluginNET.PluginInfrastructure;
@@ -152,7 +151,7 @@ namespace PlantUmlViewer
             IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
             if (editor.GetCodePage() != (int)SciMsg.SC_CP_UTF8)
             {
-                throw new FileFormatException("File encoding invalid, please use UTF-8 as encoding");
+                throw new FormatException("File encoding invalid, please use UTF-8 as encoding");
             }
             return editor.GetText(editor.GetLength() + 1);
 
