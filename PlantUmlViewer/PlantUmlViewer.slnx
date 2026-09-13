@@ -8,7 +8,7 @@
     <File Path="../CHANGELOG.md" />
     <File Path="../README.md" />
   </Folder>
-  <Project Path="PlantUmlViewer/PlantUmlViewer.csproj" Id="6110e276-539a-49a0-aead-269ab1c7b6e1">
+  <Project Path="PlantUmlViewer/PlantUmlViewer.csproj">
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>

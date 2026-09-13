@@ -1,297 +1,101 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\ILMerge.3.0.41\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" />
-  <Import Project="..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.props" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{6110E276-539A-49A0-AEAD-269AB1C7B6E1}</ProjectGuid>
+    <!-- Build target -->
+    <TargetFramework>net462</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlantUmlViewer</RootNamespace>
-    <AssemblyName>PlantUmlViewer</AssemblyName>
-    <OutputPath>bin\Debug\</OutputPath>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Platforms>x86;x64</Platforms>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Frameworks and language features -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Assembly identity and versioning -->
+    <Version>1.9.0.13</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <!-- Assembly metadata -->
+    <Title>PlantUmlViewer</Title>
+    <Description>PlantUML Viewer</Description>
+    <Product>PlantUML Viewer by Philipp Schmidt</Product>
+    <Company>Schmidt</Company>
+    <Authors>Philipp Schmidt</Authors>
+    <Copyright>Copyright © 2022 - $([System.DateTime]::UtcNow.Year), all rights reserved</Copyright>
+    <!-- Code analysis -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>10.0-all</AnalysisLevel>
+    <!-- Diagnostics -->
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <!-- Map the source paths for reproducible builds, but not while debugging since it prevents binding breakpoints -->
+    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)').TrimEnd('\'))=./</PathMap>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug-x86</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugSymbols>false</DebugSymbols>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release-x86</OutputPath>
     <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x86</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug-x64</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugSymbols>false</DebugSymbols>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release-x64</OutputPath>
     <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x64</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+
   <PropertyGroup>
     <!-- Default values for debugging so it start correct version of Notepad++
          $(ProgramW6432) and $(MSBuildProgramFiles32) points to the 64 and 32 bit "Program Files" directories -->
     <StartAction>Program</StartAction>
-    <StartProgram Condition="'$(Platform)'=='x64'">$(ProgramW6432)\Notepad++\notepad++.exe</StartProgram>
-    <StartProgram Condition="'$(Platform)'=='x86'">$(MSBuildProgramFiles32)\Notepad++\notepad++.exe</StartProgram>
+    <!--<StartProgram Condition="'$(Platform)'=='x64'">$(ProgramW6432)\Notepad++\notepad++.exe</StartProgram>
+    <StartProgram Condition="'$(Platform)'=='x86'">$(MSBuildProgramFiles32)\Notepad++\notepad++.exe</StartProgram>-->
+    <StartProgram Condition="'$(Platform)'=='x64'">C:\Users\phili\Documents\Workspace_PlantUmlViewer\npp.8.8.9.portable.x64\notepad++.exe</StartProgram>
+    <StartProgram Condition="'$(Platform)'=='x86'">C:\Users\phili\Documents\Workspace_PlantUmlViewer\npp.8.8.9.portable\notepad++.exe</StartProgram>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Cyotek.Windows.Forms.ImageBox, Version=1.2.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221">
-      <HintPath>..\packages\CyotekImageBox.1.5.0\lib\net20\Cyotek.Windows.Forms.ImageBox.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ExCSS, Version=4.2.3.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExCSS.4.2.3\lib\netstandard2.0\ExCSS.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Svg, Version=3.4.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Svg.3.4.8\lib\net462\Svg.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="CyotekImageBox" Version="1.5.0" />
+    <PackageReference Include="MSBuild.ILMerge.Task" Version="1.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Svg" Version="3.4.8" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyAttributes.cs" />
-    <Compile Include="DiagramGeneration\DiagramGenerator.cs" />
-    <Compile Include="DiagramGeneration\PlantUml\PlantUmlRunner.cs" />
-    <Compile Include="DiagramGeneration\PlantUml\ErrorFormat.cs" />
-    <Compile Include="DiagramGeneration\PlantUml\OutputFormat.cs" />
-    <Compile Include="DiagramGeneration\PlantUml\PlantUmlArguments.cs" />
-    <Compile Include="DiagramGeneration\PlantUml\RenderException.cs" />
-    <Compile Include="Helpers\PathHelper.cs" />
-    <Compile Include="Helpers\ProcessExtensions.cs" />
-    <Compile Include="Helpers\ProcessHelper.cs" />
-    <Compile Include="Windows\JavaLocator.cs" />
-    <Compile Include="Forms\Controls\LoadingCircle.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\LoadingCircle.designer.cs">
-      <DependentUpon>LoadingCircle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Controls\LoadingCircleToolStripMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\AboutWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AboutWindow.Designer.cs">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ControlsExtensions.cs" />
-    <Compile Include="Forms\OptionsWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OptionsWindow.Designer.cs">
-      <DependentUpon>OptionsWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DiagramGeneration\GeneratedDiagram.cs" />
-    <Compile Include="PlantUmlViewer.cs" />
-    <Compile Include="PluginInfrastructure\ClikeStringArray.cs" />
-    <Compile Include="PluginInfrastructure\DllExport\DllExportAttribute.cs" />
-    <Compile Include="Forms\PreviewWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PreviewWindow.Designer.cs">
-      <DependentUpon>PreviewWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PluginInfrastructure\Win32.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="PluginInfrastructure\GatewayDomain.cs" />
-    <Compile Include="PluginInfrastructure\NotepadPPGateway.cs" />
-    <Compile Include="PluginInfrastructure\ScintillaGateway.cs" />
-    <Compile Include="PluginInfrastructure\IScintillaGateway.cs" />
-    <Compile Include="PluginInfrastructure\NppPluginNETBase.cs" />
-    <Compile Include="PluginInfrastructure\NppPluginNETHelper.cs" />
-    <Compile Include="PluginInfrastructure\Docking_h.cs" />
-    <Compile Include="PluginInfrastructure\MenuCmdID_h.cs" />
-    <Compile Include="PluginInfrastructure\Scintilla_iface.cs" />
-    <Compile Include="PluginInfrastructure\Msgs_h.cs" />
-    <Compile Include="PluginInfrastructure\Preference_h.cs" />
-    <Compile Include="PluginInfrastructure\Resource_h.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PluginInfrastructure\UnmanagedExports.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Settings\OpenExport.cs" />
-    <Compile Include="Settings\PlantUmlViewerSettings.cs" />
-    <Compile Include="Settings\SettingsService.cs" />
-    <Compile Include="Windows\Messages.cs" />
-    <Compile Include="Windows\NativeWindowApi.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Forms\AboutWindow.resx">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PreviewWindow.resx">
-      <DependentUpon>PreviewWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OptionsWindow.resx">
-      <DependentUpon>OptionsWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="ILMerge.props" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ILMergeOrder.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
-    <None Include="Resources\AboutText.rtf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PluginInfrastructure\Commit.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Empty.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PluginInfrastructure\DllExport\Mono.Cecil.dll" />
-    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.dll" />
-    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.MSBuild.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NavigateRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NavigateLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ZoomIn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ZoomOut.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ZoomFit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ZoomReset.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NavigateUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NavigateDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\IconFluentDark.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\IconFluent.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <!-- The MSBuild.ILMerge.Task props/targets are imported automatically by NuGet via PackageReference,
+       no explicit <Import> of the packages folder is needed. -->
   <Import Project="$(MSBuildProjectDirectory)\PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+
+  <!-- MSBuild.ILMerge.Task builds its input list from @(ReferencePath) items carrying CopyLocal='true' metadata,
+       which is only set for packages.config style references. With PackageReference the list stays empty and
+       only the main assembly gets "merged", so rebuild it from @(ReferenceCopyLocalPaths) instead. -->
+  <Target Name="CollectILMergeAssemblies" AfterTargets="SaveILMergeData">
+    <ItemGroup>
+      <ILMergeInputAssemblies Include="@(ReferenceCopyLocalPaths)" Condition=" '%(Extension)' == '.dll' AND '%(ReferenceCopyLocalPaths.DestinationSubDirectory)' == '' " />
+    </ItemGroup>
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <MergedAssemblies>@(IntermediateAssembly->'%(FullPath)');@(ILMergeInputAssemblies->'%(FullPath)')</MergedAssemblies>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.props'))" />
-    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.targets'))" />
-    <Error Condition="!Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.41\build\ILMerge.props'))" />
   </Target>
-  <Import Project="..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.targets" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.1.3\build\MSBuild.ILMerge.Task.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -271,8 +271,8 @@ namespace PlantUmlViewer.Forms
         }
         #endregion Styling
 
-        public async void Button_Refresh_Click(object sender, EventArgs e)
         #region ButtonClicks
+        public async void Button_Refresh_Click(object sender, EventArgs e)
         {
             //Cancel if already running
             if (refreshCancellationTokenSource != null)
@@ -369,9 +369,9 @@ namespace PlantUmlViewer.Forms
                     ToolStripMenuItem_Diagram_CopyToClipboard.Enabled = true;
                 });
             }
-            catch (FileFormatException ffEx)
+            catch (FormatException fEx)
             {
-                GenerationFailed("Failed to load file", ffEx.Message);
+                GenerationFailed("Failed to load file", fEx.Message);
             }
             catch (TaskCanceledException)
             {
