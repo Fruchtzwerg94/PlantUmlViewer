@@ -1,6 +1,6 @@
 ﻿namespace PlantUmlViewer.DiagramGeneration.PlantUml
 {
-    public enum ErrorFormat
+    internal enum ErrorFormat
     {
         TwoLines,
         SingleLine,

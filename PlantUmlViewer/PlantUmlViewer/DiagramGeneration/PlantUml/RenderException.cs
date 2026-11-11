@@ -2,7 +2,7 @@
 
 namespace PlantUmlViewer.DiagramGeneration.PlantUml
 {
-    public class RenderException : Exception
+    internal class RenderException : Exception
     {
         public string Code { get; }
 

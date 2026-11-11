@@ -2,6 +2,7 @@
 - Added commands which can be mapped to shortcuts for all buttons
 - Added horizontal mouse wheel scroll support (Cyotek.Windows.Forms.ImageBox 1.5.0)
 - Improved open export file by running asynchronously
+- Fixed generation errors being hidden by a closed pipe error and potential hang of subsequent generations
 - Improved security by validating update URLs against the expected GitHub repository before opening them
 - Improved security of settings deserialization by prohibiting DTD processing
 - Fixed potential race condition generating multiple pages in parallel

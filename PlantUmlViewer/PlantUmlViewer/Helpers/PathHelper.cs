@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace PlantUmlViewer.Helpers
 {
-    public static class PathHelper
+    internal static class PathHelper
     {
         private static readonly string assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

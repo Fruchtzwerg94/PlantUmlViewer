@@ -58,10 +58,10 @@ namespace PlantUmlViewer.Forms
                 generatedText = text;
                 generatedDateTime = dateTime;
                 images = new ReadOnlyCollection<GeneratedDiagram>(newImages);
-
-                //Update the text of the selected diagram and visibility
-                SetSelectedImage(selectedDiagramIndex, selectedPageIndex);
             }
+
+            //Update the text of the selected diagram and visibility (outside the lock to avoid deadlocks on invoke)
+            SetSelectedImage(GetSelectedDiagramIndex(), GetSelectedPageIndex());
         }
 
         private int GetSelectedDiagramIndex()

@@ -1,6 +1,6 @@
 ﻿namespace PlantUmlViewer.DiagramGeneration.PlantUml
 {
-    public enum OutputFormat
+    internal enum OutputFormat
     {
         Png,
         Svg,

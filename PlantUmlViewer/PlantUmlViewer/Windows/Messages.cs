@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 namespace PlantUmlViewer.Windows
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct NMHDR
+    internal struct NMHDR
     {
         public IntPtr hwndFrom;
         public IntPtr idFrom;
         public int code;
     }
 
-    public enum WindowsMessage
+    internal enum WindowsMessage
     {
         WM_NULL = 0x0000,
         WM_CREATE = 0x0001,
