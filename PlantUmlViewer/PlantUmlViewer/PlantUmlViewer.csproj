@@ -69,10 +69,8 @@
     <!-- Default values for debugging so it start correct version of Notepad++
          $(ProgramW6432) and $(MSBuildProgramFiles32) points to the 64 and 32 bit "Program Files" directories -->
     <StartAction>Program</StartAction>
-    <!--<StartProgram Condition="'$(Platform)'=='x64'">$(ProgramW6432)\Notepad++\notepad++.exe</StartProgram>
-    <StartProgram Condition="'$(Platform)'=='x86'">$(MSBuildProgramFiles32)\Notepad++\notepad++.exe</StartProgram>-->
-    <StartProgram Condition="'$(Platform)'=='x64'">C:\Users\phili\Documents\Workspace_PlantUmlViewer\npp.8.8.9.portable.x64\notepad++.exe</StartProgram>
-    <StartProgram Condition="'$(Platform)'=='x86'">C:\Users\phili\Documents\Workspace_PlantUmlViewer\npp.8.8.9.portable\notepad++.exe</StartProgram>
+    <StartProgram Condition="'$(Platform)'=='x64'">$(ProgramW6432)\Notepad++\notepad++.exe</StartProgram>
+    <StartProgram Condition="'$(Platform)'=='x86'">$(MSBuildProgramFiles32)\Notepad++\notepad++.exe</StartProgram>
   </PropertyGroup>
 
   <ItemGroup>
