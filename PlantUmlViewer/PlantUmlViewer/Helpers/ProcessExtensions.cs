@@ -59,9 +59,10 @@ namespace PlantUmlViewer.Helpers
             process.EnableRaisingEvents = true;
 
             TaskCompletionSource<ProcessResult> tcs = new TaskCompletionSource<ProcessResult>();
+            CancellationTokenRegistration registration = default;
             if (cancellationToken != CancellationToken.None)
             {
-                cancellationToken.Register(() =>
+                registration = cancellationToken.Register(() =>
                 {
                     if (tcs.TrySetCanceled())
                     {
@@ -77,24 +78,75 @@ namespace PlantUmlViewer.Helpers
                 });
             }
 
+            using (registration)
+            {
+                return await RunStartedAsync(process, input, tcs, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task<ProcessResult> RunStartedAsync(Process process, byte[] input,
+            TaskCompletionSource<ProcessResult> tcs, CancellationToken cancellationToken)
+        {
             if (!process.Start())
             {
                 throw new InvalidOperationException("Failed to start process " + process);
             }
 
+            //Read output and error concurrently before writing input to avoid deadlocks
+            Task<byte[]> outputTask = Task.Run(() => process.GetOutput(), CancellationToken.None);
+            Task<byte[]> errorTask = Task.Run(() => process.GetError(), CancellationToken.None);
+
+            IOException inputException = null;
             if (input != null)
             {
-                await process.StandardInput.BaseStream
-                    .WriteAsync(input, 0, input.Length, cancellationToken).ConfigureAwait(false);
-                await process.StandardInput.FlushAsync().ConfigureAwait(false);
-                process.StandardInput.Close();
+                try
+                {
+                    await process.StandardInput.BaseStream
+                        .WriteAsync(input, 0, input.Length, cancellationToken).ConfigureAwait(false);
+                    await process.StandardInput.FlushAsync().ConfigureAwait(false);
+                }
+                catch (IOException ex)
+                {
+                    //Process closed its input (e.g. exited early), its result is more meaningful
+                    inputException = ex;
+                }
+                finally
+                {
+                    try
+                    {
+                        process.StandardInput.Close();
+                    }
+                    catch (IOException)
+                    {
+                        //Do nothing
+                    }
+                }
             }
 
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
-                ProcessResult result = new ProcessResult(
-                    process.GetOutput(), process.GetError(), process.ExitCode);
-                tcs.SetResult(result);
+                try
+                {
+                    byte[] output = await outputTask.ConfigureAwait(false);
+                    byte[] error = await errorTask.ConfigureAwait(false);
+                    process.WaitForExit();
+                    ProcessResult result = new ProcessResult(output, error, process.ExitCode);
+
+                    if ((inputException != null) && (result.ExitCode == 0) && (result.Error.Length == 0))
+                    {
+                        //The process exited successfully and did not write to standard error, but we failed to write to its standard input
+                        tcs.TrySetException(inputException);
+                    }
+                    else
+                    {
+                        //Everything is fine or the process exited with an error, return the result
+                        tcs.TrySetResult(result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
             }, CancellationToken.None);
 
             return await tcs.Task.ConfigureAwait(false);
