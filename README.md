@@ -21,17 +21,17 @@ You can find the latest and all other changes in the [changelog](CHANGELOG.md).
 ## Installation
 Detailed information about plugins and how they are installed can be found in the [Notepad++ User Manual](https://npp-user-manual.org/docs/plugins/).
 
-### Manual
-Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy the folder *PlantUmlViewer* with its content to the *plugins* subfolder of your Notepad++ installation directory.
-
 ### Plugins Admin (recommended)
 Use the built-in *Plugins Admin* to install it directly. Just open Notepad++ and navigate to *Plugins* &rarr; *Plugins Admin*. Here under the *Available* tab, search for *PlantUML Viewer*. After checking the corresponding box, click *Install* at the top right corner of the window.
+
+### Manual
+Download a [release version](https://github.com/Fruchtzwerg94/PlantUmlViewer/releases) and copy the folder *PlantUmlViewer* with its content to the *plugins* subfolder of your Notepad++ installation directory.
 
 ### Compatibility
 This plugin requires at least
 * Notepad++ 32-bit or 64-bit
 * .NET Framework 4.6.2 or above
-* Java
+* Java 11 or newer ([Quick Start Guide to PlantUML](https://plantuml.com/starting))
 
 ## Usage
 PlantUML Viewer can be opened
@@ -41,26 +41,26 @@ PlantUML Viewer can be opened
 ![PlantUML Viewer](doc/PlantUmlViewer.png)
 ![PlantUML Viewer dark](doc/PlantUmlViewerDark.png)
 
-By clicking the *Refresh* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Refresh.png" width="20">) button the diagram(s) are generated out of the current opened document. The file extension doesn't matter.
+By clicking the *Refresh* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Refresh.png" width="20">) button, the diagram(s) are generated from of the current opened document. The file extension doesn't matter.
 The diagram can be
 * moved by dragging it,
-* zoomed by <kbd>Ctrl</kbd> + mouse wheel or clicking the buttons (<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomIn.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomOut.png" width="20"> / <img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomFit.png" width="20">)
+* zoomed by <kbd>Ctrl</kbd> + mouse wheel or clicking the buttons (<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomIn.png" width="20">/<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomOut.png" width="20">/<img src="PlantUmlViewer/PlantUmlViewer/Resources/ZoomFit.png" width="20">)
 * or scrolled vertically and horizontally by (<kbd>Shift</kbd> +) mouse wheel.
 
-The currently showed diagram can be exported or copied to clipboard as PNG or SVG image by clicking the *Export* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Save.png" width="20">) button or using the right click context menu.
-If your document contains multiple diagrams and or pages, you can use the navigation buttons to show the next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateRight.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateLeft.png" width="20">) diagram and next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateUp.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateDown.png" width="20">) page.
+The currently showen diagram can be exported or copied to clipboard as PNG or SVG image by clicking the *Export* (<img src="PlantUmlViewer/PlantUmlViewer/Resources/Save.png" width="20">) button or using the right click context menu.
+If your document contains multiple diagrams and/or pages, you can use the navigation buttons to show the next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateRight.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateLeft.png" width="20">) diagram and next (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateDown.png" width="20">) or previous (<img src="PlantUmlViewer/PlantUmlViewer/Resources/NavigateUp.png" width="20">) page.
 
-Make sure Java is properly installed and referenced in your environment, it can be also specified through the options available in the plugins options window.
+Make sure Java is properly installed and referenced in your environment, it can also be specified through the options available in the plugins options window.
 
 ![PlantUML Viewer menu](doc/Menu.png)
 ![PlantUML Viewer options](doc/Options.png)
 
 ### Usability hints
-* You may also want use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
+* You may also want to use this plugin in combination with [PlantUML_Notepad-_UDL](https://github.com/brianmaher84/PlantUML_Notepad-_UDL), which enables the PlantUML language syntax for Notepad++.
 * Using the *Shortcut Mapper*, which is accessible via the *Settings* submenu of Notepad++, you can define a shortcut to generate the diagrams.
 
 ## License and credits
-PlantUML Viewer is released under the [MIT License](LICENSE). This means, you can do with it whatever you want as long as you include the original copyright and license notice in any copy of the software.
+PlantUML Viewer is released under the [MIT License](LICENSE). This means you can do with it whatever you want as long as you include the original copyright and license notice in any copy of the software.
 
 This Notepad++ plugin integrates multiple other libraries and sources. Credits and thanks to all the developers working on these great projects:
 * The plugin is based on the [Notepad++ PluginPack.net](https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net) by Kasper B. Graversen provided under the Apache 2.0 license.
@@ -76,10 +76,10 @@ This Notepad++ plugin integrates multiple other libraries and sources. Credits a
     * the binaries of [The Apache™ Batik Project](https://xmlgraphics.apache.org/batik/) which are free to use and released under the Apache 2.0 license.
 
 ## Feedback, issues and contribution
-Resonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!
+Reasonable feedback, issues and contributions are always very welcome. Feel free to bring in your points!
 
 ## Disclaimer
-This source and the whole package comes without warranty. It may or may not harm your computer. Please use with care. Any damage cannot be related back to the author. The source has been tested on a virtual environment and scanned for viruses and has passed all tests.
+This source and the whole package come without warranty. It may or may not harm your computer. Please use with care. Any damage cannot be related back to the author. The source has been tested on a virtual environment and scanned for viruses and has passed all tests.
 
 ## Personal Note
 *I've created this software in my leasure time since I found no comparable solution to preview PlantUML diagrams seamlessly in Notepad++. This software (with all its bugs) is not aiming to be an enterprise solution. It surely will not fulfill the needs of everybody. But it maybe is a nice little helper for some of you. I am always open for your reasonable feedback, issues and contributions. Feel free to contact me and have fun with it.*

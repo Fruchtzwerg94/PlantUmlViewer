@@ -10,7 +10,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Assembly identity and versioning -->
-    <Version>1.9.0.13</Version>
+    <Version>1.10.0.14</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <!-- Assembly metadata -->

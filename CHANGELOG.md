@@ -1,4 +1,5 @@
-# X.X.X.X (XX.XX.XXXX)
+# 1.10.0.14 (12.11.2026)
+- PlantUML version updated to 1.2026.10
 - Added commands which can be mapped to shortcuts for all buttons
 - Added horizontal mouse wheel scroll support (Cyotek.Windows.Forms.ImageBox 1.5.0)
 - Improved open export file by running asynchronously

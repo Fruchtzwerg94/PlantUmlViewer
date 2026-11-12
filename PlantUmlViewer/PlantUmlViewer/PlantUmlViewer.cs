@@ -12,7 +12,7 @@ namespace PlantUmlViewer
     internal class PlantUmlViewer
     {
         public const string PluginName = "PlantUML Viewer";
-        public const string PlantUmlVersion = "1.2025.10";
+        public const string PlantUmlVersion = "1.2026.10";
         public const string PlantUmlJar = "plantuml-" + PlantUmlVersion + ".jar";
 
         private enum CommandId

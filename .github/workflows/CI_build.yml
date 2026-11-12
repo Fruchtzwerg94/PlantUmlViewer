@@ -48,8 +48,8 @@ jobs:
     - name: Download libraries
       if: matrix.build_configuration == 'Release'
       run: |
-        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2025.10/plantuml-1.2025.10.jar --output deploy/plantuml-1.2025.10.jar
-        if ((Get-FileHash -Algorithm SHA256 -Path "deploy/plantuml-1.2025.10.jar").Hash -ne "4a01ea09b317180fb8e7eef712dfdca725409d2ee1919e4b5adfe9d8362b6fe5") { throw "SHA256 sum is invalid" }
+        curl -L --url https://github.com/plantuml/plantuml/releases/download/v1.2026.10/plantuml-1.2026.10.jar --output deploy/plantuml-1.2026.10.jar
+        if ((Get-FileHash -Algorithm SHA256 -Path "deploy/plantuml-1.2026.10.jar").Hash -ne "e9bc9e6b2eb715e8c0c929f3dcb5fc1923be13f37599b09c293c66d354e88686") { throw "SHA256 sum is invalid" }
         curl -L --url http://beta.plantuml.net/plantuml-jlatexmath.zip --output deploy/plantuml-jlatexmath.zip
         if ((Get-FileHash -Algorithm SHA256 -Path "deploy/plantuml-jlatexmath.zip").Hash -ne "e041164c6dce5dec3377242a0664c1855d863094dd51c28880888f59820fc7e2") { throw "SHA256 sum is invalid" }
         tar -xf deploy/plantuml-jlatexmath.zip -C deploy
